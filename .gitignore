@@ -1,4 +1,6 @@
 ./data/*
 ./code/*.ipynb
+./code/.idea/*
+./code/.ipynb_checkpoints/*
 ./*.ipynb
 ./*.xlsx
