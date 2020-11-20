@@ -27,6 +27,7 @@ if __name__=='__main__':
         'latent_dim': 128,
         'encoder_hidden_dims': [512, 256],
         'classifier_hidden_dims': [64, 32, 16],
+        'decay_coefficient': 0.1,
         'model_save_folder': './model_save'
     }
 
