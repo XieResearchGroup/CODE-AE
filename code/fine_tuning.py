@@ -97,7 +97,7 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
             except IndexError:
                 break
 
-        target_classifier.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'target_classifier.pt')))
+    target_classifier.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'target_classifier.pt')))
 
     return target_classifier, (target_classification_train_history, target_classification_eval_train_history,
                                target_classification_eval_val_history, target_classification_eval_test_history)
