@@ -128,6 +128,6 @@ def train_coral(s_dataloaders, t_dataloaders, **kwargs):
         if stop_flag:
             break
 
-        autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'coral_ae.pt')))
+    autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'coral_ae.pt')))
 
     return autoencoder.encoder, (ae_train_history, ae_eval_val_history)
