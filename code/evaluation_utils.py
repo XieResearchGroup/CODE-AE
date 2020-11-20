@@ -1,7 +1,8 @@
+from collections import defaultdict
+
 import numpy as np
 import torch
-from collections import defaultdict
-from sklearn.metrics import roc_auc_score, average_precision_score, precision_recall_curve, accuracy_score, f1_score, \
+from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score, f1_score, \
     log_loss
 
 
