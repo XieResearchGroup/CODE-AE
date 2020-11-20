@@ -1,13 +1,14 @@
-import numpy as np
-import pandas as pd
 import gzip
 import os
 import random
+
+import numpy as np
+import pandas as pd
 import torch
-import data_config
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from torch.utils.data import TensorDataset, DataLoader
+
+import data_config
 from data_preprocessing import align_feature
 
 

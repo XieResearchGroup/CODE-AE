@@ -1,10 +1,9 @@
-import pandas as pd
 import numpy as np
-import re
-import gzip
-import data_config
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 from sklearn.cluster import KMeans
+
+import data_config
+
 
 def align_feature(df1, df2):
     """
@@ -39,7 +38,6 @@ def filter_features(df, mean_tres=1.0, std_thres=0.5):
     :param df: samples X features
     :param mean_tres:
     :param std_thres:
-    :param cor_thres:
     :return:
     """
     df = df.loc[:, df.apply(lambda col: col.isna().sum()) == 0]

@@ -1,11 +1,9 @@
 import os
-import torch
-import torch.nn as nn
-from mlp import MLP
-from collections import defaultdict
-from evaluation_utils import *
-from dsn_ae import DSNAE
 from itertools import chain
+
+from dsn_ae import DSNAE
+from evaluation_utils import *
+from mlp import MLP
 from train_dsn import eval_dsnae_epoch, dsn_ae_train_step
 
 
