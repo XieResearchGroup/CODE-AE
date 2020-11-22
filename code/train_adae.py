@@ -95,7 +95,7 @@ def customized_ae_train_step(classifier, ae, s_batch, t_batch, loss_fn, alpha, d
     loss_dict = {k: v.cpu().detach().item() + t_loss_dict[k].cpu().detach().item() for k, v in s_loss_dict.items()}
     for k, v in loss_dict.items():
         history[k].append(v)
-    # history['bce'].append(adv_loss.cpu().detach().item())
+    #history['bce'].append(adv_loss.cpu().detach().item())
 
     return history
 
@@ -121,8 +121,10 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
                      output_dim=1,
                      hidden_dims=kwargs['classifier_hidden_dims'])
     confounder_classifier = EncoderDecoder(encoder=autoencoder.encoder, decoder=classifier)
+    autoencoder = autoencoder.to(kwargs['device'])
 
     autoencoder = autoencoder.to(kwargs['device'])
+    confounder_classifier = confounder_classifier.to(kwargs['device'])
 
     ae_eval_train_history = defaultdict(list)
     ae_eval_val_history = defaultdict(list)

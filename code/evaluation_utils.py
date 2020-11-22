@@ -12,11 +12,11 @@ def model_save_check(history, metric_name, tolerance_count=5, reset_count=1):
     if 'best_index' not in history:
         history['best_index'] = 0
     if metric_name.endswith('loss'):
-        if history[metric_name][-1] < history[metric_name][history['best_index']]:
+        if history[metric_name][-1] <= history[metric_name][history['best_index']]:
             save_flag = True
             history['best_index'] = len(history[metric_name]) - 1
     else:
-        if history[metric_name][-1] > history[metric_name][history['best_index']]:
+        if history[metric_name][-1] >= history[metric_name][history['best_index']]:
             save_flag = True
             history['best_index'] = len(history[metric_name]) - 1
 

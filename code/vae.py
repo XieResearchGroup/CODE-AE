@@ -3,7 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 from base_ae import BaseAE
 from types_ import *
-
+from typing import List
 
 class VAE(BaseAE):
 
