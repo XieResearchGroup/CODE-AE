@@ -82,13 +82,13 @@ class DSNAE(BaseAE):
 
     def p_encode(self, input: Tensor) -> Tensor:
         latent_code = self.private_encoder(input)
-        # return latent_code
-        return F.normalize(latent_code, p=2, dim=1)
+        return latent_code
+        #return F.normalize(latent_code, p=2, dim=1)
 
     def s_encode(self, input: Tensor) -> Tensor:
         latent_code = self.shared_encoder(input)
-        # return latent_code
-        return F.normalize(latent_code, p=2, dim=1)
+        return latent_code
+        #return F.normalize(latent_code, p=2, dim=1)
 
     def encode(self, input: Tensor) -> Tensor:
         p_latent_code = self.p_encode(input)
