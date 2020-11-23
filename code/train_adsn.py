@@ -178,7 +178,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
 
 
     #start critic pre-training
-    for epoch in range(kwargs['pretrain_num_epochs']):
+    for epoch in range(50):
         if epoch % 10 == 0:
             print(f'confounder critic pre-training epoch {epoch}')
         for step, t_batch in enumerate(s_train_dataloader):
@@ -194,7 +194,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          clip=0.05)
 
     #start GAN training
-    for epoch in range(kwargs['pretrain_num_epochs']):
+    for epoch in range(kwargs['train_num_epochs']):
         if epoch % 50 == 0:
             print(f'confounder wgan training epoch {epoch}')
         for step, s_batch in enumerate(s_train_dataloader):

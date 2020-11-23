@@ -8,7 +8,7 @@ import random
 from collections import defaultdict
 
 scoring = {
-    'auc': 'roc_auc',
+    'auroc': 'roc_auc',
     'acc': make_scorer(accuracy_score),
     'f1': make_scorer(f1_score),
     'aps': make_scorer(average_precision_score, needs_proba=True)
@@ -24,7 +24,7 @@ def classify_with_rf(train_features, y_train, cv_split_rf):
         rf_tuning_parameters = [{'n_estimators': [10, 50, 200, 500, 1000], 'max_depth': [10, 50, 100, 200, 500]}]
         # rf_tuning_parameters = [{'n_estimators': [5], 'max_depth': [10]}]
         rf = GridSearchCV(RandomForestClassifier(), rf_tuning_parameters, n_jobs=-1, cv=cv_split_rf,
-                          verbose=2, scoring=scoring, refit='auc')
+                          verbose=2, scoring=scoring, refit='auroc')
         rf.fit(train_features, y_train)  # , groups=train_groups
         # logger.debug("Trained Random Forest successfully")
         return rf
@@ -44,7 +44,7 @@ def classify_with_enet(train_features, y_train, cv_split_enet):
         base_enet = SGDClassifier(loss='log', penalty='elasticnet', random_state=2020)
         enet_param_grid = dict(alpha=alphas, l1_ratio=l1_ratios)
         enet = GridSearchCV(estimator=base_enet, param_grid=enet_param_grid, n_jobs=-1, cv=cv_split_enet, verbose=2,
-                            scoring=scoring, refit='auc')
+                            scoring=scoring, refit='auroc')
         enet.fit(train_features, y_train)
         # logger.debug("Trained Elastic net classification model successfully")
         return enet
@@ -52,8 +52,8 @@ def classify_with_enet(train_features, y_train, cv_split_enet):
         raise e
 
 
-def n_time_cv(train_data, n=10, metric_name='auc', model_fn=classify_with_rf, test_data=None, random_state=2020):
-    metric_list = ['auc', 'acc', 'aps', 'f1']
+def n_time_cv(train_data, n=10, metric_name='auroc', model_fn=classify_with_rf, test_data=None, random_state=2020):
+    metric_list = ['auroc', 'acc', 'aps', 'f1']
     random.seed(random_state)
     seeds = random.sample(range(100000), k=n)
     train_history = defaultdict(list)
@@ -71,7 +71,7 @@ def n_time_cv(train_data, n=10, metric_name='auc', model_fn=classify_with_rf, te
             pred_scores = trained_model.predict_proba(test_data[0])[:, 1]
             # print(preds)
             # print(pred_scores)
-            test_history['auc'].append(roc_auc_score(y_true=test_data[1], y_score=pred_scores))
+            test_history['auroc'].append(roc_auc_score(y_true=test_data[1], y_score=pred_scores))
             test_history['acc'].append(accuracy_score(y_true=test_data[1], y_pred=preds))
             test_history['aps'].append(average_precision_score(y_true=test_data[1], y_score=pred_scores))
             test_history['f1'].append(f1_score(y_true=test_data[1], y_pred=preds))
