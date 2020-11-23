@@ -46,7 +46,7 @@ def classification_train_step(classifier, s_batch, t_batch, loss_fn, device, opt
     batch_size = s_x.shape[0]
 
     outputs = torch.cat((classifier(s_x), classifier(t_x)), dim=0)
-    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0)
+    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0).to(device)
     loss = loss_fn(outputs, truths)
 
     optimizer.zero_grad()
@@ -78,7 +78,7 @@ def customized_ae_train_step(classifier, ae, s_batch, t_batch, loss_fn, alpha, d
     batch_size = s_x.shape[0]
 
     outputs = torch.cat((classifier(s_x), classifier(t_x)), dim=0)
-    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0)
+    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0).to(device)
     adv_loss = loss_fn(outputs, truths)
 
     s_loss_dict = ae.loss_function(*ae(s_x))

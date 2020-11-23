@@ -28,10 +28,10 @@ def generate_encoded_features(encoder, dataloader):
     :return:
     """
     encoder.eval()
-    raw_feature_tensor = dataloader.dataset.tensors[0]
-    label_tensor = dataloader.dataset.tensors[1]
+    raw_feature_tensor = dataloader.dataset.tensors[0].cpu()
+    label_tensor = dataloader.dataset.tensors[1].cpu()
 
-    encoded_feature_tensor = encoder(raw_feature_tensor)
+    encoded_feature_tensor = encoder.cpu()(raw_feature_tensor)
     return encoded_feature_tensor, label_tensor
 
 
