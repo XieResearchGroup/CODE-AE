@@ -93,29 +93,29 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
 
     shared_encoder = MLP(input_dim=kwargs['input_dim'],
                          output_dim=kwargs['latent_dim'],
-                         hidden_dims=kwargs['encoder_hidden_dims'])
+                         hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
 
     shared_decoder = MLP(input_dim=2 * kwargs['latent_dim'],
                          output_dim=kwargs['input_dim'],
-                         hidden_dims=kwargs['encoder_hidden_dims'][::-1])
+                         hidden_dims=kwargs['encoder_hidden_dims'][::-1]).to(kwargs['device'])
 
     s_dsnae = DSNAE(shared_encoder=shared_encoder,
                     decoder=shared_decoder,
                     alpha=kwargs['alpha'],
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
-                    hidden_dims=kwargs['encoder_hidden_dims'])
+                    hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
 
     t_dsnae = DSNAE(shared_encoder=shared_encoder,
                     decoder=shared_decoder,
                     alpha=kwargs['alpha'],
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
-                    hidden_dims=kwargs['encoder_hidden_dims'])
+                    hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
 
     confounding_classifier = MLP(input_dim=kwargs['latent_dim'] * 2,
                                  output_dim=1,
-                                 hidden_dims=kwargs['classifier_hidden_dims'])
+                                 hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
 
     ae_params = [t_dsnae.private_encoder.parameters(),
                  s_dsnae.private_encoder.parameters(),

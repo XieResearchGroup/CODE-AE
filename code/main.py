@@ -13,6 +13,9 @@ import train_dsn
 import train_adae
 import train_adsn
 import train_coral
+import train_dae
+import train_vae
+import train_ae
 import fine_tuning
 import ml_baseline
 
@@ -53,7 +56,8 @@ def wrap_training_params(training_params, type='unlabeled'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
-    parser.add_argument('--method', dest='method', nargs='?', default='adsn', choices=['adsn', 'dsn', 'adae', 'coral'])
+    parser.add_argument('--method', dest='method', nargs='?', default='adsn',
+                        choices=['adsn', 'dsn', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
     parser.add_argument('--n', dest='n', nargs='?', default=1)
@@ -66,6 +70,12 @@ if __name__ == '__main__':
         train_fn = train_adae.train_adae
     elif args.method == 'coral':
         train_fn = train_coral.train_coral
+    elif args.method == 'dae':
+        train_fn = train_dae.train_dae
+    elif args.method == 'vae':
+        train_fn = train_vae.train_vae
+    elif args.method == 'ae':
+        train_fn = train_ae.train_ae
     else:
         train_fn = train_adsn.train_adsn
 
@@ -102,12 +112,13 @@ if __name__ == '__main__':
             drug=args.drug,
             auc_threshold=args.auc_thres
         )
-        #start unlabeled training
+        # start unlabeled training
         encoder, historys = train_fn(s_dataloaders=s_dataloaders,
                                      t_dataloaders=t_dataloaders,
                                      **wrap_training_params(training_params, type='unlabeled'))
 
-        with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history_{seed}.pickle'), 'wb') as f:
+        with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history_{seed}.pickle'),
+                  'wb') as f:
             for history in historys:
                 pickle.dump(dict(history), f)
 
@@ -154,12 +165,10 @@ if __name__ == '__main__':
             **wrap_training_params(training_params, type='labeled')
         )
 
-        with open(os.path.join(training_params['model_save_folder'], f'{args.drug}_ft_train_history_{seed}.pickle'), 'wb') as f:
+        with open(os.path.join(training_params['model_save_folder'], f'{args.drug}_ft_train_history_{seed}.pickle'),
+                  'wb') as f:
             for history in ft_historys:
                 pickle.dump(dict(history), f)
 
     with open(os.path.join(training_params['model_save_folder'], f'{args.drug}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
-
-
-

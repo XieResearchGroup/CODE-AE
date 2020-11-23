@@ -116,15 +116,12 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
 
     autoencoder = AE(input_dim=kwargs['input_dim'],
                      latent_dim=kwargs['latent_dim'],
-                     hidden_dims=kwargs['encoder_hidden_dims'])
+                     hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
     classifier = MLP(input_dim=kwargs['latent_dim'],
                      output_dim=1,
                      hidden_dims=kwargs['classifier_hidden_dims'])
-    confounder_classifier = EncoderDecoder(encoder=autoencoder.encoder, decoder=classifier)
-    autoencoder = autoencoder.to(kwargs['device'])
+    confounder_classifier = EncoderDecoder(encoder=autoencoder.encoder, decoder=classifier).to(kwargs['device'])
 
-    autoencoder = autoencoder.to(kwargs['device'])
-    confounder_classifier = confounder_classifier.to(kwargs['device'])
 
     ae_eval_train_history = defaultdict(list)
     ae_eval_val_history = defaultdict(list)
