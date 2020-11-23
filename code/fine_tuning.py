@@ -36,8 +36,8 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
 def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader=None, **kwargs):
     target_decoder = MLP(input_dim=kwargs['latent_dim'],
                          output_dim=1,
-                         hidden_dims=kwargs['classifier_hidden_dims'])
-    target_classifier = EncoderDecoder(encoder=encoder, decoder=target_decoder)
+                         hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
+    target_classifier = EncoderDecoder(encoder=encoder, decoder=target_decoder).to(kwargs['device'])
     classification_loss = nn.BCEWithLogitsLoss()
 
     target_classification_train_history = defaultdict(list)
