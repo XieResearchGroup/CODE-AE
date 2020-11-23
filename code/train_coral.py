@@ -97,7 +97,7 @@ def train_coral(s_dataloaders, t_dataloaders, **kwargs):
 
     autoencoder = AE(input_dim=kwargs['input_dim'],
                      latent_dim=kwargs['latent_dim'],
-                     hidden_dims=kwargs['encoder_hidden_dims'])
+                     hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
 
     ae_optimizer = torch.optim.AdamW(autoencoder.parameters(), lr=1e-4)
 

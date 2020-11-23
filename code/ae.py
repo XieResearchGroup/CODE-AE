@@ -8,9 +8,10 @@ from typing import List
 
 class AE(BaseAE):
 
-    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, **kwargs) -> None:
+    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, noise_flag: bool = False, **kwargs) -> None:
         super(AE, self).__init__()
         self.latent_dim = latent_dim
+        self.noise_flag = noise_flag
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -75,7 +76,11 @@ class AE(BaseAE):
         )
 
     def encode(self, input: Tensor) -> Tensor:
-        latent_code = self.encoder(input)
+        if self.noise_flag and self.training:
+            latent_code = self.encoder(input+torch.randn_like(input) * 0.1)
+        else:
+            latent_code = self.encoder(input)
+
         return latent_code
 
     def decode(self, z: Tensor) -> Tensor:
