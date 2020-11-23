@@ -3,7 +3,6 @@ code/*.ipynb
 code/.idea/*
 code/.ipynb_checkpoints/*
 code/__pycache__/*
-code/model_save/*
 code/results/*
 *.ipynb
 *.xlsx
