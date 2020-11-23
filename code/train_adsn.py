@@ -178,7 +178,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
 
 
     #start critic pre-training
-    for epoch in range(50):
+    for epoch in range(100):
         if epoch % 10 == 0:
             print(f'confounder critic pre-training epoch {epoch}')
         for step, t_batch in enumerate(s_train_dataloader):

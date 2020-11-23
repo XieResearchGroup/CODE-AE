@@ -9,7 +9,7 @@ from typing import List
 class DSNAE(BaseAE):
 
     def __init__(self, shared_encoder, decoder, input_dim: int, latent_dim: int, alpha: float = 1.0,
-                 hidden_dims: List = None, noise_flag: bool = True, **kwargs) -> None:
+                 hidden_dims: List = None, noise_flag: bool = False, **kwargs) -> None:
         super(DSNAE, self).__init__()
         self.latent_dim = latent_dim
         self.alpha = alpha
@@ -87,16 +87,16 @@ class DSNAE(BaseAE):
         else:
             latent_code = self.private_encoder(input)
 
-        #return latent_code
-        return F.normalize(latent_code, p=2, dim=1)
+        return latent_code
+        #return F.normalize(latent_code, p=2, dim=1)
 
     def s_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
             latent_code = self.shared_encoder(input+torch.randn_like(input) * 0.1)
         else:
             latent_code = self.shared_encoder(input)
-        #return latent_code
-        return F.normalize(latent_code, p=2, dim=1)
+        return latent_code
+        #return F.normalize(latent_code, p=2, dim=1)
 
     def encode(self, input: Tensor) -> Tensor:
         p_latent_code = self.p_encode(input)
