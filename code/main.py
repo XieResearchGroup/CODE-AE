@@ -154,11 +154,11 @@ if __name__ == '__main__':
             **wrap_training_params(training_params, type='labeled')
         )
 
-        with open(os.path.join(training_params['model_save_folder'], f'ft_train_history_{seed}.pickle'), 'wb') as f:
+        with open(os.path.join(training_params['model_save_folder'], f'{args.drug}_ft_train_history_{seed}.pickle'), 'wb') as f:
             for history in ft_historys:
                 pickle.dump(dict(history), f)
 
-    with open(os.path.join(training_params['model_save_folder'], 'ml_baseline_results.json'), 'w') as f:
+    with open(os.path.join(training_params['model_save_folder'], f'{args.drug}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
 
 
