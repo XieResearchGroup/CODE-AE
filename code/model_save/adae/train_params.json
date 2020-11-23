@@ -3,15 +3,15 @@
     "batch_size":64,
     "lr":0.0001,
     "pretrain_num_epochs":500,
-    "train_num_epochs":1000,
+    "train_num_epochs":2000,
     "alpha":1.0,
-    "classifier_hidden_dims":[64,32,16]
+    "classifier_hidden_dims":[64,32]
   },
   "labeled":{
     "classifier_hidden_dims":[64,32,16],
     "batch_size":64,
     "lr":5e-05,
-    "train_num_epochs":500,
+    "train_num_epochs":1000,
     "decay_coefficient":0.1
   },
   "encoder_hidden_dims":[512,256],
