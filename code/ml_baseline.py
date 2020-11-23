@@ -8,7 +8,7 @@ import random
 from collections import defaultdict
 
 scoring = {
-    'auc': 'roc_auc',
+    'auroc': 'roc_auc',
     'acc': make_scorer(accuracy_score),
     'f1': make_scorer(f1_score),
     'aps': make_scorer(average_precision_score, needs_proba=True)
@@ -53,7 +53,7 @@ def classify_with_enet(train_features, y_train, cv_split_enet):
 
 
 def n_time_cv(train_data, n=10, metric_name='auc', model_fn=classify_with_rf, test_data=None, random_state=2020):
-    metric_list = ['auc', 'acc', 'aps', 'f1']
+    metric_list = ['auroc', 'acc', 'aps', 'f1']
     random.seed(random_state)
     seeds = random.sample(range(100000), k=n)
     train_history = defaultdict(list)
@@ -71,7 +71,7 @@ def n_time_cv(train_data, n=10, metric_name='auc', model_fn=classify_with_rf, te
             pred_scores = trained_model.predict_proba(test_data[0])[:, 1]
             # print(preds)
             # print(pred_scores)
-            test_history['auc'].append(roc_auc_score(y_true=test_data[1], y_score=pred_scores))
+            test_history['auroc'].append(roc_auc_score(y_true=test_data[1], y_score=pred_scores))
             test_history['acc'].append(accuracy_score(y_true=test_data[1], y_pred=preds))
             test_history['aps'].append(average_precision_score(y_true=test_data[1], y_score=pred_scores))
             test_history['f1'].append(f1_score(y_true=test_data[1], y_pred=preds))
