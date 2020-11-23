@@ -6,4 +6,3 @@ code/__pycache__/*
 code/results/*
 *.ipynb
 *.xlsx
-code/model_save/*
