@@ -55,6 +55,11 @@ def wrap_training_params(training_params, type='unlabeled'):
 
     return aux_dict
 
+def safe_make_dir(new_folder_name):
+    if not os.path.exists(new_folder_name):
+        os.makedirs(new_folder_name)
+    else:
+        print(new_folder_name, 'exists!')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
@@ -93,8 +98,9 @@ if __name__ == '__main__':
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method)
+            'model_save_folder': os.path.join('model_save', args.method, args.drug)
         })
+    safe_make_dir(training_params['model_save_folder'])
 
     ml_baseline_history = defaultdict(list)
     model_evaluation_history = defaultdict(list)
