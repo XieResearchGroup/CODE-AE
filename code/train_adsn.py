@@ -191,7 +191,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          device=kwargs['device'],
                                                          optimizer=classifier_optimizer,
                                                          history=critic_train_history,
-                                                         clip=0.05)
+                                                         clip=0.1)
 
     #start GAN training
     for epoch in range(kwargs['train_num_epochs']):
@@ -207,7 +207,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          device=kwargs['device'],
                                                          optimizer=classifier_optimizer,
                                                          history=critic_train_history,
-                                                         clip=0.05)
+                                                         clip=0.1)
             if (step + 1) % 5 == 0:
                 gen_train_history = gan_dsn_gen_train_step(critic=confounding_classifier,
                                                            s_dsnae=s_dsnae,
