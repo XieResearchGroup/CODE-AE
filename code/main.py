@@ -20,7 +20,7 @@ import fine_tuning
 import ml_baseline
 
 
-def generate_encoded_features(encoder, dataloader):
+def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
 
     :param encoder:
@@ -32,6 +32,8 @@ def generate_encoded_features(encoder, dataloader):
     label_tensor = dataloader.dataset.tensors[1].cpu()
 
     encoded_feature_tensor = encoder.cpu()(raw_feature_tensor)
+    if normalize_flag:
+        encoded_feature_tensor = torch.nn.functional.normalize(encoded_feature_tensor, p=2, dim=1)
     return encoded_feature_tensor, label_tensor
 
 
@@ -79,6 +81,8 @@ if __name__ == '__main__':
     else:
         train_fn = train_adsn.train_adsn
 
+    normalize_flag = 'dsn' in args.method
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
 
@@ -123,8 +127,8 @@ if __name__ == '__main__':
                 pickle.dump(dict(history), f)
 
         # generate encoded features
-        ccle_encoded_feature_tensor, ccle_label_tensor = generate_encoded_features(encoder, labeled_ccle_dataloader)
-        tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader)
+        ccle_encoded_feature_tensor, ccle_label_tensor = generate_encoded_features(encoder, labeled_ccle_dataloader, normalize_flag=normalize_flag)
+        tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader, normalize_flag=normalize_flag)
         # build baseline ml models for encoded features
         ml_baseline_history['rf'].append(
             ml_baseline.n_time_cv(
@@ -162,6 +166,7 @@ if __name__ == '__main__':
             train_dataloader=labeled_ccle_dataloader,
             val_dataloader=labeled_tcga_dataloader,
             test_dataloader=labeled_tcga_dataloader,
+            normalize_flag=normalize_flag,
             **wrap_training_params(training_params, type='labeled')
         )
 
