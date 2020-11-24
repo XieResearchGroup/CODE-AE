@@ -178,7 +178,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
 
 
     #start critic pre-training
-    for epoch in range(50):
+    for epoch in range(100):
         if epoch % 10 == 0:
             print(f'confounder critic pre-training epoch {epoch}')
         for step, t_batch in enumerate(s_train_dataloader):
@@ -191,7 +191,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          device=kwargs['device'],
                                                          optimizer=classifier_optimizer,
                                                          history=critic_train_history,
-                                                         clip=0.05)
+                                                         clip=0.1)
 
     #start GAN training
     for epoch in range(kwargs['train_num_epochs']):
@@ -207,7 +207,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          device=kwargs['device'],
                                                          optimizer=classifier_optimizer,
                                                          history=critic_train_history,
-                                                         clip=0.05)
+                                                         clip=0.1)
             if (step + 1) % 5 == 0:
                 gen_train_history = gan_dsn_gen_train_step(critic=confounding_classifier,
                                                            s_dsnae=s_dsnae,
