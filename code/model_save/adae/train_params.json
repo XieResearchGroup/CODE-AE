@@ -8,9 +8,9 @@
     "classifier_hidden_dims":[64,32]
   },
   "labeled":{
-    "classifier_hidden_dims":[64,32,16],
+    "classifier_hidden_dims":[64,32],
     "batch_size":64,
-    "lr":5e-05,
+    "lr":1e-04,
     "train_num_epochs":1000,
     "decay_coefficient":0.1
   },
