@@ -93,7 +93,7 @@ if __name__ == '__main__':
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method, 'fu')
+            'model_save_folder': os.path.join('model_save', args.method)
         })
 
     ml_baseline_history = defaultdict(list)
