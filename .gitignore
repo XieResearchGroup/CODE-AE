@@ -7,3 +7,4 @@ code/results/*
 *.ipynb
 *.xlsx
 paper/*
+code/model_save/*
