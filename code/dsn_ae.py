@@ -87,8 +87,8 @@ class DSNAE(BaseAE):
         else:
             latent_code = self.private_encoder(input)
 
-        return latent_code
-        #return F.normalize(latent_code, p=2, dim=1)
+        #return latent_code
+        return F.normalize(latent_code, p=2, dim=1)
 
     def s_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
