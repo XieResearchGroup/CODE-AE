@@ -6,3 +6,4 @@ code/__pycache__/*
 code/results/*
 *.ipynb
 *.xlsx
+paper/*
