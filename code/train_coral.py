@@ -108,8 +108,8 @@ def train_coral(s_dataloaders, t_dataloaders, **kwargs):
     for epoch in range(kwargs['train_num_epochs']):
         if epoch % 50 == 0:
             print(f'AE training epoch {epoch}')
-        for step, s_batch in enumerate(s_train_dataloader):
-            t_batch = next(iter(t_train_dataloader))
+        for step, t_batch in enumerate(t_train_dataloader):
+            s_batch = next(iter(s_train_dataloader))
             ae_train_history = coral_ae_train_step(ae=autoencoder,
                                                    s_batch=s_batch,
                                                    t_batch=t_batch,
