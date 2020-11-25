@@ -131,7 +131,7 @@ def train_dsn(s_dataloaders, t_dataloaders, **kwargs):
                 dsnae_val_history[k][-2] += dsnae_val_history[k][-1]
                 dsnae_val_history[k].pop()
 
-        save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
+        save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=50)
         if save_flag:
             torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 's_dsnae.pt'))
             torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 't_dsnae.pt'))
