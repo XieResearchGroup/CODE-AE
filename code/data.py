@@ -48,7 +48,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
         ccle_sample_info_df[ccle_sample_info_df.primary_disease.isin(excluded_ccle_diseases)].index)
 
     to_split_ccle_df = ccle_df[~ccle_df.index.isin(excluded_ccle_samples)]
-    train_ccle_df, test_ccle_df = train_test_split(to_split_ccle_df, test_size=0.2,
+    train_ccle_df, test_ccle_df = train_test_split(to_split_ccle_df, test_size=0.1,
                                                    stratify=ccle_sample_info_df.loc[
                                                        to_split_ccle_df.index].primary_disease)
     test_ccle_df = test_ccle_df.append(ccle_df.loc[excluded_ccle_samples])
