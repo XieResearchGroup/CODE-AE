@@ -55,6 +55,10 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     train_xena_df, test_xena_df = train_test_split(xena_df, test_size=len(test_ccle_df) / len(xena_df),
                                                    stratify=xena_sample_info_df['_primary_disease'])
 
+    xena_dataset = TensorDataset(
+        torch.from_numpy(xena_df.values.astype('float32'))
+    )
+
     train_xena_dateset = TensorDataset(
         torch.from_numpy(train_xena_df.values.astype('float32')))
     test_xena_dateset = TensorDataset(
@@ -64,6 +68,9 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     test_ccle_dateset = TensorDataset(
         torch.from_numpy(test_ccle_df.values.astype('float32')))
 
+    xena_dataloader = DataLoader(xena_dataset,
+                                 batch_size=batch_size,
+                                 shuffle=True)
     train_xena_dataloader = DataLoader(train_xena_dateset,
                                        batch_size=batch_size,
                                        shuffle=True)
@@ -77,8 +84,8 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     test_ccle_dataloader = DataLoader(test_ccle_dateset,
                                       batch_size=batch_size,
                                       shuffle=True)
-
-    return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
+    return (train_ccle_dataloader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
+    #return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
 
 def get_labeled_dataloaders(gex_features_df, seed, batch_size, drug='gem', auc_threshold=0.80):

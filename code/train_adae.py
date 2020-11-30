@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.autograd import Variable
 import os
 from evaluation_utils import eval_ae_epoch, evaluate_adv_classification_epoch, model_save_check
 from collections import defaultdict
@@ -42,12 +43,16 @@ def classification_train_step(classifier, s_batch, t_batch, loss_fn, device, opt
 
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
-
-    batch_size = s_x.shape[0]
-
     outputs = torch.cat((classifier(s_x), classifier(t_x)), dim=0)
-    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0).to(device)
+    truths = torch.cat((torch.zeros(s_x.shape[0], 1), torch.ones(t_x.shape[0], 1)), dim=0).to(device)
     loss = loss_fn(outputs, truths)
+
+    # valid = torch.ones((s_x.shape[0], 1)).to(device)
+    # fake = torch.zeros((t_x.shape[0], 1)).to(device)
+    #
+    # real_loss = loss_fn((classifier(s_x)), valid)
+    # fake_loss = loss_fn(classifier(t_x), fake)
+    # loss = 0.5 * (real_loss + fake_loss)
 
     optimizer.zero_grad()
     loss.backward()
@@ -66,7 +71,7 @@ def classification_train_step(classifier, s_batch, t_batch, loss_fn, device, opt
 
 
 def customized_ae_train_step(classifier, ae, s_batch, t_batch, loss_fn, alpha, device, optimizer, history,
-                             scheduler=None, clip=None):
+                             scheduler=None):
     classifier.zero_grad()
     ae.zero_grad()
     classifier.eval()
@@ -75,11 +80,16 @@ def customized_ae_train_step(classifier, ae, s_batch, t_batch, loss_fn, alpha, d
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    batch_size = s_x.shape[0]
-
     outputs = torch.cat((classifier(s_x), classifier(t_x)), dim=0)
-    truths = torch.cat((torch.zeros(batch_size, 1), torch.ones(batch_size, 1)), dim=0).to(device)
+    truths = torch.cat((torch.zeros(s_x.shape[0], 1), torch.ones(t_x.shape[0], 1)), dim=0).to(device)
     adv_loss = loss_fn(outputs, truths)
+
+    # valid = torch.ones((s_x.shape[0], 1)).to(device)
+    # fake = torch.zeros((t_x.shape[0], 1)).to(device)
+    #
+    # real_loss = loss_fn((classifier(s_x)), valid)
+    # fake_loss = loss_fn(classifier(t_x), fake)
+    # adv_loss = 0.5 * (real_loss + fake_loss)
 
     s_loss_dict = ae.loss_function(*ae(s_x))
     t_loss_dict = ae.loss_function(*ae(t_x))
@@ -95,7 +105,7 @@ def customized_ae_train_step(classifier, ae, s_batch, t_batch, loss_fn, alpha, d
     loss_dict = {k: v.cpu().detach().item() + t_loss_dict[k].cpu().detach().item() for k, v in s_loss_dict.items()}
     for k, v in loss_dict.items():
         history[k].append(v)
-    #history['bce'].append(adv_loss.cpu().detach().item())
+    # history['bce'].append(adv_loss.cpu().detach().item())
 
     return history
 
@@ -121,7 +131,6 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
                      output_dim=1,
                      hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
     confounder_classifier = EncoderDecoder(encoder=autoencoder.encoder, decoder=classifier).to(kwargs['device'])
-
 
     ae_eval_train_history = defaultdict(list)
     ae_eval_val_history = defaultdict(list)
@@ -164,9 +173,9 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
         save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=10)
         if save_flag:
             torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
-        if stop_flag:
-            break
-    autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+    #     if stop_flag:
+    #         break
+    # autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
     # start adversarial classifier pre-training
     for epoch in range(kwargs['pretrain_num_epochs']):
@@ -198,11 +207,11 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
         if save_flag:
             torch.save(confounder_classifier.state_dict(),
                        os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
-        if stop_flag:
-            break
-
-    confounder_classifier.load_state_dict(
-        torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
+    #     if stop_flag:
+    #         break
+    #
+    # confounder_classifier.load_state_dict(
+    #     torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
 
     # start alternative training
     for epoch in range(kwargs['train_num_epochs']):
@@ -220,8 +229,7 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
                                                              device=kwargs['device'],
                                                              optimizer=ae_optimizer,
                                                              history=ae_eval_train_history,
-                                                             scheduler=None,
-                                                             clip=None)
+                                                             scheduler=None)
 
         ae_eval_val_history = eval_ae_epoch(model=autoencoder,
                                             data_loader=s_test_dataloader,
