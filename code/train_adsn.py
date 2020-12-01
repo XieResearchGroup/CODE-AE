@@ -1,14 +1,35 @@
 import os
+import torch.autograd as autograd
 from itertools import chain
-
 from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
 from train_dsn import eval_dsnae_epoch, dsn_ae_train_step
 
+def compute_gradient_penalty(critic, real_samples, fake_samples, device):
+    """Calculates the gradient penalty loss for WGAN GP"""
+    # Random weight term for interpolation between real and fake samples
+    alpha = torch.rand((real_samples.shape[0], 1)).to(device)
+    # Get random interpolation between real and fake samples
+    interpolates = (alpha * real_samples + ((1 - alpha) * fake_samples)).requires_grad_(True)
+    critic_interpolates = critic(interpolates)
+    fakes = torch.ones((real_samples.shape[0], 1)).to(device)
+    # Get gradient w.r.t. interpolates
+    gradients = autograd.grad(
+        outputs=critic_interpolates,
+        inputs=interpolates,
+        grad_outputs=fakes,
+        create_graph=True,
+        retain_graph=True,
+        only_inputs=True,
+    )[0]
+    gradients = gradients.view(gradients.size(0), -1)
+    gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
+    return gradient_penalty
+
 
 def critic_dsn_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, history, scheduler=None,
-                          clip=None):
+                          clip=None, gp=None):
     critic.zero_grad()
     s_dsnae.zero_grad()
     t_dsnae.zero_grad()
@@ -23,12 +44,16 @@ def critic_dsn_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, op
     t_code = t_dsnae.encode(t_x)
 
     loss = torch.mean(critic(t_code)) - torch.mean(critic(s_code))
+    if gp is not None:
+        gradient_penalty = compute_gradient_penalty(critic, s_code, t_code)
+        loss = loss + gp * gradient_penalty
 
     optimizer.zero_grad()
     loss.backward()
     #     if clip is not None:
     #         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
+
     if clip is not None:
         for p in critic.parameters():
             p.data.clamp_(-clip, clip)
@@ -178,21 +203,21 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
 
 
     #start critic pre-training
-    for epoch in range(100):
-        if epoch % 10 == 0:
-            print(f'confounder critic pre-training epoch {epoch}')
-        for step, t_batch in enumerate(s_train_dataloader):
-            s_batch = next(iter(t_train_dataloader))
-            critic_train_history = critic_dsn_train_step(critic=confounding_classifier,
-                                                         s_dsnae=s_dsnae,
-                                                         t_dsnae=t_dsnae,
-                                                         s_batch=s_batch,
-                                                         t_batch=t_batch,
-                                                         device=kwargs['device'],
-                                                         optimizer=classifier_optimizer,
-                                                         history=critic_train_history,
-                                                         clip=0.1)
-
+    # for epoch in range(100):
+    #     if epoch % 10 == 0:
+    #         print(f'confounder critic pre-training epoch {epoch}')
+    #     for step, t_batch in enumerate(s_train_dataloader):
+    #         s_batch = next(iter(t_train_dataloader))
+    #         critic_train_history = critic_dsn_train_step(critic=confounding_classifier,
+    #                                                      s_dsnae=s_dsnae,
+    #                                                      t_dsnae=t_dsnae,
+    #                                                      s_batch=s_batch,
+    #                                                      t_batch=t_batch,
+    #                                                      device=kwargs['device'],
+    #                                                      optimizer=classifier_optimizer,
+    #                                                      history=critic_train_history,
+    #                                                      clip=None,
+    #                                                      gp=None)
     #start GAN training
     for epoch in range(kwargs['train_num_epochs']):
         if epoch % 50 == 0:
@@ -207,7 +232,8 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                          device=kwargs['device'],
                                                          optimizer=classifier_optimizer,
                                                          history=critic_train_history,
-                                                         clip=0.1)
+                                                         #clip=0.1,
+                                                         gp=10.0)
             if (step + 1) % 5 == 0:
                 gen_train_history = gan_dsn_gen_train_step(critic=confounding_classifier,
                                                            s_dsnae=s_dsnae,
