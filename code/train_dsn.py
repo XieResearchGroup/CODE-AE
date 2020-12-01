@@ -135,10 +135,10 @@ def train_dsn(s_dataloaders, t_dataloaders, **kwargs):
         if save_flag:
             torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 's_dsnae.pt'))
             torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 't_dsnae.pt'))
-    #     if stop_flag:
-    #         break
-    #
-    # s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
-    # t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
+        if kwargs['es_flag'] and stop_flag:
+            break
+    if kwargs['es_flag']:
+        s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
+        t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history)

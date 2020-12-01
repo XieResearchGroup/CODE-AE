@@ -163,8 +163,8 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
     dsnae_val_history = defaultdict(list)
     critic_train_history = defaultdict(list)
     gen_train_history = defaultdict(list)
-    classification_eval_test_history = defaultdict(list)
-    classification_eval_train_history = defaultdict(list)
+    # classification_eval_test_history = defaultdict(list)
+    # classification_eval_train_history = defaultdict(list)
 
     # start dsnae pre-training
     for epoch in range(kwargs['pretrain_num_epochs']):
@@ -198,11 +198,11 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
         if save_flag:
             torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 's_dsnae.pt'))
             torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 't_dsnae.pt'))
-        if stop_flag:
+        if kwargs['es_flag'] and stop_flag:
             break
-
-    s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
-    t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
+    if kwargs['es_flag']:
+        s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
+        t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
 
     # start critic pre-training
     # for epoch in range(100):

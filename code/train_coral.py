@@ -125,9 +125,9 @@ def train_coral(s_dataloaders, t_dataloaders, **kwargs):
         save_flag, stop_flag = model_save_check(ae_eval_val_history, metric_name='loss', tolerance_count=50)
         if save_flag:
             torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'coral_ae.pt'))
-        if stop_flag:
+        if kwargs['es_flag'] and stop_flag:
             break
-
-    autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'coral_ae.pt')))
+    if kwargs['es_flag']:
+        autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'coral_ae.pt')))
 
     return autoencoder.encoder, (ae_train_history, ae_eval_val_history)

@@ -173,9 +173,10 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
         save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=10)
         if save_flag:
             torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
-    #     if stop_flag:
-    #         break
-    # autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+        if kwargs['es_flag'] and stop_flag:
+            break
+    if kwargs['es_flag']:
+        autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
     # start adversarial classifier pre-training
     for epoch in range(kwargs['pretrain_num_epochs']):
@@ -207,11 +208,11 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
         if save_flag:
             torch.save(confounder_classifier.state_dict(),
                        os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
-    #     if stop_flag:
-    #         break
-    #
-    # confounder_classifier.load_state_dict(
-    #     torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
+        if kwargs['es_flag'] and stop_flag:
+            break
+    if kwargs['es_flag']:
+        confounder_classifier.load_state_dict(
+            torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
 
     # start alternative training
     for epoch in range(kwargs['train_num_epochs']):
