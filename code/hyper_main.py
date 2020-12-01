@@ -99,7 +99,7 @@ def main(args, update_params_dict):
             'es_flag': False
         })
 
-    training_params['unlabeled'].update(*update_params_dict)
+    training_params['unlabeled'].update(update_params_dict)
 
     param_str = dict_to_str(update_params_dict)
     safe_make_dir(training_params['model_save_folder'])
