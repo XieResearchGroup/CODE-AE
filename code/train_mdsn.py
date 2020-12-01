@@ -6,6 +6,7 @@ from evaluation_utils import *
 from mlp import MLP
 from loss_and_metrics import mmd_loss
 
+
 def eval_dsnae_epoch(model, data_loader, device, history):
     """
 
@@ -45,7 +46,8 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     t_loss_dict = t_dsnae.loss_function(*t_dsnae(t_x))
 
     optimizer.zero_grad()
-    loss = s_loss_dict['loss'] + t_loss_dict['loss'] + mmd_loss(source_features=s_code, target_features=t_code)
+    loss = s_loss_dict['loss'] + t_loss_dict['loss'] + mmd_loss(source_features=s_code, target_features=t_code,
+                                                                device=device)
     loss.backward()
 
     optimizer.step()
