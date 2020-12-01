@@ -10,13 +10,17 @@ import itertools
 
 import data
 import data_config
-import train_dsn
+import train_ndsn
 import train_adae
 import train_adsn
 import train_coral
 import train_dae
 import train_vae
 import train_ae
+import train_mdsn
+import train_dsnw
+import train_dsn
+
 import fine_tuning
 import ml_baseline
 
@@ -80,8 +84,15 @@ def main(args, update_params_dict):
         train_fn = train_vae.train_vae
     elif args.method == 'ae':
         train_fn = train_ae.train_ae
+    elif args.method == 'mdsn':
+        train_fn = train_mdsn.train_mdsn
+    elif args.method == 'ndsn':
+        train_fn = train_ndsn.train_ndsn
+    elif args.method == 'dsnw':
+        train_fn = train_dsnw.train_dsnw
     else:
         train_fn = train_adsn.train_adsn
+
 
     normalize_flag = 'dsn' in args.method
 
@@ -187,7 +198,7 @@ def main(args, update_params_dict):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
-                        choices=['adsn', 'dsn', 'adae', 'coral', 'dae', 'vae', 'ae'])
+                        choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
     parser.add_argument('--n', dest='n', nargs='?', default=1)
@@ -199,7 +210,7 @@ if __name__ == '__main__':
         "train_num_epochs": [100, 200, 300, 500, 1000, 1500, 2000]
     }
 
-    if args.method not in ['adsn', 'adae']:
+    if args.method not in ['adsn', 'adae', 'dsnw']:
         params_grid.pop('pretrain_num_epochs')
 
     keys, values = zip(*params_grid.items())

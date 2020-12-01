@@ -38,8 +38,8 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    s_code = s_dsnae.s_encode(s_x)
-    t_code = t_dsnae.s_encode(t_x)
+    s_code = s_dsnae.encode(s_x)
+    t_code = t_dsnae.encode(t_x)
 
     s_loss_dict = s_dsnae.loss_function(*s_dsnae(s_x))
     t_loss_dict = t_dsnae.loss_function(*t_dsnae(t_x))
@@ -59,7 +59,7 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     return history
 
 
-def train_dsn(s_dataloaders, t_dataloaders, **kwargs):
+def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
     """
 
     :param s_dataloaders:

@@ -41,11 +41,10 @@ def critic_dsn_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, op
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    s_code = s_dsnae.encode(s_x)
-    t_code = t_dsnae.encode(t_x)
+    s_code = s_dsnae.s_encode(s_x)
+    t_code = t_dsnae.s_encode(t_x)
 
     loss = torch.mean(critic(t_code)) - torch.mean(critic(s_code))
-
     if gp is not None:
         gradient_penalty = compute_gradient_penalty(critic,
                                                     real_samples=s_code,
@@ -82,7 +81,7 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    t_code = t_dsnae.encode(t_x)
+    t_code = t_dsnae.s_encode(t_x)
 
     optimizer.zero_grad()
     gen_loss = -torch.mean(critic(t_code))
@@ -106,7 +105,7 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     return history
 
 
-def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
+def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
     """
 
     :param s_dataloaders:
@@ -142,7 +141,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
 
-    confounding_classifier = MLP(input_dim=kwargs['latent_dim'] * 2,
+    confounding_classifier = MLP(input_dim=kwargs['latent_dim'],
                                  output_dim=1,
                                  hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
 
