@@ -24,6 +24,7 @@ import train_ndsn
 import fine_tuning
 import ml_baseline
 
+from copy import deepcopy
 
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
@@ -192,8 +193,10 @@ if __name__ == '__main__':
             auc_threshold=args.auc_thres
         )
         # start fine-tuning encoder
+        ft_encoder = deepcopy(encoder)
+
         target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-            encoder=encoder,
+            encoder=ft_encoder,
             train_dataloader=train_labeled_ccle_dataloader,
             val_dataloader=test_labeled_ccle_dataloader,
             test_dataloader=labeled_tcga_dataloader,
