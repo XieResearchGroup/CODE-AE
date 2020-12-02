@@ -190,7 +190,8 @@ if __name__ == '__main__':
             seed=seed,
             batch_size=training_params['labeled']['batch_size'],
             drug=args.drug,
-            auc_threshold=args.auc_thres
+            auc_threshold=args.auc_thres,
+            ft_flag=True
         )
         # start fine-tuning encoder
         ft_encoder = deepcopy(encoder)
