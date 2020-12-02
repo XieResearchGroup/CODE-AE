@@ -104,7 +104,7 @@ if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
 
-    with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
+    with open(os.path.join('model_save', args.method, f'train_params_{args.drug}.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params.update(
