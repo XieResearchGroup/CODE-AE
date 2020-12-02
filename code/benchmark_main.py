@@ -75,7 +75,7 @@ if __name__ == '__main__':
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
-    parser.add_argument('--n', dest='n', nargs='?', default=1)
+    parser.add_argument('--n', dest='n', nargs='?', default=10)
 
     args = parser.parse_args()
 
