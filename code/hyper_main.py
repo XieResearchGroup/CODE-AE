@@ -206,8 +206,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     params_grid = {
-        #"pretrain_num_epochs": [0, 10, 30, 50, 100, 150, 200, 250, 300],
-        "pretrain_num_epochs": [0],
+        "pretrain_num_epochs": [0, 10, 30, 50, 100, 150, 200, 250, 300],
         "train_num_epochs": [100, 200, 300, 500, 750, 1000, 1500, 2000]
     }
 
