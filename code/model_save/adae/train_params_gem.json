@@ -2,8 +2,8 @@
   "unlabeled":{
     "batch_size":64,
     "lr":0.0001,
-    "pretrain_num_epochs":500,
-    "train_num_epochs":500,
+    "pretrain_num_epochs":200,
+    "train_num_epochs":200,
     "alpha":1.0,
     "classifier_hidden_dims":[64,32]
   },
