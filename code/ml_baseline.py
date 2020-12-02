@@ -52,7 +52,7 @@ def classify_with_enet(train_features, y_train, cv_split_enet):
         raise e
 
 
-def n_time_cv(train_data, n=10, metric_name='auroc', model_fn=classify_with_rf, test_data=None, random_state=2020):
+def n_time_cv(train_data, n=10, model_fn=classify_with_rf, test_data=None, random_state=2020):
     metric_list = ['auroc', 'acc', 'aps', 'f1']
     random.seed(random_state)
     seeds = random.sample(range(100000), k=n)
