@@ -154,7 +154,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
     t_ae_params = [t_dsnae.private_encoder.parameters(),
                    shared_encoder.parameters()
                    ]
-    t_ae_params.append(shared_decoder.parameters())
+    #t_ae_params.append(shared_decoder.parameters())
 
     ae_optimizer = torch.optim.AdamW(chain(*ae_params), lr=kwargs['lr'])
     classifier_optimizer = torch.optim.RMSprop(confounding_classifier.parameters(), lr=kwargs['lr'])
