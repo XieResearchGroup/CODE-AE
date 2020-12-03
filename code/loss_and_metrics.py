@@ -4,7 +4,7 @@ from functools import partial
 
 
 def cov(m, rowvar=False):
-    '''Estimate a covariance matrix given data.
+    """Estimate a covariance matrix given data.
 
     Covariance indicates the level to which two variables vary together.
     If we examine N-dimensional samples, `X = [x_1, x_2, ... x_N]^T`,
@@ -22,7 +22,7 @@ def cov(m, rowvar=False):
 
     Returns:
         The covariance matrix of the variables.
-    '''
+    """
     if m.dim() > 2:
         raise ValueError('m has more than 2 dimensions')
     if m.dim() < 2:

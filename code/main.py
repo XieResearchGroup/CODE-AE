@@ -29,6 +29,7 @@ import ml_baseline
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
 
+    :param normalize_flag:
     :param encoder:
     :param dataloader:
     :return:

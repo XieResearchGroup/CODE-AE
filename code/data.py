@@ -24,6 +24,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     """
     CCLE as source domain, thus s_dataloaders
     Xena(TCGA) as target domain, thus t_dataloaders
+    :param gex_features_df:
     :param seed:
     :param batch_size:
     :return:
@@ -91,6 +92,8 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
 def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, drug='gem', auc_threshold=0.80):
     """
 
+    :param gex_features_df:
+    :param ft_flag:
     :param seed:
     :param batch_size:
     :param drug:
