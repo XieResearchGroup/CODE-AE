@@ -5,7 +5,6 @@ from collections import defaultdict
 from vae import VAE
 
 
-
 def ae_train_step(ae, s_batch, t_batch, device, optimizer, history, scheduler=None):
     ae.zero_grad()
     ae.train()
@@ -48,9 +47,9 @@ def train_vae(s_dataloaders, t_dataloaders, **kwargs):
     t_test_dataloader = t_dataloaders[1]
 
     autoencoder = VAE(input_dim=kwargs['input_dim'],
-                     latent_dim=kwargs['latent_dim'],
-                     hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
-
+                      latent_dim=kwargs['latent_dim'],
+                      hidden_dims=kwargs['encoder_hidden_dims'],
+                      dop=kwargs['dop']).to(kwargs['device'])
 
     ae_eval_train_history = defaultdict(list)
     ae_eval_val_history = defaultdict(list)

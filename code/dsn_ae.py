@@ -9,11 +9,12 @@ from typing import List
 class DSNAE(BaseAE):
 
     def __init__(self, shared_encoder, decoder, input_dim: int, latent_dim: int, alpha: float = 1.0,
-                 hidden_dims: List = None, noise_flag: bool = False, **kwargs) -> None:
+                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = False, **kwargs) -> None:
         super(DSNAE, self).__init__()
         self.latent_dim = latent_dim
         self.alpha = alpha
         self.noise_flag = noise_flag
+        self.dop = dop
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -28,7 +29,7 @@ class DSNAE(BaseAE):
                 nn.Linear(input_dim, hidden_dims[0], bias=True),
                 #nn.BatchNorm1d(hidden_dims[0]),
                 nn.ReLU(),
-                nn.Dropout(0.1)
+                nn.Dropout(self.dop)
             )
         )
 
@@ -39,10 +40,10 @@ class DSNAE(BaseAE):
                     # nn.Dropout(0.1),
                     #nn.BatchNorm1d(hidden_dims[i + 1]),
                     nn.ReLU(),
-                    nn.Dropout(0.1)
+                    nn.Dropout(self.dop)
                 )
             )
-        modules.append(nn.Dropout(0.1))
+        modules.append(nn.Dropout(self.dop))
         modules.append(nn.Linear(hidden_dims[-1], latent_dim, bias=True))
         # modules.append(nn.LayerNorm(latent_dim, eps=1e-12, elementwise_affine=False))
 

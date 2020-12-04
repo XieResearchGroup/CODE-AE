@@ -50,7 +50,8 @@ def train_dae(s_dataloaders, t_dataloaders, **kwargs):
     autoencoder = AE(input_dim=kwargs['input_dim'],
                      latent_dim=kwargs['latent_dim'],
                      hidden_dims=kwargs['encoder_hidden_dims'],
-                     noise_flag=True).to(kwargs['device'])
+                     noise_flag=True,
+                     dop=kwargs['dop']).to(kwargs['device'])
 
 
     ae_eval_train_history = defaultdict(list)

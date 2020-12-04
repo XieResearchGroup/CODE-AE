@@ -31,3 +31,8 @@ gdsc_raw_target_file = os.path.join(gdsc_folder, 'gdsc_ic50flag.csv')
 gdsc_sample_file = os.path.join(gdsc_folder, 'gdsc_cell_line_annotation.csv')
 gdsc_preprocessed_target_file = os.path.join(preprocessed_data_folder, 'gdsc_ic50flag.csv')
 
+#adae brain cancer datasets
+adae_folder = os.path.join(root_data_folder, 'adae_data')
+adae_gex_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_PREPROCESSED_RNASEQ_EXPRESSION_500_kmeans.tsv')
+adae_sex_label_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_SEX_LABELS.tsv')
+adae_subtype_label_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_SUBTYPE_LABELS.tsv')

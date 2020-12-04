@@ -60,6 +60,10 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
         torch.from_numpy(xena_df.values.astype('float32'))
     )
 
+    ccle_dataset = TensorDataset(
+        torch.from_numpy(ccle_df.value.astype('float32'))
+    )
+
     train_xena_dateset = TensorDataset(
         torch.from_numpy(train_xena_df.values.astype('float32')))
     test_xena_dateset = TensorDataset(
@@ -79,13 +83,19 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
                                       batch_size=batch_size,
                                       shuffle=True)
 
+    ccle_data_loader = DataLoader(ccle_dataset,
+                                  batch_size=batch_size,
+                                  shuffle=True,
+                                  drop_last=True
+                                  )
+
     train_ccle_dataloader = DataLoader(train_ccle_dateset,
                                        batch_size=batch_size,
                                        shuffle=True, drop_last=True)
     test_ccle_dataloader = DataLoader(test_ccle_dateset,
                                       batch_size=batch_size,
                                       shuffle=True)
-    return (train_ccle_dataloader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
+    return (ccle_data_loader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
     # return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
 
@@ -195,4 +205,103 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
                                          shuffle=True)
 
     return (train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader) if ft_flag else (
-    labeled_ccle_dataloader, labeled_tcga_dataloader)
+        labeled_ccle_dataloader, labeled_tcga_dataloader)
+
+
+def get_adae_unlabeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female'):
+    sex_label_df = pd.read_table(data_config.adae_sex_label_file, index_col=0)
+    pos_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] == pos_gender])
+    neg_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] != pos_gender])
+
+    s_df = gex_features_df.loc[pos_samples]
+    t_df = gex_features_df.loc[neg_samples]
+
+    s_dataset = TensorDataset(
+        torch.from_numpy(s_df.values.astype('float32'))
+    )
+
+    t_dataset = TensorDataset(
+        torch.from_numpy(t_df.values.astype('float32'))
+    )
+
+    s_dataloader = DataLoader(s_dataset,
+                              batch_size=batch_size,
+                              shuffle=True,
+                              drop_last=True
+                              )
+
+    t_dataloader = DataLoader(t_dataset,
+                              batch_size=batch_size,
+                              shuffle=True,
+                              drop_last=True
+                              )
+
+    return s_dataloader, t_dataloader
+
+
+def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female', ft_flag=False):
+    """
+
+    :param gex_features_df:
+    :param seed:
+    :param batch_size:
+    :param pos_gender:
+    :return:
+    """
+    sex_label_df = pd.read_table(data_config.adae_sex_label_file, index_col=0)
+    subtype_label_df = pd.read_table(data_config.adae_subtype_label_file, index_col=0)
+    gex_features_df = gex_features_df.loc[sex_label_df.index.intersection(gex_features_df.index)]
+    subtype_label_df = subtype_label_df.loc[gex_features_df.index]
+    assert all(gex_features_df.index == subtype_label_df.index)
+
+    train_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] == pos_gender])
+    test_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] != pos_gender])
+
+    train_df = gex_features_df.loc[train_samples]
+    test_df = gex_features_df.loc[test_samples]
+
+    if ft_flag:
+        train_df, val_df, train_labels, val_labels = train_test_split(
+            train_df.values,
+            subtype_label_df.loc[train_samples].values,
+            test_size=0.1,
+            stratify=subtype_label_df.loc[train_samples].values)
+
+        train_labeled_dataset = TensorDataset(
+            torch.from_numpy(train_df.values.astype('float32')),
+            torch.from_numpy(train_labels)
+        )
+
+        val_labeled_dataset = TensorDataset(
+            torch.from_numpy(val_df.values.astype('float32')),
+            torch.from_numpy(val_labels)
+        )
+
+        val_labeled_dataloader = DataLoader(val_labeled_dataset,
+                                            batch_size=batch_size,
+                                            shuffle=True
+                                            )
+
+    else:
+        train_labeled_dataset = TensorDataset(
+            torch.from_numpy(train_df.values.astype('float32')),
+            torch.from_numpy(subtype_label_df.loc[train_samples].values)
+        )
+
+    test_labeled_dataset = TensorDataset(
+        torch.from_numpy(test_df.values.astype('float32')),
+        torch.from_numpy(subtype_label_df.loc[test_samples].values)
+    )
+
+    train_labeled_dataloader = DataLoader(train_labeled_dataset,
+                                          batch_size=batch_size,
+                                          shuffle=True
+                                          )
+
+    test_labeled_dataloader = DataLoader(test_labeled_dataset,
+                                         batch_size=batch_size,
+                                         shuffle=True
+                                         )
+
+    return (train_labeled_dataloader, val_labeled_dataloader,
+            test_labeled_dataloader) if ft_flag else train_labeled_dataloader, test_labeled_dataloader

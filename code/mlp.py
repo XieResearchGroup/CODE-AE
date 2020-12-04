@@ -4,9 +4,10 @@ from typing import List
 
 class MLP(nn.Module):
 
-    def __init__(self, input_dim: int, output_dim: int, hidden_dims: List = None, **kwargs) -> None:
+    def __init__(self, input_dim: int, output_dim: int, hidden_dims: List = None, dop: float = 0.1, **kwargs) -> None:
         super(MLP, self).__init__()
         self.output_dim = output_dim
+        self.dop = dop
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -17,7 +18,7 @@ class MLP(nn.Module):
                 nn.Linear(input_dim, hidden_dims[0], bias=True),
                 #nn.BatchNorm1d(hidden_dims[0]),
                 nn.ReLU(),
-                nn.Dropout(0.1),
+                nn.Dropout(self.dop)
             )
         )
 
@@ -27,7 +28,7 @@ class MLP(nn.Module):
                     nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=True),
                     #nn.BatchNorm1d(hidden_dims[i + 1]),
                     nn.ReLU(),
-                    nn.Dropout(0.1)
+                    nn.Dropout(self.dop)
                 )
             )
 
@@ -37,7 +38,7 @@ class MLP(nn.Module):
             nn.Linear(hidden_dims[-1], hidden_dims[-1], bias=True),
             #nn.BatchNorm1d(hidden_dims[-1]),
             nn.ReLU(),
-            nn.Dropout(0.1),
+            nn.Dropout(self.dop),
             nn.Linear(hidden_dims[-1], output_dim, bias=True),
         )
 
