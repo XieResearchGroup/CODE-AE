@@ -4,6 +4,7 @@ from itertools import chain
 from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
+from loss_and_metrics import mmd_loss
 
 
 def eval_dsnae_epoch(model, data_loader, device, history):
@@ -38,11 +39,15 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
+    s_code = s_dsnae.s_encode(s_x)
+    t_code = t_dsnae.s_encode(t_x)
+
     s_loss_dict = s_dsnae.loss_function(*s_dsnae(s_x))
     t_loss_dict = t_dsnae.loss_function(*t_dsnae(t_x))
 
     optimizer.zero_grad()
-    loss = s_loss_dict['loss'] + t_loss_dict['loss']
+    loss = s_loss_dict['loss'] + t_loss_dict['loss'] + mmd_loss(source_features=s_code, target_features=t_code,
+                                                                device=device)
     loss.backward()
 
     optimizer.step()
@@ -131,14 +136,14 @@ def train_dsn(s_dataloaders, t_dataloaders, **kwargs):
                 dsnae_val_history[k][-2] += dsnae_val_history[k][-1]
                 dsnae_val_history[k].pop()
 
-        save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
+        save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=50)
         if save_flag:
-            torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 's_dsnae.pt'))
-            torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 't_dsnae.pt'))
-        if stop_flag:
+            torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt'))
+            torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt'))
+        if kwargs['es_flag'] and stop_flag:
             break
-
-    s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
-    t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
+    if kwargs['es_flag']:
+        s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt')))
+        t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt')))
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history)

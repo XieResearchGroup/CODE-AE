@@ -24,6 +24,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     """
     CCLE as source domain, thus s_dataloaders
     Xena(TCGA) as target domain, thus t_dataloaders
+    :param gex_features_df:
     :param seed:
     :param batch_size:
     :return:
@@ -48,12 +49,16 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
         ccle_sample_info_df[ccle_sample_info_df.primary_disease.isin(excluded_ccle_diseases)].index)
 
     to_split_ccle_df = ccle_df[~ccle_df.index.isin(excluded_ccle_samples)]
-    train_ccle_df, test_ccle_df = train_test_split(to_split_ccle_df, test_size=0.2,
+    train_ccle_df, test_ccle_df = train_test_split(to_split_ccle_df, test_size=0.1,
                                                    stratify=ccle_sample_info_df.loc[
                                                        to_split_ccle_df.index].primary_disease)
     test_ccle_df = test_ccle_df.append(ccle_df.loc[excluded_ccle_samples])
     train_xena_df, test_xena_df = train_test_split(xena_df, test_size=len(test_ccle_df) / len(xena_df),
                                                    stratify=xena_sample_info_df['_primary_disease'])
+
+    xena_dataset = TensorDataset(
+        torch.from_numpy(xena_df.values.astype('float32'))
+    )
 
     train_xena_dateset = TensorDataset(
         torch.from_numpy(train_xena_df.values.astype('float32')))
@@ -64,6 +69,9 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     test_ccle_dateset = TensorDataset(
         torch.from_numpy(test_ccle_df.values.astype('float32')))
 
+    xena_dataloader = DataLoader(xena_dataset,
+                                 batch_size=batch_size,
+                                 shuffle=True)
     train_xena_dataloader = DataLoader(train_xena_dateset,
                                        batch_size=batch_size,
                                        shuffle=True)
@@ -77,13 +85,15 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     test_ccle_dataloader = DataLoader(test_ccle_dateset,
                                       batch_size=batch_size,
                                       shuffle=True)
+    return (train_ccle_dataloader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
+    # return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
-    return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
-
-def get_labeled_dataloaders(gex_features_df, seed, batch_size, drug='gem', auc_threshold=0.80):
+def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, drug='gem', auc_threshold=0.80):
     """
 
+    :param gex_features_df:
+    :param ft_flag:
     :param seed:
     :param batch_size:
     :param drug:
@@ -147,26 +157,27 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, drug='gem', auc_t
     ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
     assert all(ccle_labels.index == ccle_labeled_feature_df.index)
 
-    # train_labeled_ccle_df, test_labeled_ccle_df, train_ccle_labels, test_ccle_labels = train_test_split(
-    #     ccle_labeled_feature_df.values,
-    #     ccle_labels.values,
-    #     test_size=0.1,
-    #     stratify=ccle_labels.values)
-    #
-    # train_labeled_ccle_dateset = TensorDataset(
-    #     torch.from_numpy(train_labeled_ccle_df.astype('float32')),
-    #     torch.from_numpy(train_ccle_labels))
-    # test_labeled_ccle_df = TensorDataset(
-    #     torch.from_numpy(test_labeled_ccle_df.astype('float32')),
-    #     torch.from_numpy(test_ccle_labels))
-    #
-    # train_labeled_ccle_dataloader = DataLoader(train_labeled_ccle_dateset,
-    #                                            batch_size=batch_size,
-    #                                            shuffle=True)
-    #
-    # test_labeled_tcga_dataloader = DataLoader(test_labeled_ccle_df,
-    #                                           batch_size=batch_size,
-    #                                           shuffle=True)
+    if ft_flag:
+        train_labeled_ccle_df, test_labeled_ccle_df, train_ccle_labels, test_ccle_labels = train_test_split(
+            ccle_labeled_feature_df.values,
+            ccle_labels.values,
+            test_size=0.1,
+            stratify=ccle_labels.values)
+
+        train_labeled_ccle_dateset = TensorDataset(
+            torch.from_numpy(train_labeled_ccle_df.astype('float32')),
+            torch.from_numpy(train_ccle_labels))
+        test_labeled_ccle_df = TensorDataset(
+            torch.from_numpy(test_labeled_ccle_df.astype('float32')),
+            torch.from_numpy(test_ccle_labels))
+
+        train_labeled_ccle_dataloader = DataLoader(train_labeled_ccle_dateset,
+                                                   batch_size=batch_size,
+                                                   shuffle=True)
+
+        test_labeled_ccle_dataloader = DataLoader(test_labeled_ccle_df,
+                                                  batch_size=batch_size,
+                                                  shuffle=True)
 
     labeled_ccle_dateset = TensorDataset(
         torch.from_numpy(ccle_labeled_feature_df.values.astype('float32')),
@@ -183,4 +194,5 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, drug='gem', auc_t
                                          batch_size=batch_size,
                                          shuffle=True)
 
-    return labeled_ccle_dataloader, labeled_tcga_dataloader
+    return (train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader) if ft_flag else (
+    labeled_ccle_dataloader, labeled_tcga_dataloader)

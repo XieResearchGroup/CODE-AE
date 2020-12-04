@@ -91,6 +91,9 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
             try:
                 ind = encoder_module_indices.pop()
                 print(f'Unfreezing {epoch}')
+                target_classifier.load_state_dict(
+                    torch.load(os.path.join(kwargs['model_save_folder'], 'target_classifier.pt')))
+
                 target_classification_params.append(list(target_classifier.encoder.modules())[ind].parameters())
                 lr = lr * kwargs['decay_coefficient']
                 target_classification_optimizer = torch.optim.AdamW(chain(*target_classification_params), lr=lr)

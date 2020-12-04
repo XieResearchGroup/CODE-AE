@@ -9,13 +9,19 @@ from collections import defaultdict
 
 import data
 import data_config
-import train_dsn
+
 import train_adae
 import train_adsn
 import train_coral
 import train_dae
 import train_vae
 import train_ae
+import train_mdsn
+import train_dsn
+import train_dsnw
+import train_ndsn
+
+
 import fine_tuning
 import ml_baseline
 
@@ -23,6 +29,7 @@ import ml_baseline
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
 
+    :param normalize_flag:
     :param encoder:
     :param dataloader:
     :return:
@@ -55,11 +62,16 @@ def wrap_training_params(training_params, type='unlabeled'):
 
     return aux_dict
 
+def safe_make_dir(new_folder_name):
+    if not os.path.exists(new_folder_name):
+        os.makedirs(new_folder_name)
+    else:
+        print(new_folder_name, 'exists!')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
-                        choices=['adsn', 'dsn', 'adae', 'coral', 'dae', 'vae', 'ae'])
+                        choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
     parser.add_argument('--n', dest='n', nargs='?', default=1)
@@ -78,6 +90,12 @@ if __name__ == '__main__':
         train_fn = train_vae.train_vae
     elif args.method == 'ae':
         train_fn = train_ae.train_ae
+    elif args.method == 'mdsn':
+        train_fn = train_mdsn.train_mdsn
+    elif args.method == 'ndsn':
+        train_fn = train_ndsn.train_ndsn
+    elif args.method == 'dsnw':
+        train_fn = train_dsnw.train_dsnw
     else:
         train_fn = train_adsn.train_adsn
 
@@ -93,8 +111,10 @@ if __name__ == '__main__':
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method)
+            'model_save_folder': os.path.join('model_save', args.method, args.drug),
+            'es_flag': True
         })
+    safe_make_dir(training_params['model_save_folder'])
 
     ml_baseline_history = defaultdict(list)
     model_evaluation_history = defaultdict(list)
