@@ -104,7 +104,7 @@ if __name__ == '__main__':
     normalize_flag = 'dsn' in args.method
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    gex_features_df = pd.read_table(data_config.adae_gex_file, sep='\t', index_col=0)
+    gex_features_df = pd.read_csv(data_config.adae_gex_file, sep='\t', index_col=0)
 
     with open(os.path.join('model_save', args.method, f'train_params_{args.gender}.json'), 'r') as f:
         training_params = json.load(f)

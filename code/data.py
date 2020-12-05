@@ -209,7 +209,7 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
 
 
 def get_adae_unlabeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female'):
-    sex_label_df = pd.read_table(data_config.adae_sex_label_file, index_col=0)
+    sex_label_df = pd.read_csv(data_config.adae_sex_label_file, index_col=0, sep='\t')
     pos_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] == pos_gender])
     neg_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] != pos_gender])
 
@@ -248,8 +248,8 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
     :param pos_gender:
     :return:
     """
-    sex_label_df = pd.read_table(data_config.adae_sex_label_file, index_col=0)
-    subtype_label_df = pd.read_table(data_config.adae_subtype_label_file, index_col=0)
+    sex_label_df = pd.read_csv(data_config.adae_sex_label_file, index_col=0, sep='\t')
+    subtype_label_df = pd.read_csv(data_config.adae_subtype_label_file, index_col=0, sep='\t')
     gex_features_df = gex_features_df.loc[sex_label_df.index.intersection(gex_features_df.index)]
     subtype_label_df = subtype_label_df.loc[gex_features_df.index]
     assert all(gex_features_df.index == subtype_label_df.index)
