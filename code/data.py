@@ -61,7 +61,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     )
 
     ccle_dataset = TensorDataset(
-        torch.from_numpy(ccle_df.value.astype('float32'))
+        torch.from_numpy(ccle_df.values.astype('float32'))
     )
 
     train_xena_dateset = TensorDataset(
