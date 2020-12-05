@@ -65,7 +65,7 @@ def evaluate_target_classification_epoch(classifier, dataloader, device, history
     history['aps'].append(average_precision_score(y_true=y_truths, y_score=y_preds))
     history['f1'].append(f1_score(y_true=y_truths, y_pred=(y_preds > 0.5).astype('int')))
     history['bce'].append(log_loss(y_true=y_truths, y_pred=y_preds))
-    history['auprc'].appeng(auprc(y_true=y_truths, y_score=y_preds))
+    history['auprc'].append(auprc(y_true=y_truths, y_score=y_preds))
 
     return history
 
@@ -94,5 +94,6 @@ def evaluate_adv_classification_epoch(classifier, s_dataloader, t_dataloader, de
     history['aps'].append(average_precision_score(y_true=y_truths, y_score=y_preds))
     history['f1'].append(f1_score(y_true=y_truths, y_pred=(y_preds > 0.5).astype('int')))
     history['bce'].append(log_loss(y_true=y_truths, y_pred=y_preds))
+    history['auprc'].append(auprc(y_true=y_truths, y_score=y_preds))
 
     return history
