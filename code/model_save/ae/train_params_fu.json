@@ -15,5 +15,6 @@
     "decay_coefficient":0.1
   },
   "encoder_hidden_dims":[512,256],
-  "latent_dim":128
+  "latent_dim":128,
+  "dop":0.1
 }
