@@ -236,7 +236,7 @@ def get_adae_unlabeled_dataloaders(gex_features_df, seed, batch_size, pos_gender
                               drop_last=True
                               )
 
-    return s_dataloader, t_dataloader
+    return (s_dataloader, s_dataloader), (t_dataloader,t_dataloader)
 
 
 def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female', ft_flag=False):
