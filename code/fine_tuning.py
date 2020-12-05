@@ -14,7 +14,7 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
 
     x = batch[0].to(device)
     y = batch[1].to(device)
-    loss = loss_fn(model(x), y.double().unsqueeze(1))
+    loss = loss_fn(model(x), y.double())
 
     optimizer.zero_grad()
     loss.backward()
