@@ -7,7 +7,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_sco
 
 
 def auprc(y_true, y_score):
-    lr_precision, lr_recall = precision_recall_curve(y_true, y_score)
+    lr_precision, lr_recall, _ = precision_recall_curve(y_true=y_true, probas_pred=y_score)
     return auc(lr_recall, lr_precision)
 
 
