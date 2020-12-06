@@ -304,4 +304,4 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
                                          )
 
     return (train_labeled_dataloader, val_labeled_dataloader,
-            test_labeled_dataloader) if ft_flag else train_labeled_dataloader, test_labeled_dataloader
+            test_labeled_dataloader) if ft_flag else (train_labeled_dataloader, test_labeled_dataloader)
