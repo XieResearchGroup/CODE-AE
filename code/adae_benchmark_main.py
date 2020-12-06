@@ -113,7 +113,7 @@ if __name__ == '__main__':
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method, args.drug),
+            'model_save_folder': os.path.join('model_save', args.method, args.gender),
             'es_flag': False
         })
     safe_make_dir(training_params['model_save_folder'])
