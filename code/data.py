@@ -268,12 +268,12 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
             stratify=subtype_label_df.loc[train_samples].values)
 
         train_labeled_dataset = TensorDataset(
-            torch.from_numpy(train_df.values.astype('float32')),
+            torch.from_numpy(train_df.astype('float32')),
             torch.from_numpy(train_labels.ravel())
         )
 
         val_labeled_dataset = TensorDataset(
-            torch.from_numpy(val_df.values.astype('float32')),
+            torch.from_numpy(val_df.astype('float32')),
             torch.from_numpy(val_labels.ravel())
         )
 

@@ -155,7 +155,7 @@ if __name__ == '__main__':
     ml_baseline_history['rf'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_rf,
-            n=10,
+            n=int(args.n),
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     ml_baseline_history['enet'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_enet,
-            n=10,
+            n=int(args.n),
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
