@@ -148,20 +148,20 @@ def main(args, update_params_dict):
     tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
                                                                                normalize_flag=normalize_flag)
     # build baseline ml models for encoded features
-    ml_baseline_history['rf'].append(
-        ml_baseline.n_time_cv(
-            model_fn=ml_baseline.classify_with_rf,
-            n=args.n,
-            train_data=(
-                ccle_encoded_feature_tensor.detach().cpu().numpy(),
-                ccle_label_tensor.detach().cpu().numpy()
-            ),
-            test_data=(
-                tcga_encoded_feature_tensor.detach().cpu().numpy(),
-                tcga_label_tensor.detach().cpu().numpy()
-            )
-        )[1]
-    )
+    # ml_baseline_history['rf'].append(
+    #     ml_baseline.n_time_cv(
+    #         model_fn=ml_baseline.classify_with_rf,
+    #         n=args.n,
+    #         train_data=(
+    #             ccle_encoded_feature_tensor.detach().cpu().numpy(),
+    #             ccle_label_tensor.detach().cpu().numpy()
+    #         ),
+    #         test_data=(
+    #             tcga_encoded_feature_tensor.detach().cpu().numpy(),
+    #             tcga_label_tensor.detach().cpu().numpy()
+    #         )
+    #     )[1]
+    # )
 
     ml_baseline_history['enet'].append(
         ml_baseline.n_time_cv(

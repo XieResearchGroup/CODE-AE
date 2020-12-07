@@ -145,20 +145,20 @@ def main(args, update_params_dict):
     neg_encoded_feature_tensor, neg_label_tensor = generate_encoded_features(encoder, labeled_neg_dataloader,
                                                                                normalize_flag=normalize_flag)
     # build baseline ml models for encoded features
-    ml_baseline_history['rf'].append(
-        ml_baseline.n_time_cv(
-            model_fn=ml_baseline.classify_with_rf,
-            n=args.n,
-            train_data=(
-                pos_encoded_feature_tensor.detach().cpu().numpy(),
-                pos_label_tensor.detach().cpu().numpy()
-            ),
-            test_data=(
-                neg_encoded_feature_tensor.detach().cpu().numpy(),
-                neg_label_tensor.detach().cpu().numpy()
-            )
-        )[1]
-    )
+    # ml_baseline_history['rf'].append(
+    #     ml_baseline.n_time_cv(
+    #         model_fn=ml_baseline.classify_with_rf,
+    #         n=args.n,
+    #         train_data=(
+    #             pos_encoded_feature_tensor.detach().cpu().numpy(),
+    #             pos_label_tensor.detach().cpu().numpy()
+    #         ),
+    #         test_data=(
+    #             neg_encoded_feature_tensor.detach().cpu().numpy(),
+    #             neg_label_tensor.detach().cpu().numpy()
+    #         )
+    #     )[1]
+    # )
 
     ml_baseline_history['enet'].append(
         ml_baseline.n_time_cv(
