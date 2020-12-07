@@ -151,7 +151,7 @@ def main(args, update_params_dict):
     ml_baseline_history['rf'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_rf,
-            n=1,
+            n=args.n,
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
@@ -166,7 +166,7 @@ def main(args, update_params_dict):
     ml_baseline_history['enet'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_enet,
-            n=1,
+            n=args.n,
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
@@ -202,7 +202,7 @@ if __name__ == '__main__':
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
-    parser.add_argument('--n', dest='n', nargs='?', default=1)
+    parser.add_argument('--n', dest='n', nargs='?', default=10)
 
     args = parser.parse_args()
 
