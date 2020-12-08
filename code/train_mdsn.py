@@ -46,8 +46,8 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     t_loss_dict = t_dsnae.loss_function(*t_dsnae(t_x))
 
     optimizer.zero_grad()
-    loss = s_loss_dict['loss'] + t_loss_dict['loss'] + mmd_loss(source_features=s_code, target_features=t_code,
-                                                                device=device)
+    m_loss = mmd_loss(source_features=s_code, target_features=t_code, device=device)
+    loss = s_loss_dict['loss'] + t_loss_dict['loss'] + m_loss
     loss.backward()
 
     optimizer.step()
@@ -57,6 +57,7 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
 
     for k, v in loss_dict.items():
         history[k].append(v)
+    history['mmd_loss'].append(m_loss.cpu().detach().item())
 
     return history
 

@@ -151,6 +151,11 @@ if __name__ == '__main__':
                                                                              normalize_flag=normalize_flag)
     neg_encoded_feature_tensor, neg_label_tensor = generate_encoded_features(encoder, labeled_neg_dataloader,
                                                                              normalize_flag=normalize_flag)
+    pd.DataFrame(pos_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_encoded_feature.csv'))
+    pd.DataFrame(pos_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_label.csv'))
+    pd.DataFrame(neg_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_encoded_feature.csv'))
+    pd.DataFrame(neg_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_label.csv'))
+
     # build baseline ml models for encoded features
     ml_baseline_history['rf'].append(
         ml_baseline.n_time_cv(

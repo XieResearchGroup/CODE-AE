@@ -67,6 +67,7 @@ def safe_make_dir(new_folder_name):
     else:
         print(new_folder_name, 'exists!')
 
+
 def dict_to_str(d):
     return "_".join(["_".join([k, str(v)]) for k, v in d.items()])
 
@@ -135,15 +136,25 @@ def main(args, update_params_dict):
                                  t_dataloaders=t_dataloaders,
                                  **wrap_training_params(training_params, type='unlabeled'))
 
-    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_unlabel_train_history.pickle'), 'wb') as f:
+    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_unlabel_train_history.pickle'),
+              'wb') as f:
         for history in historys:
             pickle.dump(dict(history), f)
 
     # generate encoded features
     pos_encoded_feature_tensor, pos_label_tensor = generate_encoded_features(encoder, labeled_pos_dataloader,
-                                                                               normalize_flag=normalize_flag)
+                                                                             normalize_flag=normalize_flag)
     neg_encoded_feature_tensor, neg_label_tensor = generate_encoded_features(encoder, labeled_neg_dataloader,
-                                                                               normalize_flag=normalize_flag)
+                                                                             normalize_flag=normalize_flag)
+
+    pd.DataFrame(pos_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(training_params['model_save_folder'], f'{param_str}_train_encoded_feature.csv'))
+    pd.DataFrame(pos_label_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(training_params['model_save_folder'], f'{param_str}_train_label.csv'))
+    pd.DataFrame(neg_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(training_params['model_save_folder'], f'{param_str}_test_encoded_feature.csv'))
+    pd.DataFrame(neg_label_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(training_params['model_save_folder'], f'{param_str}_test_label.csv'))
     # build baseline ml models for encoded features
     # ml_baseline_history['rf'].append(
     #     ml_baseline.n_time_cv(
@@ -203,8 +214,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     params_grid = {
-        "pretrain_num_epochs": [0, 10, 30, 50, 100, 150, 200, 250, 300],
-        "train_num_epochs": [100, 200, 300, 500, 750, 1000, 1500, 2000]
+        "pretrain_num_epochs": [0, 50, 100, 200, 300],
+        "train_num_epochs": [100, 300, 500, 1000, 1500, 2000],
+        "dop": [0.0, 0.1, 0.2]
     }
 
     if args.method not in ['adsn', 'adae', 'dsnw']:
@@ -215,10 +227,3 @@ if __name__ == '__main__':
 
     for param_dict in update_params_dict_list:
         main(args=args, update_params_dict=param_dict)
-
-
-
-
-
-
-

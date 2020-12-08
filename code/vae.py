@@ -7,10 +7,11 @@ from typing import List
 
 class VAE(BaseAE):
 
-    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, dop: float = 0.1, **kwargs) -> None:
+    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = True, **kwargs) -> None:
         super(VAE, self).__init__()
         self.latent_dim = latent_dim
         self.dop = dop
+        self.noise_flag = noise_flag
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -79,7 +80,10 @@ class VAE(BaseAE):
         )
 
     def encode(self, input: Tensor) -> Tensor:
-        embed = self.embedder(input)
+        if self.noise_flag and self.training:
+            embed = self.embedder(input+torch.randn_like(input) * 0.1)
+        else:
+            embed = self.embedder(input)
 
         mu = self.fc_mu(embed)
         log_var = self.fc_var(embed)

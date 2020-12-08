@@ -151,6 +151,12 @@ if __name__ == '__main__':
                                                                                normalize_flag=normalize_flag)
     tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
                                                                                normalize_flag=normalize_flag)
+
+    pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_encoded_feature.csv'))
+    pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_label.csv'))
+    pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_encoded_feature.csv'))
+    pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_label.csv'))
+
     # build baseline ml models for encoded features
     ml_baseline_history['rf'].append(
         ml_baseline.n_time_cv(
