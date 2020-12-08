@@ -82,7 +82,7 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
                                                                                            history=target_classification_eval_test_history)
         save_flag, stop_flag = model_save_check(history=target_classification_eval_val_history,
                                                 metric_name='auroc',
-                                                tolerance_count=20,
+                                                tolerance_count=10,
                                                 reset_count=reset_count)
         if save_flag:
             torch.save(target_classifier.state_dict(),
