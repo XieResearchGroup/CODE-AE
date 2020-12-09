@@ -60,7 +60,7 @@ def train_ae(s_dataloaders, t_dataloaders, **kwargs):
     ae_optimizer = torch.optim.AdamW(autoencoder.parameters(), lr=kwargs['lr'])
 
     # start autoencoder pretraining
-    for epoch in range(kwargs['train_num_epochs']):
+    for epoch in range(int(kwargs['train_num_epochs'])):
         if epoch % 50 == 0:
             print(f'----Autoencoder Training Epoch {epoch} ----')
         for step, s_batch in enumerate(s_train_dataloader):

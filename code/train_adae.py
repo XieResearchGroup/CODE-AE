@@ -145,7 +145,7 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
     classifier_optimizer = torch.optim.AdamW(confounder_classifier.decoder.parameters(), lr=kwargs['lr'])
 
     # start autoencoder pretraining
-    for epoch in range(kwargs['pretrain_num_epochs']):
+    for epoch in range(int(kwargs['pretrain_num_epochs'])):
         if epoch % 50 == 0:
             print(f'----Autoencoder  Pre-Training Epoch {epoch} ----')
         for step, s_batch in enumerate(s_train_dataloader):
@@ -181,7 +181,7 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
         autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
     # start adversarial classifier pre-training
-    for epoch in range(kwargs['pretrain_num_epochs']):
+    for epoch in range(int(kwargs['pretrain_num_epochs'])):
         if epoch % 50 == 0:
             print(f'Adversarial classifier pre-training epoch {epoch}')
         for step, s_batch in enumerate(s_train_dataloader):
@@ -217,7 +217,7 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
             torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
 
     # start alternative training
-    for epoch in range(kwargs['train_num_epochs']):
+    for epoch in range(int(kwargs['train_num_epochs'])):
         if epoch % 50 == 0:
             print(f'Alternative training epoch {epoch}')
         # start autoencoder training epoch

@@ -173,7 +173,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
     # classification_eval_train_history = defaultdict(list)
 
     # start dsnae pre-training
-    for epoch in range(kwargs['pretrain_num_epochs']):
+    for epoch in range(int(kwargs['pretrain_num_epochs'])):
         if epoch % 50 == 0:
             print(f'AE training epoch {epoch}')
         for step, s_batch in enumerate(s_train_dataloader):
@@ -227,7 +227,7 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
     #                                                      clip=None,
     #                                                      gp=None)
     # start GAN training
-    for epoch in range(kwargs['train_num_epochs']):
+    for epoch in range(int(kwargs['train_num_epochs'])):
         if epoch % 50 == 0:
             print(f'confounder wgan training epoch {epoch}')
         for step, s_batch in enumerate(s_train_dataloader):
