@@ -87,7 +87,7 @@ def n_time_cv(train_data, n=10, model_fn=classify_with_enet, test_data=None, ran
             # preds = trained_model.predict(test_data[0])
             # pred_scores = trained_model.predict_proba(test_data[0])[:, 1]
             preds = trained_model.predict(scaler.transform(test_data[0]))
-            pred_scores = trained_model.predict_proba(scaler.transform(test_data[0])[:, 1])
+            pred_scores = trained_model.predict_proba(scaler.transform(test_data[0]))[:, 1]
 
             # print(preds)
             # print(pred_scores)
