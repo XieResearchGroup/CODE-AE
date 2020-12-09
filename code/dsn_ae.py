@@ -88,16 +88,16 @@ class DSNAE(BaseAE):
         else:
             latent_code = self.private_encoder(input)
 
-        return latent_code
-        #return F.normalize(latent_code, p=2, dim=1)
+        #return latent_code
+        return F.normalize(latent_code, p=2, dim=1)
 
     def s_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
             latent_code = self.shared_encoder(input+torch.randn_like(input) * 0.1)
         else:
             latent_code = self.shared_encoder(input)
-        return latent_code
-        #return F.normalize(latent_code, p=2, dim=1)
+        #return latent_code
+        return F.normalize(latent_code, p=2, dim=1)
 
     def encode(self, input: Tensor) -> Tensor:
         p_latent_code = self.p_encode(input)
