@@ -81,7 +81,7 @@ class VAE(BaseAE):
 
     def encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
-            embed = self.embedder(input+torch.randn_like(input) * 0.1)
+            embed = self.embedder(input+torch.randn_like(input, requires_grad=False) * 0.1)
         else:
             embed = self.embedder(input)
 

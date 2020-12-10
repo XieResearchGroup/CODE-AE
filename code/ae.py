@@ -79,7 +79,7 @@ class AE(BaseAE):
 
     def encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
-            latent_code = self.encoder(input+torch.randn_like(input) * 0.1)
+            latent_code = self.encoder(input+torch.randn_like(input, requires_grad=False) * 0.1)
         else:
             latent_code = self.encoder(input)
 
