@@ -170,7 +170,8 @@ if __name__ == '__main__':
             test_data=(
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric = 'auroc'
         )[1]
     )
 
@@ -185,7 +186,8 @@ if __name__ == '__main__':
             test_data=(
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric='auroc'
         )[1]
     )
 

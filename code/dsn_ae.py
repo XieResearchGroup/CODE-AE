@@ -9,7 +9,7 @@ from typing import List
 class DSNAE(BaseAE):
 
     def __init__(self, shared_encoder, decoder, input_dim: int, latent_dim: int, alpha: float = 1.0,
-                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = False, **kwargs) -> None:
+                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = True, **kwargs) -> None:
         super(DSNAE, self).__init__()
         self.latent_dim = latent_dim
         self.alpha = alpha

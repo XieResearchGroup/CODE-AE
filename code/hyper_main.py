@@ -170,7 +170,8 @@ def main(args, update_params_dict):
     #         ),
     #         test_data=(
     #             tcga_encoded_feature_tensor.detach().cpu().numpy(),
-    #             tcga_label_tensor.detach().cpu().numpy()
+    #             tcga_label_tensor.detach().cpu().numpy(),
+    #         metric = 'auroc'
     #         )
     #     )[1]
     # )
@@ -186,7 +187,8 @@ def main(args, update_params_dict):
             test_data=(
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric='auroc'
         )[1]
     )
 

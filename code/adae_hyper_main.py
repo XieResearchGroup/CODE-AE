@@ -183,7 +183,8 @@ def main(args, update_params_dict):
             test_data=(
                 neg_encoded_feature_tensor.detach().cpu().numpy(),
                 neg_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric = 'auroc'
         )[1]
     )
 
