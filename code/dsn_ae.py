@@ -9,7 +9,7 @@ from typing import List
 class DSNAE(BaseAE):
 
     def __init__(self, shared_encoder, decoder, input_dim: int, latent_dim: int, alpha: float = 1.0,
-                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = True, **kwargs) -> None:
+                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = False, **kwargs) -> None:
         super(DSNAE, self).__init__()
         self.latent_dim = latent_dim
         self.alpha = alpha
@@ -132,7 +132,7 @@ class DSNAE(BaseAE):
         p_l2_norm = torch.norm(p_z, p=2, dim=1, keepdim=True).detach()
         p_l2 = p_z.div(p_l2_norm.expand_as(p_z) + 1e-6)
 
-        ortho_loss = torch.mean((s_l2.t().mm(p_l2)).pow(2))
+        ortho_loss = torch.mean(torch.diagonal(s_l2.t().mm(p_l2)).pow(2))
         # ortho_loss = torch.square(torch.norm(torch.matmul(s_z.t(), p_z), p='fro'))
         # ortho_loss = torch.mean(torch.square(torch.diagonal(torch.matmul(p_z, s_z.t()))))
         # if recons_loss > ortho_loss:
