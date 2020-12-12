@@ -92,7 +92,8 @@ def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
-                    dop=kwargs['dop']).to(kwargs['device'])
+                    dop=kwargs['dop'],
+                    norm_flag=True).to(kwargs['device'])
 
     t_dsnae = DSNAE(shared_encoder=shared_encoder,
                     decoder=shared_decoder,
@@ -100,7 +101,8 @@ def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
-                    dop=kwargs['dop']).to(kwargs['device'])
+                    dop=kwargs['dop'],
+                    norm_flag=True).to(kwargs['device'])
 
     ae_params = [t_dsnae.private_encoder.parameters(),
                  s_dsnae.private_encoder.parameters(),

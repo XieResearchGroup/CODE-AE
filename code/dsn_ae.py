@@ -9,12 +9,14 @@ from typing import List
 class DSNAE(BaseAE):
 
     def __init__(self, shared_encoder, decoder, input_dim: int, latent_dim: int, alpha: float = 1.0,
-                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = False, **kwargs) -> None:
+                 hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = False, norm_flag: bool = False,
+                 **kwargs) -> None:
         super(DSNAE, self).__init__()
         self.latent_dim = latent_dim
         self.alpha = alpha
         self.noise_flag = noise_flag
         self.dop = dop
+        self.norm_flag = norm_flag
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -27,7 +29,7 @@ class DSNAE(BaseAE):
         modules.append(
             nn.Sequential(
                 nn.Linear(input_dim, hidden_dims[0], bias=True),
-                #nn.BatchNorm1d(hidden_dims[0]),
+                # nn.BatchNorm1d(hidden_dims[0]),
                 nn.ReLU(),
                 nn.Dropout(self.dop)
             )
@@ -38,7 +40,7 @@ class DSNAE(BaseAE):
                 nn.Sequential(
                     nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=True),
                     # nn.Dropout(0.1),
-                    #nn.BatchNorm1d(hidden_dims[i + 1]),
+                    # nn.BatchNorm1d(hidden_dims[i + 1]),
                     nn.ReLU(),
                     nn.Dropout(self.dop)
                 )
@@ -84,20 +86,22 @@ class DSNAE(BaseAE):
 
     def p_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
-            latent_code = self.private_encoder(input+torch.randn_like(input, requires_grad=False) * 0.1)
+            latent_code = self.private_encoder(input + torch.randn_like(input, requires_grad=False) * 0.1)
         else:
             latent_code = self.private_encoder(input)
 
         return latent_code
-        #return F.normalize(latent_code, p=2, dim=1)
+        # return F.normalize(latent_code, p=2, dim=1)
 
     def s_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
-            latent_code = self.shared_encoder(input+torch.randn_like(input,requires_grad=False) * 0.1)
+            latent_code = self.shared_encoder(input + torch.randn_like(input, requires_grad=False) * 0.1)
         else:
             latent_code = self.shared_encoder(input)
-        return latent_code
-        #return F.normalize(latent_code, p=2, dim=1)
+        if self.norm_flag:
+            return F.normalize(latent_code, p=2, dim=1)
+        else:
+            return latent_code
 
     def encode(self, input: Tensor) -> Tensor:
         p_latent_code = self.p_encode(input)

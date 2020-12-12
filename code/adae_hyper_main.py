@@ -94,7 +94,7 @@ def main(args, update_params_dict):
     else:
         train_fn = train_adsn.train_adsn
 
-    normalize_flag = 'dsn' in args.method
+    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
     # normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -217,8 +217,8 @@ if __name__ == '__main__':
 
     params_grid = {
         "pretrain_num_epochs": [0, 50, 100, 200, 300],
-        "train_num_epochs": [100, 300, 500, 1000, 1500, 2000],
-        "dop": [0.0, 0.1, 0.2]
+        "train_num_epochs": [100, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3000],
+        "dop": [0.0, 0.1]
     }
 
     if args.method not in ['adsn', 'adae', 'dsnw']:

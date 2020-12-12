@@ -101,7 +101,7 @@ if __name__ == '__main__':
     else:
         train_fn = train_adsn.train_adsn
 
-    normalize_flag = 'dsn' in args.method
+    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
     # normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
