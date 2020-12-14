@@ -9,7 +9,6 @@ import random
 from collections import defaultdict
 from copy import deepcopy
 
-
 import data
 import data_config
 import train_ndsn
@@ -209,12 +208,11 @@ def main(args, update_params_dict):
     #         pickle.dump(dict(history), f)
     ft_evaluation_metrics = defaultdict(list)
     for seed in seeds:
-        train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+        train_labeled_pos_dataloader, val_labeled_pos_dataloader, labeled_neg_dataloader = data.get_adae_labeled_dataloaders(
             gex_features_df=gex_features_df,
             seed=seed,
             batch_size=training_params['labeled']['batch_size'],
-            drug=args.drug,
-            auc_threshold=args.auc_thres,
+            pos_gender=args.gender,
             ft_flag=True
         )
         # start fine-tuning encoder
@@ -222,9 +220,9 @@ def main(args, update_params_dict):
 
         target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
             encoder=ft_encoder,
-            train_dataloader=train_labeled_ccle_dataloader,
-            val_dataloader=test_labeled_ccle_dataloader,
-            test_dataloader=labeled_tcga_dataloader,
+            train_dataloader=train_labeled_pos_dataloader,
+            val_dataloader=val_labeled_pos_dataloader,
+            test_dataloader=labeled_neg_dataloader,
             normalize_flag=normalize_flag,
             metric_name='auprc',
             **wrap_training_params(training_params, type='labeled')
