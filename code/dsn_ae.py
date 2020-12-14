@@ -90,8 +90,10 @@ class DSNAE(BaseAE):
         else:
             latent_code = self.private_encoder(input)
 
-        return latent_code
-        # return F.normalize(latent_code, p=2, dim=1)
+        if self.norm_flag:
+            return F.normalize(latent_code, p=2, dim=1)
+        else:
+            return latent_code
 
     def s_encode(self, input: Tensor) -> Tensor:
         if self.noise_flag and self.training:
@@ -136,8 +138,8 @@ class DSNAE(BaseAE):
         p_l2_norm = torch.norm(p_z, p=2, dim=1, keepdim=True).detach()
         p_l2 = p_z.div(p_l2_norm.expand_as(p_z) + 1e-6)
 
-        ortho_loss = torch.mean((s_l2.t().mm(p_l2)).pow(2))
-        # ortho_loss = torch.square(torch.norm(torch.matmul(s_z.t(), p_z), p='fro'))
+        # ortho_loss = torch.mean((s_l2.t().mm(p_l2)).pow(2))
+        ortho_loss = torch.square(torch.norm(torch.matmul(s_z.t(), p_z), p='fro'))
         # ortho_loss = torch.mean(torch.square(torch.diagonal(torch.matmul(p_z, s_z.t()))))
         # if recons_loss > ortho_loss:
         #     loss = recons_loss + self.alpha * 0.1 * ortho_loss

@@ -24,6 +24,7 @@ import train_dsn
 import fine_tuning
 import ml_baseline
 
+from copy import deepcopy
 
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
@@ -118,7 +119,9 @@ def main(args, update_params_dict):
     safe_make_dir(training_params['model_save_folder'])
 
     ml_baseline_history = defaultdict(list)
-    model_evaluation_history = defaultdict(list)
+
+    random.seed(2020)
+    seeds = random.sample(range(100000), k=int(args.n))
 
     s_dataloaders, t_dataloaders = data.get_unlabeled_dataloaders(
         gex_features_df=gex_features_df,
@@ -191,23 +194,59 @@ def main(args, update_params_dict):
             metric='auroc'
         )[1]
     )
-
-    # start fine-tuning encoder
-    target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-        encoder=encoder,
-        train_dataloader=labeled_ccle_dataloader,
-        val_dataloader=labeled_tcga_dataloader,
-        test_dataloader=labeled_tcga_dataloader,
-        normalize_flag=normalize_flag,
-        **wrap_training_params(training_params, type='labeled')
-    )
-
-    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_train_history.pickle'), 'wb') as f:
-        for history in ft_historys:
-            pickle.dump(dict(history), f)
-
     with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
+
+    # start fine-tuning encoder
+    # target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
+    #     encoder=encoder,
+    #     train_dataloader=labeled_ccle_dataloader,
+    #     val_dataloader=labeled_tcga_dataloader,
+    #     test_dataloader=labeled_tcga_dataloader,
+    #     normalize_flag=normalize_flag,
+    #     **wrap_training_params(training_params, type='labeled')
+    # )
+    #
+    # with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_train_history.pickle'), 'wb') as f:
+    #     for history in ft_historys:
+    #         pickle.dump(dict(history), f)
+    #
+
+    ft_evaluation_metrics = defaultdict(list)
+    for seed in seeds:
+        train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+            gex_features_df=gex_features_df,
+            seed=seed,
+            batch_size=training_params['labeled']['batch_size'],
+            drug=args.drug,
+            auc_threshold=args.auc_thres,
+            ft_flag=True
+        )
+        # start fine-tuning encoder
+        ft_encoder = deepcopy(encoder)
+
+        target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
+            encoder=ft_encoder,
+            train_dataloader=train_labeled_ccle_dataloader,
+            val_dataloader=test_labeled_ccle_dataloader,
+            test_dataloader=labeled_tcga_dataloader,
+            normalize_flag=normalize_flag,
+            metric_name='auroc',
+            **wrap_training_params(training_params, type='labeled')
+        )
+
+        # with open(os.path.join(training_params['model_save_folder'], f'ft_train_history_{seed}.pickle'),
+        #           'wb') as f:
+        #     for history in ft_historys:
+        #         pickle.dump(dict(history), f)
+
+        for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
+            ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
+
+    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_evaluation_results.json'), 'w') as f:
+        json.dump(ft_evaluation_metrics, f)
+
+
 
 
 if __name__ == '__main__':

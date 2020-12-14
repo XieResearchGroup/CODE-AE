@@ -18,13 +18,10 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
 
     optimizer.zero_grad()
     loss.backward()
-    #     if clip is not None:
-    #         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+    if clip is not None:
+        torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
 
     optimizer.step()
-    if clip is not None:
-        for p in model.decoder.parameters():
-            p.data.clamp_(-clip, clip)
     if scheduler is not None:
         scheduler.step()
 
@@ -33,11 +30,12 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
     return history
 
 
-def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader=None, normalize_flag=False, **kwargs):
+def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader=None, metric_name='auroc',
+                      normalize_flag=False, **kwargs):
     target_decoder = MLP(input_dim=kwargs['latent_dim'],
                          output_dim=1,
                          hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
-    target_classifier = EncoderDecoder(encoder=encoder, decoder=target_decoder, normalize_flag=False).to(
+    target_classifier = EncoderDecoder(encoder=encoder, decoder=target_decoder, normalize_flag=normalize_flag).to(
         kwargs['device'])
     classification_loss = nn.BCEWithLogitsLoss()
 
@@ -81,8 +79,8 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
                                                                                            device=kwargs['device'],
                                                                                            history=target_classification_eval_test_history)
         save_flag, stop_flag = model_save_check(history=target_classification_eval_val_history,
-                                                metric_name='auroc',
-                                                tolerance_count=10,
+                                                metric_name=metric_name,
+                                                tolerance_count=20,
                                                 reset_count=reset_count)
         if save_flag:
             torch.save(target_classifier.state_dict(),
