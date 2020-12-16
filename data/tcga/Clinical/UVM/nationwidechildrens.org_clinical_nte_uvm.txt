@@ -1,0 +1,22 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_histology	new_tumor_event_surgery	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+bcr_patient_uuid	bcr_patient_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_neoplasm_histology_other	new_tumor_event_additional_surgery_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:4500217	CDE_ID:3427611	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3008335	CDE_ID:3392464
+B5C516BA-4785-41DC-BD07-B129D47808DD	TCGA-V4-A9E7	Distant Metastasis	Liver	[Not Available]	mixed	YES	NO	YES	56	35
+DF941BC1-6356-4F2E-A3F5-AE190266B441	TCGA-V4-A9E8	Distant Metastasis	Liver	[Not Available]	mixed	NO	NO	YES	[Not Available]	557
+EDBF6720-467E-4928-B1CB-0E7336358D18	TCGA-V4-A9EE	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	211
+B533E555-90CF-4657-80C6-15B67DA8AD26	TCGA-V4-A9EI	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	241
+8DE236F1-C029-44DF-A2A9-319145488BAA	TCGA-V4-A9EL	Distant Metastasis	Liver	[Not Available]	epithelioid	NO	[Not Available]	YES	[Not Available]	413
+A6FF0B7A-1D04-4A64-AF43-5011A4487CB2	TCGA-V4-A9EQ	Distant Metastasis	Liver	[Not Available]	epithelioid	[Not Available]	[Not Available]	YES	[Not Available]	252
+DF685F8C-645A-47AE-A471-63BF1973A0AE	TCGA-V4-A9EU	New Primary Tumor	Other, specify	biliary	cholangiocarcinoma	[Not Available]	[Not Available]	[Not Available]	[Not Available]	86
+6BE5176C-4980-4663-ADFF-D04F05737DA0	TCGA-V4-A9EW	Distant Metastasis	Liver	[Not Available]	epithelioid	[Not Available]	[Not Available]	YES	[Not Available]	197
+892E7630-B11E-47BD-987C-327D33258E11	TCGA-V4-A9EX	Distant Metastasis	Liver	[Not Available]	epithelioid	[Not Available]	[Not Available]	YES	[Not Available]	381
+92FCA97D-6123-46A7-9C34-7A6F877FE612	TCGA-V4-A9F0	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	[Not Available]	489
+E21D8018-8FE9-4C92-8B36-28D7D3F7DF2B	TCGA-V4-A9F3	Distant Metastasis	Liver	[Not Available]	epithelioid	[Not Available]	[Not Available]	YES	[Not Available]	355
+E21D8018-8FE9-4C92-8B36-28D7D3F7DF2B	TCGA-V4-A9F3	Distant Metastasis	Skin	[Not Available]	melanoma of epitheloid type	YES	[Not Available]	NO	595	597
+73B3E4DD-C53D-4FE3-8607-EE462C9CBBD1	TCGA-VD-A8KD	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Unknown]	[Unknown]	[Unknown]	[Not Available]	-4
+78039723-94A9-4903-8BB4-C00852E8E889	TCGA-VD-A8KF	Distant Metastasis	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]	[Unknown]	[Not Available]	[Not Available]
+3EB7ADED-8887-4C27-A464-1B50EC090133	TCGA-WC-A87T	New Primary Tumor	Skin	[Not Available]	Squamous Cell Cacinoma	YES	NO	NO	2020	2020
+60D7B6CF-D605-4837-9061-612F6BBB7393	TCGA-WC-A87W	New Primary Tumor	Skin	[Not Available]	Basal Cell Carcinoma	YES	NO	NO	625	606
+01B18F83-DA8A-4D3F-B722-F00FE7559C60	TCGA-WC-AA9A	Distant Metastasis	Skin	[Not Available]	[Not Available]	YES	NO	NO	371	371
+743FC661-9BA2-4FA8-966E-508FB4B965E0	TCGA-YZ-A984	New Primary Tumor	Other, specify	Thyroid	Angioinvasive follicular carcinoma	YES	NO	NO	154	154
+743FC661-9BA2-4FA8-966E-508FB4B965E0	TCGA-YZ-A984	Distant Metastasis	Liver	[Not Available]	No tissue biopsy	NO	NO	NO	[Not Available]	916

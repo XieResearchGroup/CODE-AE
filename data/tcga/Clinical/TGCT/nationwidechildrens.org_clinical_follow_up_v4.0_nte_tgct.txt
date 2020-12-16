@@ -1,0 +1,66 @@
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_dx_days_to
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3392464
+E03C99F2-93CB-457F-8A77-D600F292E313	TCGA-2G-AAF6	TCGA-2G-AAF6-F62226	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	810
+E03C99F2-93CB-457F-8A77-D600F292E313	TCGA-2G-AAF6	TCGA-2G-AAF6-F68859	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	810
+A9C10A1D-EF0B-4A4E-8433-522A9E04796E	TCGA-2G-AAF8	TCGA-2G-AAF8-F62972	New Primary Tumor	Testes	[Not Available]	3149
+A9C10A1D-EF0B-4A4E-8433-522A9E04796E	TCGA-2G-AAF8	TCGA-2G-AAF8-F62972	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	3234
+A9C10A1D-EF0B-4A4E-8433-522A9E04796E	TCGA-2G-AAF8	TCGA-2G-AAF8-F69859	New Primary Tumor	Testes	[Not Available]	3149
+A9C10A1D-EF0B-4A4E-8433-522A9E04796E	TCGA-2G-AAF8	TCGA-2G-AAF8-F69859	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	3234
+1D25C24E-BD3C-4023-85C1-B158F76324F1	TCGA-2G-AAFE	TCGA-2G-AAFE-F62254	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	4270
+630C683D-D1A2-4BEC-AA20-38EF59227D97	TCGA-2G-AAFG	TCGA-2G-AAFG-F62365	New Primary Tumor	Testes	[Not Available]	2495
+630C683D-D1A2-4BEC-AA20-38EF59227D97	TCGA-2G-AAFG	TCGA-2G-AAFG-F62365	New Primary Tumor	Other, specify	skin (melanoma)	5827
+630C683D-D1A2-4BEC-AA20-38EF59227D97	TCGA-2G-AAFG	TCGA-2G-AAFG-F72308	New Primary Tumor	Testes	[Not Available]	2495
+630C683D-D1A2-4BEC-AA20-38EF59227D97	TCGA-2G-AAFG	TCGA-2G-AAFG-F72308	New Primary Tumor	Other, specify	skin (melanoma)	5827
+67DCDE6D-E247-402E-AB27-BA2832B2CC3B	TCGA-2G-AAFJ	TCGA-2G-AAFJ-F63215	[Not Available]	[Not Available]	[Not Available]	313
+67DCDE6D-E247-402E-AB27-BA2832B2CC3B	TCGA-2G-AAFJ	TCGA-2G-AAFJ-F72397	[Not Available]	[Not Available]	[Not Available]	313
+894B81B8-E98E-4ECB-B4E0-4C1C9AD97957	TCGA-2G-AAFL	TCGA-2G-AAFL-F63214	New Primary Tumor	Testes	[Not Available]	38
+894B81B8-E98E-4ECB-B4E0-4C1C9AD97957	TCGA-2G-AAFL	TCGA-2G-AAFL-F63214	Distant Metastasis	Lung	[Not Available]	130
+894B81B8-E98E-4ECB-B4E0-4C1C9AD97957	TCGA-2G-AAFL	TCGA-2G-AAFL-F70734	New Primary Tumor	Testes	[Not Available]	38
+894B81B8-E98E-4ECB-B4E0-4C1C9AD97957	TCGA-2G-AAFL	TCGA-2G-AAFL-F70734	Distant Metastasis	Lung	[Not Available]	130
+251B5341-405F-4F16-8334-475F2D358C25	TCGA-2G-AAG0	TCGA-2G-AAG0-F63207	Distant Metastasis	Lung	[Not Available]	90
+251B5341-405F-4F16-8334-475F2D358C25	TCGA-2G-AAG0	TCGA-2G-AAG0-F69602	Distant Metastasis	Lung	[Not Available]	90
+A789B81C-3D8F-42A6-80B9-AE2AB4DF34E9	TCGA-2G-AAG3	TCGA-2G-AAG3-F63275	New Primary Tumor	Lung	[Not Available]	181
+A789B81C-3D8F-42A6-80B9-AE2AB4DF34E9	TCGA-2G-AAG3	TCGA-2G-AAG3-F63275	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	414
+31356D96-F0A1-4A17-895F-89720C264377	TCGA-2G-AAG5	TCGA-2G-AAG5-F63206	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	451
+31356D96-F0A1-4A17-895F-89720C264377	TCGA-2G-AAG5	TCGA-2G-AAG5-F68547	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	451
+1B67D80C-335E-4094-B973-E8C064C6BF59	TCGA-2G-AAGC	TCGA-2G-AAGC-F63000	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	317
+1B67D80C-335E-4094-B973-E8C064C6BF59	TCGA-2G-AAGC	TCGA-2G-AAGC-F67417	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	317
+626C1CB7-05F6-4DB1-A809-F6FCBA2CCE8E	TCGA-2G-AAGE	TCGA-2G-AAGE-F63001	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	121
+626C1CB7-05F6-4DB1-A809-F6FCBA2CCE8E	TCGA-2G-AAGE	TCGA-2G-AAGE-F66655	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	121
+8F734F5C-FE5C-4C81-98C9-F88A8CA4A5EE	TCGA-2G-AAGF	TCGA-2G-AAGF-F63002	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	139
+8F734F5C-FE5C-4C81-98C9-F88A8CA4A5EE	TCGA-2G-AAGF	TCGA-2G-AAGF-F69564	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	139
+8062CA27-542F-4A00-A047-C88B9B26F34F	TCGA-2G-AAGI	TCGA-2G-AAGI-F63277	New Primary Tumor	Testes	[Not Available]	2193
+8062CA27-542F-4A00-A047-C88B9B26F34F	TCGA-2G-AAGI	TCGA-2G-AAGI-F72521	New Primary Tumor	Testes	[Not Available]	2193
+4E7EB78E-A4E2-463E-A3A0-54E128108031	TCGA-2G-AAGJ	TCGA-2G-AAGJ-F63004	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	171
+4E7EB78E-A4E2-463E-A3A0-54E128108031	TCGA-2G-AAGJ	TCGA-2G-AAGJ-F68736	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	171
+A1A4313C-9C5B-432C-A879-5425898FFAEE	TCGA-2G-AAGK	TCGA-2G-AAGK-F63005	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	713
+A1A4313C-9C5B-432C-A879-5425898FFAEE	TCGA-2G-AAGK	TCGA-2G-AAGK-F68549	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	713
+320995DF-9EF7-460C-AA37-E232E2D4E327	TCGA-2G-AAGT	TCGA-2G-AAGT-F63013	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	15
+320995DF-9EF7-460C-AA37-E232E2D4E327	TCGA-2G-AAGT	TCGA-2G-AAGT-F67221	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	15
+9ED4368B-AC80-419E-B6AD-1C70D56EF4E7	TCGA-2G-AAGX	TCGA-2G-AAGX-F63017	New Primary Tumor	Testes	[Not Available]	4323
+9ED4368B-AC80-419E-B6AD-1C70D56EF4E7	TCGA-2G-AAGX	TCGA-2G-AAGX-F63017	New Primary Tumor	Other, specify	bladder	5027
+9ED4368B-AC80-419E-B6AD-1C70D56EF4E7	TCGA-2G-AAGX	TCGA-2G-AAGX-F72310	New Primary Tumor	Testes	[Not Available]	4323
+9ED4368B-AC80-419E-B6AD-1C70D56EF4E7	TCGA-2G-AAGX	TCGA-2G-AAGX-F72310	New Primary Tumor	Other, specify	bladder	5027
+24718E25-4434-4054-861B-0B3E63FE506A	TCGA-2G-AAGY	TCGA-2G-AAGY-F63018	New Primary Tumor	Testes	[Not Available]	623
+24718E25-4434-4054-861B-0B3E63FE506A	TCGA-2G-AAGY	TCGA-2G-AAGY-F67617	New Primary Tumor	Testes	[Not Available]	623
+D0F2103B-A525-4AB4-A476-DF21623E756C	TCGA-2G-AAH0	TCGA-2G-AAH0-F63022	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	107
+D0F2103B-A525-4AB4-A476-DF21623E756C	TCGA-2G-AAH0	TCGA-2G-AAH0-F67616	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	107
+D7D793F6-EAEA-4DD3-8237-C2C02B042340	TCGA-2G-AAHP	TCGA-2G-AAHP-F63096	New Primary Tumor	Testes	[Not Available]	816
+D7D793F6-EAEA-4DD3-8237-C2C02B042340	TCGA-2G-AAHP	TCGA-2G-AAHP-F70236	New Primary Tumor	Testes	[Not Available]	816
+43CC3C60-F0A6-4B44-BD7B-8EC4DA71991F	TCGA-2G-AAKG	TCGA-2G-AAKG-F63261	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	122
+43CC3C60-F0A6-4B44-BD7B-8EC4DA71991F	TCGA-2G-AAKG	TCGA-2G-AAKG-F63261	New Primary Tumor	Testes	[Not Available]	4616
+43CC3C60-F0A6-4B44-BD7B-8EC4DA71991F	TCGA-2G-AAKG	TCGA-2G-AAKG-F68550	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	122
+43CC3C60-F0A6-4B44-BD7B-8EC4DA71991F	TCGA-2G-AAKG	TCGA-2G-AAKG-F68550	New Primary Tumor	Testes	[Not Available]	4616
+3F0A06D1-4C45-46B8-A06D-036C8998342C	TCGA-2G-AAL5	TCGA-2G-AAL5-F63268	New Primary Tumor	Testes	[Not Available]	3723
+3F0A06D1-4C45-46B8-A06D-036C8998342C	TCGA-2G-AAL5	TCGA-2G-AAL5-F67423	New Primary Tumor	Testes	[Not Available]	3723
+18E7182D-16E8-4EFF-96EC-56FF241810D3	TCGA-2G-AAL7	TCGA-2G-AAL7-F63270	Locoregional Recurrence	Retroperitoneal lymph nodes	[Not Available]	2
+B8F0D793-C9AC-4964-ADED-35BBD30B669B	TCGA-SN-A84Y	TCGA-SN-A84Y-F63026	Distant Metastasis	Other, specify	bone	44
+B0DF5500-D608-416E-82F4-9A99206D24C8	TCGA-VF-A8AA	TCGA-VF-A8AA-F64022	Locoregional Recurrence	Lymph Node(s)	[Not Available]	1059
+BE5254DF-EBCF-4A63-9F9F-4A73B7A8D9ED	TCGA-VF-A8AD	TCGA-VF-A8AD-F64023	Locoregional Recurrence	Testes	[Not Available]	276
+A9D8A9E3-2A0D-4DBD-808F-646A624D2E0A	TCGA-XE-AANJ	TCGA-XE-AANJ-F67408	Locoregional Recurrence	Lymph Node(s)	[Not Available]	328
+A9D8A9E3-2A0D-4DBD-808F-646A624D2E0A	TCGA-XE-AANJ	TCGA-XE-AANJ-F67408	Locoregional Recurrence	Other, specify	LT spermatic cord	328
+A9D8A9E3-2A0D-4DBD-808F-646A624D2E0A	TCGA-XE-AANJ	TCGA-XE-AANJ-F67408	Locoregional Recurrence	Other, specify	LT inguinal ring	328
+11D10254-3A16-4526-98E8-80838F8427F2	TCGA-XE-AANV	TCGA-XE-AANV-F67492	Locoregional Recurrence	Lymph Node(s)	[Not Available]	1370
+F18E8E44-6DCA-4588-A003-77D70D6E6866	TCGA-XE-AAOJ	TCGA-XE-AAOJ-F67612	Locoregional Recurrence	Other, specify	Mature teratoma: abdominal wall	266
+D6C4198B-6C69-40E5-A8EB-B2DE3AC0B2B7	TCGA-ZM-AA0N	TCGA-ZM-AA0N-F72071	Distant Metastasis	Retroperitoneal lymph nodes	[Not Available]	490

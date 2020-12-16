@@ -1,0 +1,2 @@
+bcr_patient_uuid	bcr_patient_barcode	bcr_sample_barcode	ffpe_slide_uuid
+	CDE_ID:2673794		
