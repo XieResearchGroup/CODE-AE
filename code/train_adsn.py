@@ -159,14 +159,14 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                  shared_encoder.parameters()
                  ]
     t_ae_params = [t_dsnae.private_encoder.parameters(),
-                   shared_encoder.parameters()
-                   ]
-    #t_ae_params.append(shared_decoder.parameters())
+                 s_dsnae.private_encoder.parameters(),
+                 shared_decoder.parameters(),
+                 shared_encoder.parameters()
+                 ]
 
     ae_optimizer = torch.optim.AdamW(chain(*ae_params), lr=kwargs['lr'])
     classifier_optimizer = torch.optim.RMSprop(confounding_classifier.parameters(), lr=kwargs['lr'])
-    #t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
-    t_ae_optimizer = torch.optim.RMSprop(chain(*ae_params), lr=kwargs['lr'])
+    t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
 
     dsnae_train_history = defaultdict(list)
     dsnae_val_history = defaultdict(list)
