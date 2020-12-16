@@ -162,7 +162,8 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
 
     ae_optimizer = torch.optim.AdamW(chain(*ae_params), lr=kwargs['lr'])
     classifier_optimizer = torch.optim.RMSprop(confounding_classifier.parameters(), lr=kwargs['lr'])
-    t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
+    #t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
+    t_ae_optimizer = torch.optim.RMSprop(chain(*ae_params), lr=kwargs['lr'])
 
     dsnae_train_history = defaultdict(list)
     dsnae_val_history = defaultdict(list)
@@ -249,7 +250,7 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
                                                            t_batch=t_batch,
                                                            device=kwargs['device'],
                                                            optimizer=t_ae_optimizer,
-                                                           alpha=kwargs['alpha'],
+                                                           alpha=1.0,
                                                            history=gen_train_history)
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history, critic_train_history, gen_train_history)
