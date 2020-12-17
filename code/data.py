@@ -99,7 +99,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     # return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
 
-def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, drug='gem', auc_threshold=0.80):
+def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, drug='gem', auc_threshold=None):
     """
 
     :param gex_features_df:
@@ -110,10 +110,16 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
     :param auc_threshold:
     :return:
     """
-    if drug == 'gem':
-        drugs_to_keep = ['Gemcitabine']
-    else:
-        drugs_to_keep = ['5-Fluorouracil']
+    drug_name_dict = {
+        'gem': 'Gemcitabine',
+        'fu': '5-Fluorouracil',
+        'cis': 'Cisplatin',
+        'carbo': ,
+        'oxa': 'Oxaliplatin',
+        'pac':
+    }
+
+    drugs_to_keep = [drug_name_dict[drug]]
 
     non_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_non_gex.csv')
     res_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_res_gex.csv')
@@ -162,6 +168,9 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
     ccle_target_df = target_df[drugs_to_keep[0]]
     ccle_target_df.dropna(inplace=True)
     ccle_labeled_samples = gex_features_df.index.intersection(ccle_target_df.index)
+
+    if auc_threshold is None:
+        auc_threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
 
     ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < auc_threshold).astype('int')
     ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
@@ -305,3 +314,7 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
 
     return (train_labeled_dataloader, val_labeled_dataloader,
             test_labeled_dataloader) if ft_flag else (train_labeled_dataloader, test_labeled_dataloader)
+
+
+
+

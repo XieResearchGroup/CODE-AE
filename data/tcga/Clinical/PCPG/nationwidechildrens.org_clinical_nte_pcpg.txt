@@ -1,0 +1,28 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_dx_confirmed_by	days_to_new_tumor_event_after_initial_treatment
+bcr_patient_uuid	bcr_patient_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_neoplasm_confirmed_diagnosis_method_name	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3186701	CDE_ID:3392464
+08DD606A-1982-4CB9-BCD6-09D4BC158F6D	TCGA-QR-A6GT	Distant Metastasis	Liver	[Not Applicable]	Imaging	1476
+08DD606A-1982-4CB9-BCD6-09D4BC158F6D	TCGA-QR-A6GT	Distant Metastasis	Lung	[Not Applicable]	Imaging	1476
+08DD606A-1982-4CB9-BCD6-09D4BC158F6D	TCGA-QR-A6GT	Distant Metastasis	Bone	[Not Applicable]	Imaging	1476
+EC54924B-2463-4364-A8FC-6D5A7DF0B444	TCGA-QR-A700	Distant Metastasis	Lung	[Not Applicable]	Imaging	606
+EC54924B-2463-4364-A8FC-6D5A7DF0B444	TCGA-QR-A700	Distant Metastasis	Liver	[Not Applicable]	Imaging	606
+A3B165E0-BEC1-4DBC-B2D8-08FA21874CFA	TCGA-QR-A703	New Primary Tumor	Other, specify	Left Adrenal Pheochromocytoma	Pathology	0
+A3B165E0-BEC1-4DBC-B2D8-08FA21874CFA	TCGA-QR-A703	New Primary Tumor	Other, specify	Right Paraganglioma	Pathology	106
+A39AC229-60D2-42C2-9721-7E0894C0AE38	TCGA-QR-A70P	Locoregional Disease	Other, specify	L jugular area	[Not Available]	648
+59F305D2-DCA8-4EC7-8708-27B4B105FC72	TCGA-QT-A5XJ	Distant Metastasis	Other, specify	Bilateral Breasts SubQ Tissue	Pathology	77
+59F305D2-DCA8-4EC7-8708-27B4B105FC72	TCGA-QT-A5XJ	New Primary Tumor	Other, specify	R Breast	Pathology	501
+59F305D2-DCA8-4EC7-8708-27B4B105FC72	TCGA-QT-A5XJ	Locoregional Disease	Lymph Node(s)	[Not Applicable]	Imaging	93
+59F305D2-DCA8-4EC7-8708-27B4B105FC72	TCGA-QT-A5XJ	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Imaging	93
+59F305D2-DCA8-4EC7-8708-27B4B105FC72	TCGA-QT-A5XJ	Distant Metastasis	Bone	[Not Applicable]	Imaging	227
+E90E83EF-6B0D-439B-A1C2-8D8DD3EBD090	TCGA-RW-A67V	Locoregional Disease	Other, specify	Left adrenal	Pathology	551
+A7809D38-985D-4D0E-9BEC-3FDB6536BE45	TCGA-RW-A688	New Primary Tumor	Lung	[Not Applicable]	Pathology	27
+C6F5EC07-84BB-4868-BE01-8FE8C7CE6999	TCGA-SP-A6QF	New Primary Tumor	Other, specify	Thyroid	Pathology	588
+6F8DF65F-326E-441E-91AC-61E5B32AC16F	TCGA-SP-A6QG	New Primary Tumor	Other, specify	Breast, left	Pathology	626
+5A36B7AF-70C6-4A08-84AC-01EF15739337	TCGA-SR-A6MR	New Primary Tumor	Retroperitoneum	[Not Applicable]	Imaging	928
+054B81AC-963F-4F49-950C-AE03144AF348	TCGA-WB-A80K	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Pathology	772
+3B6B1088-662A-4A66-8134-97D385EB5AE9	TCGA-WB-A80P	Distant Metastasis	Bone	[Not Applicable]	Imaging	6866
+3B6B1088-662A-4A66-8134-97D385EB5AE9	TCGA-WB-A80P	Distant Metastasis	Lung	[Not Applicable]	Imaging	6866
+3B6B1088-662A-4A66-8134-97D385EB5AE9	TCGA-WB-A80P	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Imaging	6866
+BA65B478-65D0-4C9A-A2C2-D32B29A1A9C4	TCGA-WB-A81E	Locoregional Disease	Lymph Node(s)	[Not Applicable]	Pathology	887
+826EC350-7096-40B8-93F7-6C9205ACF7F6	TCGA-WB-A822	Distant Metastasis	Bone	[Not Applicable]	Pathology	69
+93FFFB9E-E065-40DC-8EAA-62C9F35560C4	TCGA-XG-A823	New Primary Tumor	Other, specify	Carotid Body	[Not Available]	190

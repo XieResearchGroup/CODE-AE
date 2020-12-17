@@ -1,0 +1,63 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_dx_days_to	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_dx_evidence	new_tumor_event_surgery_days_to	new_tumor_event_residual_tumor	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx	new_tumor_event_additional_surgery_procedure
+bcr_patient_uuid	bcr_patient_barcode	days_to_new_tumor_event_after_initial_treatment	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	progression_determined_by	days_to_new_tumor_event_additional_surgery_procedure	residual_disease_post_new_tumor_event_margin_status	additional_radiation_therapy	additional_pharmaceutical_therapy	new_tumor_event_additional_surgery_procedure
+CDE_ID:	CDE_ID:2673794	CDE_ID:3392464	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:2786205	CDE_ID:3008335	CDE_ID:3008753	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3427611
+75119D1A-93E5-4AE7-9D60-69EE929A0772	TCGA-2J-AAB1	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	[Not Available]
+33833131-1482-42D5-9CF5-01CADE540234	TCGA-2J-AAB4	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	[Not Available]
+70797499-16E6-48CC-8AE4-1E692713DAD3	TCGA-2J-AAB6	169	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	[Unknown]	NO
+2E8F90F4-AED3-43B0-985C-DFDC2581F24F	TCGA-2J-AAB8	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	[Not Available]
+A5748656-5330-417A-8938-01F69DDB3576	TCGA-2J-AAB9	521	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+E3A19E63-BAE5-498B-9687-41194AA5728D	TCGA-2J-AABA	472	Distant Metastasis	Other, specify	sq nodule	Biopsy with Histologic Confirmation	[Not Available]	[Not Available]	NO	YES	NO
+58C1C391-5EA3-4432-BB1E-E7E1974954BC	TCGA-2J-AABE	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	[Not Available]
+886D6116-D496-444F-9B7B-7449DAD31055	TCGA-2J-AABF	671	Distant Metastasis	Other, specify	Liver/lung	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+2AAF212F-000A-4A9D-8A4A-198FA94F491E	TCGA-2J-AABI	788	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES	NO
+C24C54EA-4095-460D-BB53-E3629A56CD62	TCGA-2J-AABK	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	[Not Available]
+A8C3E333-865D-4060-8CE4-453AA6F9F0E8	TCGA-2J-AABO	440	Locoregional Recurrence	Other, specify	abdomen	Biopsy with Histologic Confirmation	435	[Not Evaluated]	NO	YES	YES
+507A4E05-D5AB-4DBB-9B4F-76B1A21B79DD	TCGA-2J-AABR	412	Distant Metastasis	Liver	[Not Available]	Biopsy with Histologic Confirmation	[Not Available]	[Not Available]	NO	YES	NO
+3F9CC59E-9F7D-40D1-9365-28B40DFF3C59	TCGA-2J-AABT	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]	[Not Available]
+0B4B50C7-AA0B-4A64-807B-D3CB47EEEB6F	TCGA-2J-AABU	154	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+232073A1-2BF3-4539-A396-BDE7836F9AEB	TCGA-2J-AABV	617	Distant Metastasis	Liver	[Not Available]	Biopsy with Histologic Confirmation|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+396FF766-A383-4F42-BCE3-F2F32B7F1151	TCGA-3A-A9I9	513	Locoregional Recurrence	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+CD9DC5C5-1161-43EA-A617-1356A3B23E16	TCGA-3A-A9IU	371	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	NO
+517E0F20-56CC-470E-8C5F-543EFA10CFB5	TCGA-3A-A9IZ	109	Locoregional Recurrence	Tumor Bed	[Not Available]	Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+A308A5EE-8EA1-47EE-823D-14736D74A925	TCGA-3A-A9J0	363	Distant Metastasis	Lung	[Not Available]	Biopsy with Histologic Confirmation	[Not Available]	[Not Available]	NO	YES	NO
+A643D0B8-AA50-481C-9F12-F2E634D61D90	TCGA-3E-AAAY	987	Distant Metastasis	Lung	[Not Available]	Positive Biomarker(s)	987	RX	NO	NO	YES
+9D449AA3-B740-4D5A-9AEA-880B6F84CFF4	TCGA-3E-AAAZ	1600	New Primary Tumor	Lung	[Not Available]	Positive Biomarker(s)	[Not Available]	[Not Available]	NO	NO	[Not Available]
+8d9bd437-8b4b-4da5-87ba-6b5790f05022	TCGA-F2-6879	183	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+4c9e6085-41c3-4cfe-ad3d-5f94196a86e0	TCGA-F2-7273	256	Distant Metastasis	Liver	[Not Available]	Biopsy with Histologic Confirmation|Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+8475C44D-E091-4C65-B1B4-9A77AE3C0E1D	TCGA-FB-AAQ6	213	Locoregional Recurrence	Peritoneal Surfaces	[Not Available]	Biopsy with Histologic Confirmation	213	[Not Available]	NO	NO	YES
+ff03311b-d20d-49ee-8de4-d4487c3f2633	TCGA-FZ-5919	55	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+345a375c-15cc-453a-8054-e68a35178082	TCGA-FZ-5921	103	Locoregional Recurrence	Peritoneal Surfaces	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO	NO
+a46fb053-616d-41e4-b38b-2bccf17125c0	TCGA-FZ-5922	743	Locoregional Recurrence	Peritoneal Surfaces	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	YES	YES	NO
+40FC7973-91C4-4FA8-A105-7FC3D6F3817C	TCGA-HV-A5A6	1819	Distant Metastasis	Lung	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+2E0701E1-E16F-457F-B939-7B1128F4A58B	TCGA-HV-A7OL	123	Distant Metastasis	Non-regional / Distant Lymph Nodes	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+5C51FBFE-153C-4CD2-97BD-E444DAA0B20F	TCGA-HV-A7OP	342	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	YES	YES	NO
+0FA89FBC-307A-48D5-ADCE-192556755C22	TCGA-HV-AA8V	526	Distant Metastasis	Other, specify	bone	Convincing Imaging	[Not Available]	[Not Available]	YES	YES	NO
+16B38977-AEA1-4C75-89EC-4FB551F652DD	TCGA-HV-AA8X	375	Distant Metastasis	Other, specify	Omentum	Biopsy with Histologic Confirmation	[Not Available]	[Not Available]	NO	NO	NO
+94CD2278-7C76-423B-A44B-564776211A07	TCGA-HZ-A9TJ	555	Distant Metastasis	Peritoneal Surfaces	[Not Available]	Biopsy with Histologic Confirmation	555	R2	NO	NO	YES
+1782bf45-7350-4053-8dd1-45faf4ed8dd9	TCGA-IB-7644	306	Distant Metastasis	Other, specify	Omentum, Peritoneal surface, Non regional Lymph nodes	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+7a1d9862-910b-403e-9eab-697dc65618c7	TCGA-IB-7645	984	Distant Metastasis	Liver	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]	NO
+d1e0f479-77dd-42cd-89cb-c1eeac60c10a	TCGA-IB-7646	132	Locoregional Recurrence	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	[Unknown]	[Unknown]	NO
+d14154a5-9c8a-4c55-8c2d-64f3cad7b7d5	TCGA-IB-7647	390	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+ec9ac713-08e9-4559-b606-5f58d2c4df50	TCGA-IB-7649	282	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+3559f697-8fec-4f36-962c-632272fe9c9c	TCGA-IB-7651	492	Locoregional Recurrence	[Not Available]	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+05d2adb3-5c6d-4edc-ba4c-bdbf628f4eee	TCGA-IB-7888	427	Distant Metastasis	Other, specify	Retroperitoneum	Convincing Imaging	[Not Available]	[Not Available]	YES	YES	NO
+31e66b80-c684-4ee8-82ae-36d00f36bc88	TCGA-IB-7889	352	Locoregional Recurrence	[Not Available]	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+5494af7d-403a-423b-b7ff-e6db9c117e93	TCGA-IB-7890	519	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+0944ce65-a89a-4916-b90a-f674b334281e	TCGA-IB-7893	80	Distant Metastasis	Peritoneal Surfaces	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	[Unknown]	[Unknown]	NO
+01775b06-5836-469c-8537-120cb8cc94e9	TCGA-IB-7897	397	Locoregional Recurrence|Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	[Unknown]	[Unknown]	NO
+C6388925-C0A1-4610-A6B9-D9D9500D88C6	TCGA-IB-A5SO	276	Locoregional Recurrence	Peritoneal Surfaces	[Not Available]	Biopsy with Histologic Confirmation|Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+BD73ED94-5F4F-4EB3-8B9B-391AF4422D0E	TCGA-IB-A5SP	300	Locoregional Recurrence	Other, specify	Superior Mesenteric Artery	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	[Unknown]
+4F87E061-E773-48F2-84BA-32401396500E	TCGA-IB-A5SQ	197	Distant Metastasis	Lung	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+31ACA8A3-7107-4B9D-8B6A-C07CAA2A9339	TCGA-IB-A5SS	66	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+712C2F78-C736-42CE-B689-A954C5290987	TCGA-IB-A7LX	7	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+638B1A6A-C222-414C-96BC-F259F0AFB278	TCGA-IB-AAUN	131	Locoregional Recurrence	Other, specify	[Unknown]	Positive Biomarker(s)	[Not Available]	[Not Available]	NO	NO	NO
+869E61D6-FBBF-4CA2-BE1A-57B82A03C7A1	TCGA-IB-AAUO	74	Distant Metastasis	Liver	[Not Available]	Biopsy with Histologic Confirmation|Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+AFE89625-B355-454D-8C0B-B4161EDD69F8	TCGA-IB-AAUQ	107	Distant Metastasis	Non-regional / Distant Lymph Nodes	[Not Available]	Biopsy with Histologic Confirmation|Convincing Imaging	107	[Not Evaluated]	NO	YES	YES
+AB449860-46E5-485E-ABD5-31C5ABEF2C58	TCGA-L1-A7W4	129	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	NO	NO
+F0A4944C-D6CF-4163-A1AB-189803464B03	TCGA-M8-A5N4	416	Locoregional Recurrence	Other, specify	retroperitoneal recurrence around the supramesenteric artery and vein and some para aortic nodes	Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+09FD6D9E-C715-4D57-88F9-238DD74C79A7	TCGA-US-A774	366	Distant Metastasis	Liver	[Not Available]	Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+5AA57FFF-4515-4076-8798-55015BB4F156	TCGA-US-A77E	166	Distant Metastasis	Liver	[Not Available]	Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	NO	NO
+B46B5A4C-59FC-4769-B05A-D15F9AAA753A	TCGA-XD-AAUH	87	New Primary Tumor	Other, specify	Left shoulder (invasive melanoma)	Biopsy with Histologic Confirmation	129	R0	NO	NO	YES
+9A2DB69E-D429-45D4-89CA-A2C4E0CFC116	TCGA-XD-AAUI	175	Distant Metastasis	Liver	[Not Available]	Convincing Imaging|Positive Biomarker(s)	[Not Available]	[Not Available]	NO	YES	NO
+DD7BCDD8-1660-4DAB-9860-9D136C4CEE77	TCGA-XN-A8T3	[Discrepancy]	Distant Metastasis	Lung	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	NO
+382B279F-87E1-4DBC-A2CA-C1DFDE1CF254	TCGA-XN-A8T5	242	Distant Metastasis	Liver	[Not Available]	Convincing Imaging	[Not Available]	[Not Available]	NO	YES	[Discrepancy]

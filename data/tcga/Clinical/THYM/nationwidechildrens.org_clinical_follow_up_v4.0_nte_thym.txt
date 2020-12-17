@@ -1,0 +1,18 @@
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_surgery	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx	new_tumor_event_dx_days_to
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_tumor_event_additional_surgery_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3427611	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3392464
+81FDC97F-8BAD-4286-9D36-9A887C6B59A1	TCGA-3G-AB19	TCGA-3G-AB19-F72302	New Primary Tumor	Lung	[Not Available]	NO	YES	NO	2420
+EDDB3067-A0E5-461F-A8B8-95081EC67DE0	TCGA-3T-AA9L	TCGA-3T-AA9L-F64918	Distant Metastasis	Other, specify	Lung Pleura	YES	YES	YES	702
+EDDB3067-A0E5-461F-A8B8-95081EC67DE0	TCGA-3T-AA9L	TCGA-3T-AA9L-F64918	Locoregional Recurrence	Other, specify	Thymus	YES	YES	YES	702
+EDDB3067-A0E5-461F-A8B8-95081EC67DE0	TCGA-3T-AA9L	TCGA-3T-AA9L-F64918	Distant Metastasis	Bone	[Not Available]	YES	YES	YES	702
+EDDB3067-A0E5-461F-A8B8-95081EC67DE0	TCGA-3T-AA9L	TCGA-3T-AA9L-F64918	Distant Metastasis	Other, specify	Superior Vena Cava Lymph Node	YES	YES	YES	702
+51ABE033-5FB4-49B5-89EF-C44D0BB1AB00	TCGA-4V-A9QN	TCGA-4V-A9QN-F70718	Distant Metastasis	Other, specify	PLEURA	YES	NO	NO	937
+7A99A808-5AC7-49B3-87F6-106663EB323F	TCGA-4V-A9QQ	TCGA-4V-A9QQ-F70719	Locoregional Recurrence	Other, specify	PLEURA	YES	NO	NO	1549
+88C0AF76-B1BA-478F-A42B-8A50C0568D5E	TCGA-4V-A9QS	TCGA-4V-A9QS-F70722	Locoregional Recurrence	Other, specify	PLEURA	YES	NO	NO	752
+66C564BA-B42D-4BE9-9E5F-BF93984569EB	TCGA-X7-A8D6	TCGA-X7-A8D6-F68399	New Primary Tumor	Other, specify	breast	YES	NO	NO	2928
+66C564BA-B42D-4BE9-9E5F-BF93984569EB	TCGA-X7-A8D6	TCGA-X7-A8D6-F68399	New Primary Tumor	Other, specify	face	[Not Available]	NO	NO	3143
+66C564BA-B42D-4BE9-9E5F-BF93984569EB	TCGA-X7-A8D6	TCGA-X7-A8D6-F68399	New Primary Tumor	Other, specify	nose	[Not Available]	NO	NO	3502
+8CC1E08D-75B6-48DA-90DF-E6AF23CB4C35	TCGA-X7-A8D7	TCGA-X7-A8D7-F68439	New Primary Tumor	Lung	[Not Available]	[Unknown]	[Unknown]	[Unknown]	265
+9BBD057C-5A3B-4E04-8DF7-C2F0C1823084	TCGA-XH-A853	TCGA-XH-A853-F70471	New Primary Tumor	Other, specify	right axillary	NO	NO	NO	196
+2F6F86F3-6D31-4A8C-B70D-2759B44BAC6C	TCGA-ZB-A962	TCGA-ZB-A962-F72422	Distant Metastasis	Liver	[Not Available]	YES	NO	NO	1091
+2F6F86F3-6D31-4A8C-B70D-2759B44BAC6C	TCGA-ZB-A962	TCGA-ZB-A962-F72422	Distant Metastasis	Liver	[Not Available]	NO	YES	NO	1365

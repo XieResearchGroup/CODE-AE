@@ -1,0 +1,110 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_type	new_tumor_event_dx_days_to	new_tumor_event_site	new_tumor_event_site_other	progression_after_hormone_tx	progression_after_hormone_tx_type	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx
+bcr_patient_uuid	bcr_patient_barcode	new_neoplasm_event_type	days_to_new_tumor_event_after_initial_treatment	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	tumor_progression_post_ht	type_of_progression_after_ht	additional_radiation_therapy	additional_pharmaceutical_therapy
+CDE_ID:	CDE_ID:2673794	CDE_ID:3119721	CDE_ID:3392464	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3158820	CDE_ID:3354944	CDE_ID:3427615	CDE_ID:3427616
+5A790086-4887-4D2B-9C28-0FDD5DD1F1FB	TCGA-2A-A8W3	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+5e2ff1e6-87bc-4b91-a959-f0f553af4e27	TCGA-EJ-7318	Locoregional Recurrence	380	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO
+df4a7caa-6289-4157-8cb4-6ce8784e7506	TCGA-EJ-8469	Biochemical evidence of disease	1925	Non-regional / Distant Lymph Nodes	[Not Available]	[Not Available]	[Not Available]	NO	NO
+ab378ad0-1881-403f-9e85-d6f97e7b7c81	TCGA-EJ-8472	Biochemical evidence of disease	196	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+08F11BDD-D665-45AB-B1A2-5485D91922C2	TCGA-EJ-A46F	Biochemical evidence of disease	215	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+8631BB5E-6D08-4C20-A85E-CB84F5DAC290	TCGA-EJ-A65F	Biochemical evidence of disease	75	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+4EF24CCA-976B-4C2F-8810-4339967DA570	TCGA-EJ-A6RA	Locoregional Recurrence	353	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+C8FAB4A7-FD7E-4D5E-A330-18C7E148B9D0	TCGA-EJ-A7NN	Biochemical evidence of disease	197	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+00F0F7DD-71DE-4E4F-B4B5-DF860324F2E8	TCGA-EJ-A8FP	Biochemical evidence of disease	117	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+9044098B-415D-4893-A682-3636F6B2B2DB	TCGA-EJ-A8FS	Biochemical evidence of disease	216	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+F97FED28-FDF3-4C82-8B6D-1015848B80DC	TCGA-FC-A6HD	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Not Available]	[Not Available]
+d39d1a49-fcc0-4f2c-9338-df904e7f6a09	TCGA-G9-6339	Biochemical evidence of disease	1634	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+b8fbfe87-e92c-4d54-a620-17b2dcde6d53	TCGA-G9-6498	Biochemical evidence of disease	1342	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+084AC674-F4CF-4A4A-A6A2-687C05C272EA	TCGA-G9-A9S0	Distant Metastasis	423	Bone	[Not Available]	YES	Distant Metastases	YES	YES
+A8573F49-9FED-4C85-9E1D-40ABAB7F86EC	TCGA-G9-A9S4	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+00F7F9D3-7A34-4A5B-9D19-38810DCABBBA	TCGA-J4-A67N	Biochemical evidence of disease	442	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+C024C4B6-0143-4071-9175-7435F1EAAC58	TCGA-J4-A83N	New Primary Tumor	433	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+73B7D4BC-6B56-4AE8-BE7F-074745563BEE	TCGA-J4-AATZ	Biochemical evidence of disease	79	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+2ECCAABE-0783-4596-B674-D59846373A1D	TCGA-J9-A52B	Biochemical evidence of disease	57	[Not Available]	[Not Available]	NO	[Not Available]	YES	YES
+30ABA886-5152-4E25-B36F-6CE7009D419E	TCGA-J9-A52E	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]	YES	YES
+1122FA92-0073-4F59-9880-3F1A34620758	TCGA-J9-A8CL	Biochemical evidence of disease	132	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+DECEB7DF-6EDC-41F0-99AA-C4AC7E764074	TCGA-J9-A8CM	Biochemical evidence of disease	344	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO
+5089A8D2-A353-4150-8A6B-6478C5BB29BB	TCGA-KC-A4BL	Biochemical evidence of disease	193	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+3E71FA1C-855C-475A-9DD0-A314A3ECD48D	TCGA-KC-A4BR	Biochemical evidence of disease	1022	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+A8C954B7-3077-4FF1-B311-D4B4BFA49786	TCGA-KC-A4BV	Biochemical evidence of disease	1328	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+4C197D76-DAF6-474D-B561-DED42905F52A	TCGA-KK-A59Y	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	[Not Available]
+436B242C-AD5F-432E-A684-27BBA4C1C8A2	TCGA-KK-A5A1	Locoregional Recurrence	203	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	[Not Available]
+D112136D-34FA-426E-B432-4D1E4286ADF8	TCGA-KK-A6E0	Biochemical evidence of disease	941	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+CECF4EE9-7610-4F47-A825-7FDE8233B75D	TCGA-KK-A7AQ	Biochemical evidence of disease	1217	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+39303E7C-5BAF-479D-A112-D8F03A18C621	TCGA-KK-A7AU	Biochemical evidence of disease	207	[Not Available]	[Not Available]	[Unknown]	[Not Available]	YES	YES
+2F231B79-84BC-4256-BF26-7CE64083D438	TCGA-KK-A7AW	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+F4AEBD64-A356-4C05-B847-6DD28CF26339	TCGA-KK-A7AY	Biochemical evidence of disease	1124	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+73D4E806-2C15-4C9E-A978-106FB9494E82	TCGA-KK-A7B0	Biochemical evidence of disease	606	[Not Available]	[Not Available]	NO	[Not Available]	YES	YES
+5447A0E0-80CA-40FB-8233-504FDE51F22C	TCGA-KK-A7B4	Biochemical evidence of disease	637	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+9A8CAEF5-6543-4391-8A55-4999035693C5	TCGA-KK-A8I4	Distant Metastasis	1162	Bone	[Not Available]	NO	[Not Evaluated]	NO	YES
+108DEE1E-B27D-4056-A167-261725F548C1	TCGA-KK-A8I7	Biochemical evidence of disease	1088	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Unknown]	YES
+70C6C3A0-B422-4541-A60F-355356A9A340	TCGA-KK-A8IC	Biochemical evidence of disease	1060	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+3F5270A2-3284-4523-BD81-54FC98C2B933	TCGA-KK-A8IF	Biochemical evidence of disease	648	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+D05681CC-DFFA-44D0-B6A1-0A99A4CE3BE5	TCGA-KK-A8II	Biochemical evidence of disease	626	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+98A9CE0E-4F02-4819-BC0C-C1A8D34E3DB6	TCGA-KK-A8IJ	New Primary Tumor	307	Other, specify	Melanoma in situ of the right midback	[Not Available]	[Not Available]	NO	NO
+3FA3CFFE-40F1-4853-9CBB-54A99FFD6108	TCGA-M7-A722	Biochemical evidence of disease	559	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+F8B98552-AE2A-4609-9929-7864485B3C51	TCGA-M7-A724	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	YES
+56DF9DE6-613D-44CE-8827-9213CC6C8B56	TCGA-V1-A8MF	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+F4F81316-C99A-4A88-AA6C-E66FC5D60C53	TCGA-V1-A8MJ	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+9938C4AD-748C-4086-9081-FAC0AEFAD440	TCGA-V1-A8MK	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+69174712-AF41-422D-952A-D8D0D16D7182	TCGA-V1-A8ML	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+94D6675E-27AE-4F34-9D53-6E19238EB01D	TCGA-V1-A8MM	Biochemical evidence of disease	990	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+A76BCD1F-E47F-4DC5-A97A-4C4F00032191	TCGA-V1-A8MU	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+F7FC3F2E-C70E-460D-B34D-BB2EA423A0AE	TCGA-V1-A8WL	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+DC16F348-A49F-4958-A3FF-BC40E18DF2BD	TCGA-V1-A8WN	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+BEA84D33-3286-44E2-9595-893C34A01F58	TCGA-V1-A8WS	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+8E5B1D47-7D92-4D28-8186-4176ADA96672	TCGA-V1-A8WV	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+D843996C-0F17-4482-8466-9F6144981B8A	TCGA-V1-A8WW	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+86B82965-B19B-4285-B1A5-51A5D5267103	TCGA-V1-A8X3	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+E0DFC37A-4A2E-4353-9673-241B100B3467	TCGA-V1-A9O5	Biochemical evidence of disease	124	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+40EBEB10-7390-44FC-9EF2-80D40D251018	TCGA-V1-A9O7	Biochemical evidence of disease	819	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+F6935F67-5C62-4774-8346-711F36F3B547	TCGA-V1-A9O9	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+A8396F6D-53E2-4664-A3E2-DF061D022108	TCGA-V1-A9OA	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+D4DC7C5C-45B3-4741-B0C1-FEE477DA2EF4	TCGA-V1-A9OF	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+6EF0FC2D-F274-4253-BEC5-6DBD55953D76	TCGA-V1-A9OH	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+FCBD7B29-12DA-44C8-B241-1388D1B15684	TCGA-V1-A9OL	Biochemical evidence of disease	105	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+10271D9C-9B9C-4B5F-A845-A0F1BD03AF51	TCGA-V1-A9OQ	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+18B8AD7F-0F39-4853-AE13-5B13AA5E6F7D	TCGA-V1-A9OT	Biochemical evidence of disease	292	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+14C2819B-9AFC-4C89-849F-530E289D55BF	TCGA-V1-A9OX	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+69FC0351-6496-46B5-BE22-25B80C1DC4CC	TCGA-V1-A9OY	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+4DB62B98-ABD4-4A7C-9FCE-8BBDA2AEC8A3	TCGA-V1-A9Z7	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+9BF4E7BB-6AA9-4BE8-A7C3-E630ECFF4DCE	TCGA-V1-A9Z8	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+0885EB03-DE9F-46BA-9C53-FB69C67AB9F0	TCGA-V1-A9Z9	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+DEC99F86-622B-477F-A26A-98C954FB1F17	TCGA-V1-A9ZG	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+3D92B872-A76A-49CD-9FD5-7993E78D2FB0	TCGA-V1-A9ZI	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+7DC62C0F-B82D-417F-89A7-4CB984A9D304	TCGA-V1-A9ZK	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Not Available]	[Not Available]
+338FE754-FC4A-4294-BA15-42D4C7C9AC10	TCGA-V1-A9ZR	Biochemical evidence of disease	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+48F36FBE-356A-40AF-B81F-8EA0B1369BAB	TCGA-VP-A878	Biochemical evidence of disease	98	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+AA405B5F-F75D-486A-96F3-1DF7ADD18193	TCGA-VP-A87D	Biochemical evidence of disease	1194	[Not Available]	[Not Available]	YES	Biochemical Recurrence	[Unknown]	YES
+24D7D4D8-F5C1-4D71-80E0-72A429FC9DBD	TCGA-VP-A87K	Biochemical evidence of disease	533	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO
+2270D09E-A8BE-4B7D-9520-A4BB1CD053C0	TCGA-XK-AAIW	New Primary Tumor	427	[Not Available]	[Not Available]	NO	[Not Available]	NO	NO
+A3A4A518-2DAC-4846-9476-1AA7E0C1FB5E	TCGA-XK-AAJR	Biochemical evidence of disease	131	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+B47791BA-85FD-41D0-AC1F-B6FA06F18E96	TCGA-XQ-A8TA	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	Distant Metastases	[Not Available]	[Not Available]
+666D8B0C-593F-4EC3-B16A-2DADBEAD8C32	TCGA-YL-A8HJ	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+351239DB-52D3-4AB5-BD4F-8FEAA6701BA1	TCGA-YL-A8HK	Biochemical evidence of disease	1376	[Not Available]	[Not Available]	YES	Biochemical Recurrence	NO	NO
+B7C8CA4C-8D9C-4C5B-99EE-2FCEBE4F70E6	TCGA-YL-A8HO	Biochemical evidence of disease	1068	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+494A8495-8D10-4A8F-8664-F68AC339C889	TCGA-YL-A8S8	Biochemical evidence of disease	679	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+B0669EEC-6A1A-4618-AE23-AE0F9E9C266C	TCGA-YL-A8S9	Locoregional Recurrence	1006	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+21A29827-7896-436D-AB52-E7EDFC91E7D0	TCGA-YL-A8SB	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+42FA9774-9471-4707-8F6F-8041B34C49E4	TCGA-YL-A8SC	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+C5F8C89C-EF69-42F4-9B37-5B552FCCDF4B	TCGA-YL-A8SI	Biochemical evidence of disease	1423	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+F3EC5BF3-97AE-4033-91A6-084A1AA152A4	TCGA-YL-A8SJ	Biochemical evidence of disease	752	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
+159B47B2-DC7D-4856-9A00-454E27301E23	TCGA-YL-A8SK	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+C506FAE4-7C0A-4705-8E80-5BCC122A8A32	TCGA-YL-A8SP	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+24E5D323-F3D4-4ADD-9A29-79E77CED357C	TCGA-YL-A8SQ	Biochemical evidence of disease	329	[Not Available]	[Not Available]	YES	Biochemical Recurrence	YES	YES
+1BCB1132-A9FC-4F03-BBED-ABAF80C7A24A	TCGA-YL-A9WH	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	[Not Available]	[Not Available]
+0B5ED938-6AB8-4E76-8558-1D86F3A90DFA	TCGA-YL-A9WJ	Distant Metastasis	1476	Non-regional / Distant Lymph Nodes	[Not Available]	[Unknown]	[Unknown]	[Unknown]	[Unknown]
+B2BCC97F-03A6-409A-8B91-78221CB10D7F	TCGA-YL-A9WK	Biochemical evidence of disease	1009	[Not Available]	[Not Available]	YES	Biochemical Recurrence	NO	YES
+CFCF057A-00FE-4603-A720-586712B75803	TCGA-YL-A9WL	Biochemical evidence of disease	740	[Not Available]	[Not Available]	YES	Biochemical Recurrence	[Unknown]	[Unknown]
+A468353E-0A96-4A4D-8AEF-5140BF1BF952	TCGA-YL-A9WX	Biochemical evidence of disease	1506	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+D7E22AF5-88AA-4A83-985C-1D346DFF652D	TCGA-YL-A9WY	Biochemical evidence of disease	765	[Not Available]	[Not Available]	YES	Biochemical Recurrence	[Unknown]	[Unknown]
+ADBF5BDA-E2DC-4B25-8FB9-96D89093F77D	TCGA-ZG-A9KY	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+083CC988-19A5-49B4-97C0-4E7BCC5D5C08	TCGA-ZG-A9L1	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	YES
+5E7A7629-800A-45C4-B4CB-314A853A1BEC	TCGA-ZG-A9L2	Biochemical evidence of disease	180	[Not Available]	[Not Available]	NO	[Not Available]	YES	NO
+C75BEE57-D6DA-4083-9BE8-17C970B77FC7	TCGA-ZG-A9L4	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	YES	NO
+E8F39C9E-0F1A-401C-9055-762B52BC77C7	TCGA-ZG-A9L5	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Unknown]	[Not Available]	[Not Available]	[Not Available]
+93CF60A7-1D61-4C1C-8DCE-221289800B0C	TCGA-ZG-A9L6	Biochemical evidence of disease	664	[Not Available]	[Not Available]	NO	[Not Available]	[Unknown]	[Unknown]
+C7912CA7-11E1-4CB8-902A-9D6CB23FD344	TCGA-ZG-A9L9	Biochemical evidence of disease	51	[Not Available]	[Not Available]	YES	Distant Metastases	NO	[Unknown]
+CA076CFD-C628-4AF2-837C-37617429ADB9	TCGA-ZG-A9LZ	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	NO	NO
+9B5D36B2-8B46-48A4-AFA7-0E1936F2D315	TCGA-ZG-A9M4	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO
+7EFC26B2-EFF9-4F1E-9F4B-F26AF072C84A	TCGA-ZG-A9MC	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO
+305B0B57-5952-43C7-9063-7BCD954EB44D	TCGA-ZG-A9N3	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	[Not Available]	NO	NO
