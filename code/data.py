@@ -110,10 +110,16 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
     :param auc_threshold:
     :return:
     """
-    if drug == 'gem':
-        drugs_to_keep = ['Gemcitabine']
-    else:
-        drugs_to_keep = ['5-Fluorouracil']
+    drug_name_dict = {
+        'gem': 'Gemcitabine',
+        'fu': '5-Fluorouracil',
+        'cis': 'Cisplatin',
+        'carbo': ,
+        'oxa': 'Oxaliplatin',
+        'pac':
+    }
+
+    drugs_to_keep = [drug_name_dict[drug]]
 
     non_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_non_gex.csv')
     res_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_res_gex.csv')
@@ -308,3 +314,7 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
 
     return (train_labeled_dataloader, val_labeled_dataloader,
             test_labeled_dataloader) if ft_flag else (train_labeled_dataloader, test_labeled_dataloader)
+
+
+
+
