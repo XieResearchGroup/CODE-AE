@@ -105,19 +105,18 @@ def main(args, update_params_dict):
     with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
         training_params = json.load(f)
 
+    training_params['unlabeled'].update(update_params_dict)
+    param_str = dict_to_str(update_params_dict)
+
     training_params.update(
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method, args.drug),
+            'model_save_folder': os.path.join('model_save', args.method, args.drug, param_str),
             'es_flag': False
         })
 
-    training_params['unlabeled'].update(update_params_dict)
-
-    param_str = dict_to_str(update_params_dict)
     safe_make_dir(training_params['model_save_folder'])
-
     ml_baseline_history = defaultdict(list)
 
     random.seed(2020)
@@ -142,7 +141,7 @@ def main(args, update_params_dict):
                                  t_dataloaders=t_dataloaders,
                                  **wrap_training_params(training_params, type='unlabeled'))
 
-    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_unlabel_train_history.pickle'),
+    with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history.pickle'),
               'wb') as f:
         for history in historys:
             pickle.dump(dict(history), f)
@@ -154,13 +153,13 @@ def main(args, update_params_dict):
                                                                                normalize_flag=normalize_flag)
 
     pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'{param_str}_train_encoded_feature.csv'))
+        os.path.join(training_params['model_save_folder'], f'train_encoded_feature.csv'))
     pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'{param_str}_train_label.csv'))
+        os.path.join(training_params['model_save_folder'], f'train_label.csv'))
     pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'{param_str}_test_encoded_feature.csv'))
+        os.path.join(training_params['model_save_folder'], f'test_encoded_feature.csv'))
     pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'{param_str}_test_label.csv'))
+        os.path.join(training_params['model_save_folder'], f'test_label.csv'))
 
     # build baseline ml models for encoded features
     # ml_baseline_history['rf'].append(
@@ -194,7 +193,7 @@ def main(args, update_params_dict):
             metric='auroc'
         )[1]
     )
-    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ml_baseline_results.json'), 'w') as f:
+    with open(os.path.join(training_params['model_save_folder'], f'ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
 
     # start fine-tuning encoder
@@ -243,7 +242,7 @@ def main(args, update_params_dict):
         for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
             ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
 
-    with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_evaluation_results.json'), 'w') as f:
+    with open(os.path.join(training_params['model_save_folder'], f'ft_evaluation_results.json'), 'w') as f:
         json.dump(ft_evaluation_metrics, f)
 
 
@@ -254,7 +253,7 @@ if __name__ == '__main__':
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
-    parser.add_argument('--thres', dest='auc_thres', nargs='?', default=0.8)
+    parser.add_argument('--thres', dest='auc_thres', nargs='?', default=None)
     parser.add_argument('--n', dest='n', nargs='?', default=10)
 
     args = parser.parse_args()
