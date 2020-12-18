@@ -144,13 +144,18 @@ def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
                 dsnae_val_history[k].pop()
 
         save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=50)
-        if save_flag:
-            torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt'))
-            torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
+        if kwargs['es_flag']:
+            if save_flag:
+                torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt'))
+                torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt'))
+            if stop_flag:
+                break
+
     if kwargs['es_flag']:
         s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt')))
         t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt')))
+
+    torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt'))
+    torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'm_t_dsnae.pt'))
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history)

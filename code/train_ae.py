@@ -87,13 +87,17 @@ def train_ae(s_dataloaders, t_dataloaders, **kwargs):
                 ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
                 ae_eval_val_history[k].pop()
         # print some loss/metric messages
-        save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=50)
-        if save_flag:
-            torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
+        if kwargs['es_flag']:
+            save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=50)
+            if save_flag:
+                torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
+            if stop_flag:
+                break
+
     if kwargs['es_flag']:
         autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+
+    torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
 
     return autoencoder.encoder, (ae_eval_train_history,
                                  ae_eval_val_history)

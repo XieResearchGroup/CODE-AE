@@ -172,11 +172,13 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
                 ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
                 ae_eval_val_history[k].pop()
         # print some loss/metric messages
-        save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=10)
-        if save_flag:
-            torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
+        if kwargs['es_flag']:
+            save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=10)
+            if save_flag:
+                torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
+            if stop_flag:
+                break
+
     if kwargs['es_flag']:
         autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
@@ -207,11 +209,13 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
 
         save_flag, stop_flag = model_save_check(history=classification_eval_test_history, metric_name='acc',
                                                 tolerance_count=50)
-        if save_flag:
-            torch.save(confounder_classifier.state_dict(),
-                       os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
+        if kwargs['es_flag']:
+            if save_flag:
+                torch.save(confounder_classifier.state_dict(),
+                           os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
+            if stop_flag:
+                break
+
     if kwargs['es_flag']:
         confounder_classifier.load_state_dict(
             torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
@@ -280,6 +284,8 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
                                                                               t_dataloader=t_test_dataloader,
                                                                               device=kwargs['device'],
                                                                               history=classification_eval_train_history)
+
+    torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
 
     return autoencoder.encoder, (ae_eval_train_history,
                                  ae_eval_val_history,

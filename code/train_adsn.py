@@ -202,13 +202,13 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
             if k != 'best_index':
                 dsnae_val_history[k][-2] += dsnae_val_history[k][-1]
                 dsnae_val_history[k].pop()
-
-        save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
-        if save_flag:
-            torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt'))
-            torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
+        if kwargs['es_flag']:
+            save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
+            if save_flag:
+                torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt'))
+                torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
+            if stop_flag:
+                break
     if kwargs['es_flag']:
         s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt')))
         t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
@@ -255,5 +255,8 @@ def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
                                                            optimizer=t_ae_optimizer,
                                                            alpha=1.0,
                                                            history=gen_train_history)
+
+    torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt'))
+    torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history, critic_train_history, gen_train_history)
