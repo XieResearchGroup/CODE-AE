@@ -142,8 +142,8 @@ def get_labeled_dataloaders(gex_features_df, seed, batch_size, ft_flag=False, dr
     gdsc2_response = pd.read_csv(data_config.gdsc_target_file2)
     gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
     gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
-    gdsc1_sensitivity_df['DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
-    gdsc2_sensitivity_df['DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
+    gdsc1_sensitivity_df.loc[:,'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
+    gdsc2_sensitivity_df.loc[:,'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
 
     gdsc1_sensitivity_df = gdsc1_sensitivity_df.loc[gdsc1_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
     gdsc2_sensitivity_df = gdsc2_sensitivity_df.loc[gdsc2_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
