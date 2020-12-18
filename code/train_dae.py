@@ -102,7 +102,7 @@ def train_dae(s_dataloaders, t_dataloaders, **kwargs):
         try:
             autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'dae.pt')))
         except FileNotFoundError:
-            print("No pre-trained encoder")
+            raise Exception("No pre-trained encoder")
 
     return autoencoder.encoder, (ae_eval_train_history,
                                  ae_eval_val_history)
