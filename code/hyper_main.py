@@ -112,12 +112,16 @@ def main(args, update_params_dict):
         {
             'device': device,
             'input_dim': gex_features_df.shape[-1],
-            'model_save_folder': os.path.join('model_save', args.method, args.drug, param_str),
+            'model_save_folder': os.path.join('model_save', args.method, param_str),
             'es_flag': False,
             'retrain_flag': args.retrain_flag
         })
+    task_save_folder = os.path.join('model_save', args.method, args.drug)
 
     safe_make_dir(training_params['model_save_folder'])
+    safe_make_dir(task_save_folder)
+
+
     ml_baseline_history = defaultdict(list)
 
     random.seed(2020)
@@ -194,7 +198,8 @@ def main(args, update_params_dict):
             metric='auroc'
         )[1]
     )
-    with open(os.path.join(training_params['model_save_folder'], f'ml_baseline_results.json'), 'w') as f:
+
+    with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
 
     # start fine-tuning encoder
@@ -243,7 +248,7 @@ def main(args, update_params_dict):
         for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
             ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
 
-    with open(os.path.join(training_params['model_save_folder'], f'ft_evaluation_results.json'), 'w') as f:
+    with open(os.path.join(task_save_folder, f'{param_str}_ft_evaluation_results.json'), 'w') as f:
         json.dump(ft_evaluation_metrics, f)
 
 
