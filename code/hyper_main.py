@@ -113,7 +113,8 @@ def main(args, update_params_dict):
             'device': device,
             'input_dim': gex_features_df.shape[-1],
             'model_save_folder': os.path.join('model_save', args.method, args.drug, param_str),
-            'es_flag': False
+            'es_flag': False,
+            'retrain_flag': args.retrain_flag
         })
 
     safe_make_dir(training_params['model_save_folder'])
@@ -255,6 +256,11 @@ if __name__ == '__main__':
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
     parser.add_argument('--thres', dest='auc_thres', nargs='?', default=None)
     parser.add_argument('--n', dest='n', nargs='?', default=10)
+
+    train_group = parser.add_mutually_exclusive_group(required=False)
+    train_group.add_argument('--train', dest='retrain_flag', action='store_true')
+    train_group.add_argument('--no-train', dest='retrain_flag', action='store_false')
+    parser.set_defaults(feature=True)
 
     args = parser.parse_args()
 
