@@ -99,11 +99,11 @@ def train_ae(s_dataloaders, t_dataloaders, **kwargs):
         if kwargs['es_flag']:
             autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
-        else:
-            try:
-                autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
-            except FileNotFoundError:
-                raise Exception("No pre-trained encoder")
+    else:
+        try:
+            autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+        except FileNotFoundError:
+            raise Exception("No pre-trained encoder")
 
     return autoencoder.encoder, (ae_eval_train_history,
                                  ae_eval_val_history)
