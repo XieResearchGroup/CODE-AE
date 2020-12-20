@@ -161,7 +161,7 @@ def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
 
     else:
         try:
-            s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt')))
+            s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'm_s_dsnae.pt')))
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")
 
