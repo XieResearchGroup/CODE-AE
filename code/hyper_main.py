@@ -242,6 +242,7 @@ def main(args, update_params_dict):
             seed=seed,
             normalize_flag=normalize_flag,
             metric_name=args.metric,
+            task_save_folder = task_save_folder,
             **wrap_training_params(training_params, type='labeled')
         )
 
