@@ -5,7 +5,7 @@ import random
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from torch.utils.data import TensorDataset, DataLoader
 
 import data_config
@@ -54,7 +54,8 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
                                                        to_split_ccle_df.index].primary_disease)
     test_ccle_df = test_ccle_df.append(ccle_df.loc[excluded_ccle_samples])
     train_xena_df, test_xena_df = train_test_split(xena_df, test_size=len(test_ccle_df) / len(xena_df),
-                                                   stratify=xena_sample_info_df['_primary_disease'])
+                                                   stratify=xena_sample_info_df['_primary_disease'],
+                                                   random_state=seed)
 
     xena_dataset = TensorDataset(
         torch.from_numpy(xena_df.values.astype('float32'))
@@ -98,6 +99,7 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size):
     return (ccle_data_loader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
     # return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
 
+
 def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_threshold=None, tcga_cancer_type=None):
     if tcga_cancer_type is not None:
         raise NotImplementedError("Only support pan-cancer")
@@ -126,11 +128,11 @@ def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_thresho
         days_threshold = np.median(labeled_df.days_to_new_tumor_event_after_initial_treatment)
 
     drug_label = np.array(labeled_df.days_to_new_tumor_event_after_initial_treatment >= days_threshold, dtype='int32')
-    drug_label_df = pd.DataFrame(drug_label, index=labeled_df.index, columns=['label'])
+    # drug_label_df = pd.DataFrame(drug_label, index=labeled_df.index, columns=['label'])
 
     labeled_tcga_dateset = TensorDataset(
         torch.from_numpy(labeled_tcga_gex_feature_df.values.astype('float32')),
-        torch.from_numpy(drug_label_df.values))
+        torch.from_numpy(drug_label))
 
     labeled_tcga_dataloader = DataLoader(labeled_tcga_dateset,
                                          batch_size=batch_size,
@@ -167,14 +169,15 @@ def get_tcga_preprocessed_labeled_dataloaders(gex_features_df, drug, batch_size)
 
     return labeled_tcga_dataloader
 
+
 def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_flag=False, auc_threshold=None):
     drugs_to_keep = [drug]
     gdsc1_response = pd.read_csv(data_config.gdsc_target_file1)
     gdsc2_response = pd.read_csv(data_config.gdsc_target_file2)
     gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
     gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
-    gdsc1_sensitivity_df.loc[:,'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
-    gdsc2_sensitivity_df.loc[:,'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
+    gdsc1_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
+    gdsc2_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
 
     gdsc1_sensitivity_df = gdsc1_sensitivity_df.loc[gdsc1_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
     gdsc2_sensitivity_df = gdsc2_sensitivity_df.loc[gdsc2_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
@@ -215,7 +218,9 @@ def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_fla
             ccle_labeled_feature_df.values,
             ccle_labels.values,
             test_size=0.1,
-            stratify=ccle_labels.values)
+            stratify=ccle_labels.values,
+            random_state=seed
+        )
 
         train_labeled_ccle_dateset = TensorDataset(
             torch.from_numpy(train_labeled_ccle_df.astype('float32')),
@@ -236,13 +241,78 @@ def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_fla
         torch.from_numpy(ccle_labeled_feature_df.values.astype('float32')),
         torch.from_numpy(ccle_labels.values))
 
-
     labeled_ccle_dataloader = DataLoader(labeled_ccle_dateset,
                                          batch_size=batch_size,
                                          shuffle=True)
 
-
     return (train_labeled_ccle_dataloader, test_labeled_ccle_dataloader) if ft_flag else labeled_ccle_dataloader
+
+
+def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, seed=2020, auc_threshold=None):
+    drugs_to_keep = [drug]
+    gdsc1_response = pd.read_csv(data_config.gdsc_target_file1)
+    gdsc2_response = pd.read_csv(data_config.gdsc_target_file2)
+    gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
+    gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
+    gdsc1_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
+    gdsc2_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
+
+    gdsc1_sensitivity_df = gdsc1_sensitivity_df.loc[gdsc1_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
+    gdsc2_sensitivity_df = gdsc2_sensitivity_df.loc[gdsc2_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
+    gdsc1_target_df = gdsc1_sensitivity_df.groupby(['COSMIC_ID', 'DRUG_NAME']).mean()
+    gdsc2_target_df = gdsc2_sensitivity_df.groupby(['COSMIC_ID', 'DRUG_NAME']).mean()
+    gdsc1_target_df = gdsc1_target_df.loc[gdsc1_target_df.index.difference(gdsc2_target_df.index)]
+    gdsc_target_df = pd.concat([gdsc1_target_df, gdsc2_target_df])
+    target_df = gdsc_target_df.reset_index().pivot_table(values='AUC', index='COSMIC_ID', columns='DRUG_NAME')
+    ccle_sample_info = pd.read_csv(data_config.ccle_sample_file, index_col=4)
+    ccle_sample_info = ccle_sample_info.loc[ccle_sample_info.index.dropna()]
+    ccle_sample_info.index = ccle_sample_info.index.astype('int')
+
+    gdsc_sample_info = pd.read_csv(data_config.gdsc_sample_file, header=0, index_col=1)
+    gdsc_sample_info = gdsc_sample_info.loc[gdsc_sample_info.index.dropna()]
+    gdsc_sample_info.index = gdsc_sample_info.index.astype('int')
+    # gdsc_sample_info = gdsc_sample_info.loc[gdsc_sample_info.iloc[:, 8].dropna().index]
+
+    gdsc_sample_mapping = gdsc_sample_info.merge(ccle_sample_info, left_index=True, right_index=True, how='inner')[
+        ['DepMap_ID']]
+    gdsc_sample_mapping_dict = gdsc_sample_mapping.to_dict()['DepMap_ID']
+
+    target_df.index = target_df.index.map(gdsc_sample_mapping_dict)
+    target_df = target_df.loc[target_df.index.dropna()]
+
+    ccle_target_df = target_df[drugs_to_keep[0]]
+    ccle_target_df.dropna(inplace=True)
+    ccle_labeled_samples = gex_features_df.index.intersection(ccle_target_df.index)
+
+    if auc_threshold is None:
+        auc_threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
+
+    ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < auc_threshold).astype('int')
+    ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
+    assert all(ccle_labels.index == ccle_labeled_feature_df.index)
+
+    s_kfold = StratifiedKFold(n_splits=10, random_state=seed)
+    for train_index, test_index in s_kfold.split(ccle_labeled_feature_df.values, ccle_labels.values):
+        train_labeled_ccle_df, test_labeled_ccle_df = ccle_labeled_feature_df.values[train_index], \
+                                                      ccle_labeled_feature_df.values[test_index]
+        train_ccle_labels, test_ccle_labels = ccle_labels.values[train_index], ccle_labels.values[test_index]
+
+        train_labeled_ccle_dateset = TensorDataset(
+            torch.from_numpy(train_labeled_ccle_df.astype('float32')),
+            torch.from_numpy(train_ccle_labels))
+        test_labeled_ccle_df = TensorDataset(
+            torch.from_numpy(test_labeled_ccle_df.astype('float32')),
+            torch.from_numpy(test_ccle_labels))
+
+        train_labeled_ccle_dataloader = DataLoader(train_labeled_ccle_dateset,
+                                                   batch_size=batch_size,
+                                                   shuffle=True)
+
+        test_labeled_ccle_dataloader = DataLoader(test_labeled_ccle_df,
+                                                  batch_size=batch_size,
+                                                  shuffle=True)
+
+        yield train_labeled_ccle_dataloader, test_labeled_ccle_dataloader
 
 
 def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_threshold=None, days_threshold=None,
@@ -257,7 +327,8 @@ def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_thresho
     tcga_drug = drug_mapping_df.loc[drug, 'tcga_name']
 
     print(f'Drug: {drug}, TCGA: {tcga_drug}, GDSC: {gdsc_drug}')
-    ccle_labeled_dataloaders = get_ccle_labeled_dataloaders(gex_features_df=gex_features_df, seed=seed, drug=gdsc_drug,
+    ccle_labeled_dataloaders = get_ccle_labeled_dataloaders(gex_features_df=gex_features_df,
+                                                            auc_threshold=auc_threshold, seed=seed, drug=gdsc_drug,
                                                             batch_size=batch_size, ft_flag=ft_flag)
     if drug in ['gem', 'fu']:
         tcga_labeled_dataloaders = get_tcga_preprocessed_labeled_dataloaders(gex_features_df=gex_features_df, drug=drug,
@@ -269,7 +340,35 @@ def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_thresho
     return ccle_labeled_dataloaders, tcga_labeled_dataloaders
 
 
-def get_adae_unlabeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female'):
+def get_labeled_dataloader_generator(gex_features_df, drug, seed, batch_size, auc_threshold=None, days_threshold=None):
+    """
+    sensitive (responder): 1
+    resistant (non-responder): 0
+
+    """
+    drug_mapping_df = pd.read_csv(data_config.gdsc_tcga_mapping_file, index_col=0)
+    gdsc_drug = drug_mapping_df.loc[drug, 'gdsc_name']
+    tcga_drug = drug_mapping_df.loc[drug, 'tcga_name']
+
+    print(f'Drug: {drug}, TCGA: {tcga_drug}, GDSC: {gdsc_drug}')
+    ccle_labeled_dataloader_generator = get_ccle_labeled_dataloader_generator(gex_features_df=gex_features_df,
+                                                                              seed=seed,
+                                                                              drug=gdsc_drug,
+                                                                              batch_size=batch_size,
+                                                                              auc_threshold=auc_threshold)
+
+    if drug in ['gem', 'fu']:
+        tcga_labeled_dataloaders = get_tcga_preprocessed_labeled_dataloaders(gex_features_df=gex_features_df, drug=drug,
+                                                                             batch_size=batch_size)
+    else:
+        tcga_labeled_dataloaders = get_tcga_labeled_dataloaders(gex_features_df=gex_features_df, drug=tcga_drug,
+                                                                batch_size=batch_size, days_threshold=days_threshold)
+
+    for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader in ccle_labeled_dataloader_generator:
+        yield train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, tcga_labeled_dataloaders
+
+
+def get_adae_unlabeled_dataloaders(gex_features_df, batch_size, pos_gender='female'):
     sex_label_df = pd.read_csv(data_config.adae_sex_label_file, index_col=0, sep='\t')
     pos_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] == pos_gender])
     neg_samples = gex_features_df.index.intersection(sex_label_df.index[sex_label_df.iloc[:, 0] != pos_gender])
@@ -297,7 +396,7 @@ def get_adae_unlabeled_dataloaders(gex_features_df, seed, batch_size, pos_gender
                               drop_last=True
                               )
 
-    return (s_dataloader, s_dataloader), (t_dataloader,t_dataloader)
+    return (s_dataloader, s_dataloader), (t_dataloader, t_dataloader)
 
 
 def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='female', ft_flag=False):
@@ -326,7 +425,8 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
             train_df.values,
             subtype_label_df.loc[train_samples].values,
             test_size=0.1,
-            stratify=subtype_label_df.loc[train_samples].values)
+            stratify=subtype_label_df.loc[train_samples].values,
+            random_state=seed)
 
         train_labeled_dataset = TensorDataset(
             torch.from_numpy(train_df.astype('float32')),
@@ -366,7 +466,3 @@ def get_adae_labeled_dataloaders(gex_features_df, seed, batch_size, pos_gender='
 
     return (train_labeled_dataloader, val_labeled_dataloader,
             test_labeled_dataloader) if ft_flag else (train_labeled_dataloader, test_labeled_dataloader)
-
-
-
-

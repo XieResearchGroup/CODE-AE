@@ -105,7 +105,6 @@ def main(args, update_params_dict):
     with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
         training_params = json.load(f)
 
-
     training_params['unlabeled'].update(update_params_dict)
     param_str = dict_to_str(update_params_dict)
 
@@ -128,15 +127,14 @@ def main(args, update_params_dict):
 
     s_dataloaders, t_dataloaders = data.get_adae_unlabeled_dataloaders(
         gex_features_df=gex_features_df,
-        seed=2020,
         batch_size=training_params['unlabeled']['batch_size']
     )
 
     labeled_pos_dataloader, labeled_neg_dataloader = data.get_adae_labeled_dataloaders(
         gex_features_df=gex_features_df,
-        seed=2020,
         batch_size=training_params['labeled']['batch_size'],
-        pos_gender=args.gender
+        pos_gender=args.gender,
+        seed=2020
     )
 
     # start unlabeled training

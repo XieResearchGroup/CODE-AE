@@ -220,17 +220,26 @@ def main(args, update_params_dict):
     #
 
     ft_evaluation_metrics = defaultdict(list)
-    for seed in seeds:
-        labeled_ccle_dataloaders, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+    labeled_dataloader_generator = data.get_labeled_dataloader_generator(
             gex_features_df=gex_features_df,
-            seed=seed,
+            seed=2020,
             batch_size=training_params['labeled']['batch_size'],
             drug=args.drug,
             auc_threshold=args.auc_thres,
-            days_threshold=args.days_thres,
-            ft_flag=True
-        )
-        train_labeled_ccle_dataloader, test_labeled_ccle_dataloader = labeled_ccle_dataloaders
+            days_threshold=args.days_thres)
+    fold_count = 0
+    for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader in labeled_dataloader_generator:
+    # for seed in seeds:
+    #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+    #         gex_features_df=gex_features_df,
+    #         seed=seed,
+    #         batch_size=training_params['labeled']['batch_size'],
+    #         drug=args.drug,
+    #         auc_threshold=args.auc_thres,
+    #         days_threshold=args.days_thres,
+    #         ft_flag=True
+    #     )
+    #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader = labeled_ccle_dataloaders
         # start fine-tuning encoder
         ft_encoder = deepcopy(encoder)
 
@@ -239,7 +248,7 @@ def main(args, update_params_dict):
             train_dataloader=train_labeled_ccle_dataloader,
             val_dataloader=test_labeled_ccle_dataloader,
             test_dataloader=labeled_tcga_dataloader,
-            seed=seed,
+            seed=fold_count,
             normalize_flag=normalize_flag,
             metric_name=args.metric,
             task_save_folder = task_save_folder,
@@ -253,6 +262,7 @@ def main(args, update_params_dict):
 
         for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
             ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
+        fold_count += 1
 
     with open(os.path.join(task_save_folder, f'{param_str}_ft_evaluation_results.json'), 'w') as f:
         json.dump(ft_evaluation_metrics, f)
