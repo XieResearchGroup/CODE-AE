@@ -7,9 +7,15 @@ root_data_folder = '../data/'
 raw_data_folder = os.path.join(root_data_folder, 'raw_dat')
 preprocessed_data_folder = os.path.join(root_data_folder, 'preprocessed_dat')
 gene_feature_file = os.path.join(preprocessed_data_folder, 'CosmicHGNC_list.tsv')
+gdsc_tcga_mapping_file = os.path.join(root_data_folder, 'tcga_gdsc_drug_mapping.csv')
+
 #TCGA_datasets
 tcga_folder = os.path.join(root_data_folder, 'tcga')
 tcga_clinical_folder = os.path.join(tcga_folder, 'Clinical')
+tcga_drug_name_mapping_file = os.path.join(tcga_folder, 'drug_name_mapping.csv')
+tcga_first_treatment_file = os.path.join(tcga_folder, 'tcga_drug_first_treatment.csv')
+tcga_first_response_file = os.path.join(tcga_folder, 'tcga_drug_first_response.csv')
+
 
 #Xena datasets
 xena_folder = os.path.join(raw_data_folder, 'Xena')
