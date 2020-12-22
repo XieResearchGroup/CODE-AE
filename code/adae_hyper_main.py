@@ -191,7 +191,7 @@ def main(args, update_params_dict):
                 neg_encoded_feature_tensor.detach().cpu().numpy(),
                 neg_label_tensor.detach().cpu().numpy()
             ),
-            metric='auprc'
+            metric=args.metric
         )[1]
     )
     with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
@@ -227,8 +227,9 @@ def main(args, update_params_dict):
             train_dataloader=train_labeled_pos_dataloader,
             val_dataloader=val_labeled_pos_dataloader,
             test_dataloader=labeled_neg_dataloader,
+            seed=seed,
             normalize_flag=normalize_flag,
-            metric_name='auprc',
+            metric_name=args.metric,
             **wrap_training_params(training_params, type='labeled')
         )
 
@@ -250,6 +251,7 @@ if __name__ == '__main__':
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--gender', dest='gender', nargs='?', default='female', choices=['female', 'male'])
     parser.add_argument('--n', dest='n', nargs='?', default=10)
+    parser.add_argument('--metric', dest='metric', nargs='?', default='auprc', choices=['auroc', 'auprc'])
 
     train_group = parser.add_mutually_exclusive_group(required=False)
     train_group.add_argument('--train', dest='retrain_flag', action='store_true')

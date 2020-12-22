@@ -30,7 +30,7 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
     return history
 
 
-def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader=None, metric_name='auroc',
+def fine_tune_encoder(encoder, train_dataloader, val_dataloader, seed, test_dataloader=None, metric_name='auroc',
                       normalize_flag=False, **kwargs):
     target_decoder = MLP(input_dim=kwargs['latent_dim'],
                          output_dim=1,
@@ -80,17 +80,17 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
                                                                                            history=target_classification_eval_test_history)
         save_flag, stop_flag = model_save_check(history=target_classification_eval_val_history,
                                                 metric_name=metric_name,
-                                                tolerance_count=20,
+                                                tolerance_count=10,
                                                 reset_count=reset_count)
         if save_flag:
             torch.save(target_classifier.state_dict(),
-                       os.path.join(kwargs['model_save_folder'], 'target_classifier.pt'))
+                       os.path.join(kwargs['model_save_folder'], f'target_classifier_{seed}.pt'))
         if stop_flag:
             try:
                 ind = encoder_module_indices.pop()
                 print(f'Unfreezing {epoch}')
                 target_classifier.load_state_dict(
-                    torch.load(os.path.join(kwargs['model_save_folder'], 'target_classifier.pt')))
+                    torch.load(os.path.join(kwargs['model_save_folder'], f'target_classifier_{seed}.pt')))
 
                 target_classification_params.append(list(target_classifier.encoder.modules())[ind].parameters())
                 lr = lr * kwargs['decay_coefficient']
@@ -99,7 +99,8 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, test_dataloader
             except IndexError:
                 break
 
-    target_classifier.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'target_classifier.pt')))
+    target_classifier.load_state_dict(
+        torch.load(os.path.join(kwargs['model_save_folder'], f'target_classifier_{seed}.pt')))
 
     return target_classifier, (target_classification_train_history, target_classification_eval_train_history,
                                target_classification_eval_val_history, target_classification_eval_test_history)

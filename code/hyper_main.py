@@ -138,7 +138,9 @@ def main(args, update_params_dict):
         seed=2020,
         batch_size=training_params['labeled']['batch_size'],
         drug=args.drug,
-        auc_threshold=args.auc_thres
+        auc_threshold=args.auc_thres,
+        days_threshold=args.days_thres,
+        ft_flag=False
     )
 
     # start unlabeled training
@@ -178,7 +180,7 @@ def main(args, update_params_dict):
     #         test_data=(
     #             tcga_encoded_feature_tensor.detach().cpu().numpy(),
     #             tcga_label_tensor.detach().cpu().numpy(),
-    #         metric = 'auroc'
+    #         metric = args.metric
     #         )
     #     )[1]
     # )
@@ -195,7 +197,7 @@ def main(args, update_params_dict):
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
             ),
-            metric='auroc'
+            metric=args.metric
         )[1]
     )
 
@@ -219,14 +221,16 @@ def main(args, update_params_dict):
 
     ft_evaluation_metrics = defaultdict(list)
     for seed in seeds:
-        train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+        labeled_ccle_dataloaders, labeled_tcga_dataloader = data.get_labeled_dataloaders(
             gex_features_df=gex_features_df,
             seed=seed,
             batch_size=training_params['labeled']['batch_size'],
             drug=args.drug,
             auc_threshold=args.auc_thres,
+            days_threshold=args.days_thres,
             ft_flag=True
         )
+        train_labeled_ccle_dataloader, test_labeled_ccle_dataloader = labeled_ccle_dataloaders
         # start fine-tuning encoder
         ft_encoder = deepcopy(encoder)
 
@@ -235,8 +239,9 @@ def main(args, update_params_dict):
             train_dataloader=train_labeled_ccle_dataloader,
             val_dataloader=test_labeled_ccle_dataloader,
             test_dataloader=labeled_tcga_dataloader,
+            seed=seed,
             normalize_flag=normalize_flag,
-            metric_name='auroc',
+            metric_name=args.metric,
             **wrap_training_params(training_params, type='labeled')
         )
 
@@ -259,7 +264,11 @@ if __name__ == '__main__':
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu'])
-    parser.add_argument('--thres', dest='auc_thres', nargs='?', default=None)
+    parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
+
+    parser.add_argument('--a_thres', dest='auc_thres', nargs='?', default=None)
+    parser.add_argument('--d_thres', dest='days_thres', nargs='?', default=None)
+
     parser.add_argument('--n', dest='n', nargs='?', default=10)
 
     train_group = parser.add_mutually_exclusive_group(required=False)
