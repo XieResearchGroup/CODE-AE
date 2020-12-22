@@ -256,7 +256,7 @@ if __name__ == '__main__':
     train_group = parser.add_mutually_exclusive_group(required=False)
     train_group.add_argument('--train', dest='retrain_flag', action='store_true')
     train_group.add_argument('--no-train', dest='retrain_flag', action='store_false')
-    parser.set_defaults(retrain_flag=True)
+    parser.set_defaults(retrain_flag=False)
 
     args = parser.parse_args()
 
