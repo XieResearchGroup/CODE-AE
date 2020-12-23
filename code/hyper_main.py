@@ -277,10 +277,10 @@ if __name__ == '__main__':
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu', 'cis', 'pac'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
-    parser.add_argument('--a_thres', dest='auc_thres', nargs='?', default=None)
-    parser.add_argument('--d_thres', dest='days_thres', nargs='?', default=None)
+    parser.add_argument('--a_thres', dest='auc_thres', nargs='?', type=float, default=None)
+    parser.add_argument('--d_thres', dest='days_thres', nargs='?', type=float, default=None)
 
-    parser.add_argument('--n', dest='n', nargs='?', default=10)
+    parser.add_argument('--n', dest='n', nargs='?', type=int, default=10)
 
     train_group = parser.add_mutually_exclusive_group(required=False)
     train_group.add_argument('--train', dest='retrain_flag', action='store_true')
