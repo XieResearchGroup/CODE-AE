@@ -1,4 +1,6 @@
-data/*
+data/raw_dat/*
+data/preprocessed_dat/*
+data/cancer_drug_response-master/*
 code/*.ipynb
 code/.idea/*
 code/.ipynb_checkpoints/*
@@ -7,3 +9,8 @@ code/results/*
 *.ipynb
 *.xlsx
 paper/*
+code/model_save/*/*/*/*.csv
+code/model_save/*/*/*/*.pt
+code/model_save/*/*/*.pt
+code/model_save/*/*/*.csv
+

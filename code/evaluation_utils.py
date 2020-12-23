@@ -3,7 +3,13 @@ from collections import defaultdict
 import numpy as np
 import torch
 from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score, f1_score, \
-    log_loss
+    log_loss, auc, precision_recall_curve
+
+
+def auprc(y_true, y_score):
+    lr_precision, lr_recall, _ = precision_recall_curve(y_true=y_true, probas_pred=y_score)
+    return auc(lr_recall, lr_precision)
+
 
 
 def model_save_check(history, metric_name, tolerance_count=5, reset_count=1):
@@ -59,6 +65,7 @@ def evaluate_target_classification_epoch(classifier, dataloader, device, history
     history['aps'].append(average_precision_score(y_true=y_truths, y_score=y_preds))
     history['f1'].append(f1_score(y_true=y_truths, y_pred=(y_preds > 0.5).astype('int')))
     history['bce'].append(log_loss(y_true=y_truths, y_pred=y_preds))
+    history['auprc'].append(auprc(y_true=y_truths, y_score=y_preds))
 
     return history
 
@@ -87,5 +94,6 @@ def evaluate_adv_classification_epoch(classifier, s_dataloader, t_dataloader, de
     history['aps'].append(average_precision_score(y_true=y_truths, y_score=y_preds))
     history['f1'].append(f1_score(y_true=y_truths, y_pred=(y_preds > 0.5).astype('int')))
     history['bce'].append(log_loss(y_true=y_truths, y_pred=y_preds))
+    history['auprc'].append(auprc(y_true=y_truths, y_score=y_preds))
 
     return history

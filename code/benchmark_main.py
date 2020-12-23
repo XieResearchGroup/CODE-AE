@@ -101,7 +101,8 @@ if __name__ == '__main__':
     else:
         train_fn = train_adsn.train_adsn
 
-    normalize_flag = 'dsn' in args.method
+    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
+    # normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
@@ -151,11 +152,17 @@ if __name__ == '__main__':
                                                                                normalize_flag=normalize_flag)
     tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
                                                                                normalize_flag=normalize_flag)
+
+    pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_encoded_feature.csv'))
+    pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'train_label.csv'))
+    pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_encoded_feature.csv'))
+    pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(os.path.join(training_params['model_save_folder'], 'test_label.csv'))
+
     # build baseline ml models for encoded features
     ml_baseline_history['rf'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_rf,
-            n=10,
+            n=int(args.n),
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
@@ -163,14 +170,15 @@ if __name__ == '__main__':
             test_data=(
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric = 'auroc'
         )[1]
     )
 
     ml_baseline_history['enet'].append(
         ml_baseline.n_time_cv(
             model_fn=ml_baseline.classify_with_enet,
-            n=10,
+            n=int(args.n),
             train_data=(
                 ccle_encoded_feature_tensor.detach().cpu().numpy(),
                 ccle_label_tensor.detach().cpu().numpy()
@@ -178,7 +186,8 @@ if __name__ == '__main__':
             test_data=(
                 tcga_encoded_feature_tensor.detach().cpu().numpy(),
                 tcga_label_tensor.detach().cpu().numpy()
-            )
+            ),
+            metric='auroc'
         )[1]
     )
 

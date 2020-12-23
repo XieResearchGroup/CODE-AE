@@ -1,0 +1,93 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_surgery	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+bcr_patient_uuid	bcr_patient_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_tumor_event_additional_surgery_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3427611	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3008335	CDE_ID:3392464
+E90BFE17-2E5B-47ED-B986-B3D4181F2BF6	TCGA-3H-AB3K	Distant Metastasis	Contralateral Pleura	[Not Applicable]	NO	NO	NO	[Not Available]	841
+E90BFE17-2E5B-47ED-B986-B3D4181F2BF6	TCGA-3H-AB3K	Distant Metastasis	Contralateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	883
+AAACE369-0A47-4176-811B-61CD42BF647F	TCGA-3H-AB3L	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	222
+EBE927E6-0A7E-4C97-AD73-F3C302CCA7BC	TCGA-3H-AB3M	Distant Metastasis	Lung	[Not Applicable]	NO	NO	YES	[Not Available]	107
+EBE927E6-0A7E-4C97-AD73-F3C302CCA7BC	TCGA-3H-AB3M	Distant Metastasis	Lung	[Not Applicable]	NO	NO	YES	[Not Available]	384
+EBE927E6-0A7E-4C97-AD73-F3C302CCA7BC	TCGA-3H-AB3M	Intrapleural Progression	Lung	[Not Applicable]	NO	NO	YES	[Not Available]	442
+EBE927E6-0A7E-4C97-AD73-F3C302CCA7BC	TCGA-3H-AB3M	Intrapleural Progression	Lung	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	724
+EBE927E6-0A7E-4C97-AD73-F3C302CCA7BC	TCGA-3H-AB3M	Distant Metastasis	Abdomen	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	822
+2B715EB2-055E-4BC5-BC98-128E8BF6954F	TCGA-3H-AB3O	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	[Not Available]	YES	YES	[Not Available]	627
+2B715EB2-055E-4BC5-BC98-128E8BF6954F	TCGA-3H-AB3O	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Node	[Not Available]	[Not Available]	[Not Available]	[Not Available]	1013
+1C848577-C3A4-4830-ABFA-549992172396	TCGA-3H-AB3S	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Nodes AND Ipsilateral Chest Wall	[Not Available]	[Not Available]	[Not Available]	[Not Available]	186
+3210027D-A9C7-4EBB-8497-E3705BED7E40	TCGA-3H-AB3T	Intrapleural Progression	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Nodes AND Ipsilateral Chest Wall	NO	[Not Available]	[Not Available]	[Not Available]	312
+3210027D-A9C7-4EBB-8497-E3705BED7E40	TCGA-3H-AB3T	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Nodes AND Ipsilateral Chest Wall	[Not Available]	[Not Available]	[Not Available]	[Not Available]	369
+C328F661-C109-4E01-B819-299A75BD4348	TCGA-3H-AB3U	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	YES	NO	YES	132	108
+C328F661-C109-4E01-B819-299A75BD4348	TCGA-3H-AB3U	Distant Metastasis	Lung	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	220
+C5D4D4B4-2C9E-4865-8860-68327356D461	TCGA-3U-A98D	Locoregional Recurrence	Ipsilateral Chest Wall	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	125
+E0DF1FEF-C650-4088-A974-26F712ED4F64	TCGA-3U-A98E	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	1257
+E0DF1FEF-C650-4088-A974-26F712ED4F64	TCGA-3U-A98E	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	1425
+24EA3CD5-C2E6-44F7-9658-78AF7BEFEEF7	TCGA-3U-A98F	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	365
+24EA3CD5-C2E6-44F7-9658-78AF7BEFEEF7	TCGA-3U-A98F	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	463
+BBABCD40-0A6C-430F-8325-EE1ED1D08AFA	TCGA-3U-A98G	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	497
+3D8B4046-822A-4A00-B79E-393BD3F5F5B5	TCGA-3U-A98H	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	798
+3D8B4046-822A-4A00-B79E-393BD3F5F5B5	TCGA-3U-A98H	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	966
+3D8B4046-822A-4A00-B79E-393BD3F5F5B5	TCGA-3U-A98H	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	1038
+C5AD9AEF-27C6-4101-BEFB-6227CD1266BA	TCGA-3U-A98I	Intrapleural Progression	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]	404
+A3C28058-D305-4F85-B42B-A221E5234EC8	TCGA-MQ-A4KX	Distant Metastasis	Other, specify	IPSILATERAL CHEST	NO	[Not Available]	YES	[Not Available]	471
+A3C28058-D305-4F85-B42B-A221E5234EC8	TCGA-MQ-A4KX	Distant Metastasis	Other, specify	Contralateral Chest	[Not Available]	[Not Available]	[Not Available]	[Not Available]	1803
+E6633347-A907-4A6C-9343-A207FDB05169	TCGA-MQ-A4LC	Locoregional Recurrence	Ipsilateral Chest Cavity	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	1908
+E6633347-A907-4A6C-9343-A207FDB05169	TCGA-MQ-A4LC	Distant Metastasis	Abdomen	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	2758
+340FEF21-55D8-433F-B00A-51276B849356	TCGA-MQ-A4LI	Distant Metastasis	Other, specify	Chest	[Not Available]	[Unknown]	[Unknown]	[Not Available]	416
+340FEF21-55D8-433F-B00A-51276B849356	TCGA-MQ-A4LI	Distant Metastasis	Abdomen	[Not Applicable]	[Not Available]	[Unknown]	[Unknown]	[Not Available]	416
+C61937AB-01FF-42E5-A534-3B33D6A9F582	TCGA-MQ-A4LJ	Intrapleural Progression	Other, specify	Ipsilateral chest	[Unknown]	[Unknown]	[Unknown]	[Not Available]	409
+C61937AB-01FF-42E5-A534-3B33D6A9F582	TCGA-MQ-A4LJ	Intrapleural Progression	Other, specify	Pericardial	[Unknown]	[Unknown]	[Unknown]	[Not Available]	409
+0AB19AE8-C095-48D6-B1AA-0F5AE75C6E68	TCGA-MQ-A4LM	Intrapleural Progression	Other, specify	IPSILATERAL CHEST	[Unknown]	[Unknown]	[Unknown]	[Not Available]	120
+0AB19AE8-C095-48D6-B1AA-0F5AE75C6E68	TCGA-MQ-A4LM	Intrapleural Progression	Other, specify	CONTRALATERAL EFFUSION	[Unknown]	[Unknown]	[Unknown]	[Not Available]	113
+B100C424-90C6-4E16-9D9E-40AD38606B5D	TCGA-MQ-A4LV	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	NO	[Not Available]	99
+0C8BD0EB-9C26-4FB0-A365-26354129F0DA	TCGA-MQ-A6BL	Distant Metastasis	Other, specify	Bone (Scapula)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	186
+4D9F1899-4A41-4E57-BDAD-B12EB0D47629	TCGA-MQ-A6BN	Distant Metastasis	Other, specify	Chest Wall	YES	NO	YES	485	485
+4D9F1899-4A41-4E57-BDAD-B12EB0D47629	TCGA-MQ-A6BN	Locoregional Recurrence	Other, specify	Ipsilateral Chest Wall AND Other	[Not Available]	[Not Available]	[Not Available]	[Not Available]	609
+00397CE0-A931-46DD-9407-C1C6A14C39F1	TCGA-MQ-A6BR	Distant Metastasis	Other, specify	Chest Wall	NO	YES	[Not Available]	[Not Available]	665
+00397CE0-A931-46DD-9407-C1C6A14C39F1	TCGA-MQ-A6BR	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	YES	NO	[Not Available]	1244	1244
+00397CE0-A931-46DD-9407-C1C6A14C39F1	TCGA-MQ-A6BR	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	YES	[Unknown]	[Not Available]	1574	1574
+E656CF38-2F5D-4306-90D9-ECB504D86351	TCGA-SC-A6LM	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Other	[Not Available]	[Not Available]	[Not Available]	[Not Available]	363
+E656CF38-2F5D-4306-90D9-ECB504D86351	TCGA-SC-A6LM	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Other	[Not Available]	[Not Available]	[Not Available]	[Not Available]	384
+E656CF38-2F5D-4306-90D9-ECB504D86351	TCGA-SC-A6LM	Distant Metastasis	Other, specify	Contralateral Chest	[Not Available]	[Not Available]	[Not Available]	[Not Available]	783
+500B86B2-3AC3-4745-AF84-3DD28F38DAEB	TCGA-SC-A6LQ	Distant Metastasis	Abdomen	[Not Applicable]	[Unknown]	[Unknown]	[Unknown]	[Not Available]	238
+CCF7073E-B224-497A-A476-C67AFF5226BD	TCGA-SH-A7BC	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Nodes	[Not Available]	[Not Available]	[Not Available]	[Not Available]	507
+83B97927-A1BE-441A-97A1-4363E1F2D530	TCGA-SH-A7BD	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Lymph Nodes AND Ipsilateral Chest Wall	[Not Available]	[Not Available]	[Not Available]	[Not Available]	200
+83B97927-A1BE-441A-97A1-4363E1F2D530	TCGA-SH-A7BD	Distant Metastasis	Other, specify	Contralateral Chest AND Abdomen (para-aortic nodes)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	200
+E611EE05-92C8-41D6-A052-18DD749F8779	TCGA-SH-A7BH	Locoregional Recurrence	Other, specify	Ipsilateral Chest Cavity AND Ipsilateral Chest Wall	[Not Available]	[Not Available]	[Not Available]	[Not Available]	125
+E611EE05-92C8-41D6-A052-18DD749F8779	TCGA-SH-A7BH	Distant Metastasis	Other, specify	Contralateral Chest	[Not Available]	[Not Available]	[Not Available]	[Not Available]	125
+E611EE05-92C8-41D6-A052-18DD749F8779	TCGA-SH-A7BH	Distant Metastasis	Abdomen	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	125
+28C6D24E-BE1E-484D-948D-55EA51BD8EC0	TCGA-TS-A7OY	Distant Metastasis	Other, specify	Regional Lymph Nodes (Internal mammary node, Pericardial Lymph node fat, Posterior Intercostal node, Anterior and Posterior Hilar Lymph nodes, Periesophageal lymph node, Phrenic lymph node, Level 4, 7, 9, and 10)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+E23BC730-B369-4D6A-90CE-7223E234CD4D	TCGA-TS-A7P0	Locoregional Recurrence	Ipsilateral Chest Cavity	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	277
+554F4424-BB94-4958-A316-6D7D4EB4181B	TCGA-TS-A7P1	[Not Available]	[Not Available]	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	494
+7D93F1B4-3460-4917-9F33-2A9C6DF773F2	TCGA-TS-A7P3	[Not Available]	Other, specify	Ipsilateral Chest Cavity	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+7D93F1B4-3460-4917-9F33-2A9C6DF773F2	TCGA-TS-A7P3	Distant Metastasis	Other, specify	Regional Lymph Nodes (Posterior Hilar Lymph node, Anterior intercostal mass, posterior intercostal lymph node, and level 7 lymph node)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+C9C7366B-8826-4BD2-A3DC-5883E34C1502	TCGA-TS-A7P7	Distant Metastasis	Other, specify	Posterior Intercostal Node	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+92C1F122-2F48-47A7-B3B8-C1792A1F4F32	TCGA-TS-A7P8	[Not Available]	Other, specify	Ipsilateral Chest Cavity	[Not Available]	[Not Available]	[Not Available]	[Not Available]	301
+CAA9B7D9-E900-4E18-A5F0-6DD4C202B40C	TCGA-TS-A7PB	Distant Metastasis	Other, specify	Regional Lymph Nodes (Pericardial Lymph Node, Posterior Intercostal Node, level 2,5,6,7, and 8 lymph nodes)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+AF5BDE54-D20C-41A1-9537-69AED5562F08	TCGA-TS-A8AF	[Not Available]	[Not Available]	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	325
+AF5BDE54-D20C-41A1-9537-69AED5562F08	TCGA-TS-A8AF	Distant Metastasis	Other, specify	Posterior Intercostal node	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+8BA34BCC-DAAD-4D69-9F02-E6A1C18DE68B	TCGA-TS-A8AI	Distant Metastasis	Other, specify	Phrenic and level 7 lymph nodes	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+E93761B9-E0A2-48D5-8B21-A6670021CAE4	TCGA-TS-A8AV	Distant Metastasis	Other, specify	Regional Lymph Nodes (Level 2, 4, 7 and 10 lymph nodes, Posterior Intercostal lymh node.)	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+A20FB646-2A9E-42AC-A2CC-FF3D6A0625FA	TCGA-UD-AABY	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	NO	[Not Available]	47
+A20FB646-2A9E-42AC-A2CC-FF3D6A0625FA	TCGA-UD-AABY	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	NO	[Not Available]	204
+F235C37F-CE8D-42EA-9B3F-065FC7E0C8B8	TCGA-UD-AAC1	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	85
+2B740646-7CD4-4C7F-890A-7B3DB6EBC1B8	TCGA-UD-AAC4	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	267
+2B740646-7CD4-4C7F-890A-7B3DB6EBC1B8	TCGA-UD-AAC4	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	555
+2B740646-7CD4-4C7F-890A-7B3DB6EBC1B8	TCGA-UD-AAC4	Distant Metastasis	Other, specify	Bony metastases rib and thoracic spine	[Not Available]	[Not Available]	[Not Available]	[Not Available]	702
+CB245767-F9D2-4CCA-95F0-F3D247C05F01	TCGA-UD-AAC5	Distant Metastasis	Abdomen	[Not Applicable]	NO	NO	NO	[Not Available]	230
+CB245767-F9D2-4CCA-95F0-F3D247C05F01	TCGA-UD-AAC5	Distant Metastasis	Contralateral Pleura	[Not Applicable]	NO	NO	NO	[Not Available]	236
+98889636-E53C-44DF-951E-01A70033E754	TCGA-UD-AAC6	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	126
+98889636-E53C-44DF-951E-01A70033E754	TCGA-UD-AAC6	Distant Metastasis	Other, specify	Subcutaneous nodules	NO	YES	YES	[Not Available]	130
+0AC27BC8-346E-4006-A701-D9676FB91CB7	TCGA-UD-AAC7	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	[Unknown]	[Not Available]	265
+B1F27FA2-133C-42C0-B69E-815AF67E2A7E	TCGA-UT-A88C	Intrapleural Progression	Other, specify	Mediastinum and Contralateral pleura	NO	NO	YES	[Not Available]	479
+77C64E5D-DA34-467A-A8D3-C79060700E4F	TCGA-UT-A88E	Intrapleural Progression	Other, specify	chest wall musculature invasion	NO	NO	YES	[Not Available]	121
+77C64E5D-DA34-467A-A8D3-C79060700E4F	TCGA-UT-A88E	Intrapleural Progression	Other, specify	posterolateral right chest wall to skin surface	NO	YES	NO	[Not Available]	272
+77C64E5D-DA34-467A-A8D3-C79060700E4F	TCGA-UT-A88E	Distant Metastasis	Abdomen	[Not Applicable]	NO	NO	NO	[Not Available]	420
+99826DAA-EB83-40BA-950D-0BB7084D960D	TCGA-UT-A88G	Intrapleural Progression	Other, specify	Right Hemithorax	NO	NO	NO	[Not Available]	44
+A48996BE-7DAE-451A-8129-9DE8DFE7221A	TCGA-XT-AASU	Locoregional Recurrence	Ipsilateral Chest Cavity	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	133
+A48996BE-7DAE-451A-8129-9DE8DFE7221A	TCGA-XT-AASU	Locoregional Recurrence	Ipsilateral Chest Wall	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	133
+A48996BE-7DAE-451A-8129-9DE8DFE7221A	TCGA-XT-AASU	Distant Metastasis	Abdomen	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	133
+A48996BE-7DAE-451A-8129-9DE8DFE7221A	TCGA-XT-AASU	Distant Metastasis	Other, specify	BONES, BLADDER, ADRENAL GLAND	[Not Available]	[Not Available]	[Not Available]	[Not Available]	133
+2DD1ECD8-A8D8-4A6A-8CF2-E847557AB04C	TCGA-YS-AA4M	Distant Metastasis	Bone	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	-131
+F8970455-BFB2-4B1D-AB71-3C5D619898AD	TCGA-ZN-A9VQ	Intrapleural Progression	Other, specify	Right chest wall	NO	NO	[Unknown]	[Not Available]	313
+676EA428-80EF-4371-B90B-95E46708278C	TCGA-ZN-A9VS	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	[Unknown]	[Unknown]	[Not Available]	1025
+F15667DC-8376-40B6-84B2-8F5370C3D66A	TCGA-ZN-A9VU	Intrapleural Progression	Other, specify	left chest wall	YES	YES	NO	588	585
+CB94A8AE-2B0C-4D0B-ADA3-4C82DD765567	TCGA-ZN-A9VV	Intrapleural Progression	Ipsilateral Pleura	[Not Applicable]	NO	NO	YES	[Not Available]	676
+54D21956-25E4-42DF-ADBE-6907721FC4B5	TCGA-ZN-A9VW	Intrapleural Progression	Other, specify	right chest wall	YES	[Unknown]	YES	0	-30

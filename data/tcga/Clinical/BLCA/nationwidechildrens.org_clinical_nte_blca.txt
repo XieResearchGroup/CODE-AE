@@ -1,0 +1,114 @@
+bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_dx_days_to	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_surgery	new_tumor_event_surgery_days_to	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx
+bcr_patient_uuid	bcr_patient_barcode	days_to_new_tumor_event_after_initial_treatment	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_additional_surgery_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy
+CDE_ID:	CDE_ID:2673794	CDE_ID:3392464	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3427611	CDE_ID:3008335	CDE_ID:3427615	CDE_ID:3427616
+DD3A6357-9087-44B2-9956-F981E0DE6F1C	TCGA-2F-A9KO	651	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+DD3A6357-9087-44B2-9956-F981E0DE6F1C	TCGA-2F-A9KO	651	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	YES	NO
+DD3A6357-9087-44B2-9956-F981E0DE6F1C	TCGA-2F-A9KO	651	Distant Metastasis	Other, specify	Adrenal	NO	[Not Available]	NO	NO
+DD3A6357-9087-44B2-9956-F981E0DE6F1C	TCGA-2F-A9KO	651	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	YES	NO
+65D1EAEC-28DB-4A41-A4DB-1A710FCB24AD	TCGA-2F-A9KP	343	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+65D1EAEC-28DB-4A41-A4DB-1A710FCB24AD	TCGA-2F-A9KP	343	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	NO
+65D1EAEC-28DB-4A41-A4DB-1A710FCB24AD	TCGA-2F-A9KP	343	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+65D1EAEC-28DB-4A41-A4DB-1A710FCB24AD	TCGA-2F-A9KP	343	Distant Metastasis	Other, specify	adrenal	NO	[Not Available]	NO	NO
+F6D916B0-8E4C-49CB-A0D4-883908F3284F	TCGA-2F-A9KR	3086	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	NO
+F6D916B0-8E4C-49CB-A0D4-883908F3284F	TCGA-2F-A9KR	3086	Distant Metastasis	Bone	[Not Applicable]	YES	3130	YES	NO
+3B464065-B2E9-4FB2-A7DA-09E963FD43B3	TCGA-2F-A9KW	85	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	YES	NO
+72FE54B5-C1C8-468A-954A-09992429512A	TCGA-4Z-AA7R	353	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	NO
+821B99BC-7E14-45B9-898D-6E8E149BC8A7	TCGA-4Z-AA7W	760	Locoregional (Urothelial tumor event)	Other, specify	Rectum	NO	[Not Available]	NO	NO
+32E79B35-A33A-4CA0-BFB7-7EA7E4E26568	TCGA-4Z-AA82	1150	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	YES	NO
+939B73D8-39FD-410E-AEAE-53080EA99618	TCGA-4Z-AA86	136	Locoregional (Urothelial tumor event)	Other, specify	Pelvis	NO	[Not Available]	[Not Available]	[Not Available]
+604C0D60-6BA9-4D2F-98DB-E310C58BC8CA	TCGA-4Z-AA89	648	New Primary Tumor	Lung	[Not Applicable]	NO	[Not Available]	YES	YES
+9743E684-25DD-4DD9-9B84-6AE9518D1818	TCGA-5N-A9KM	276	[Not Available]	[Not Available]	[Not Applicable]	NO	[Not Available]	[Not Available]	[Not Available]
+D63C186D-ADD6-492E-8250-E83F46D39D00	TCGA-DK-A3WX	167	Locoregional (Urothelial tumor event)	Bladder	[Not Applicable]	YES	167	NO	NO
+D63C186D-ADD6-492E-8250-E83F46D39D00	TCGA-DK-A3WX	244	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	YES	NO
+D63C186D-ADD6-492E-8250-E83F46D39D00	TCGA-DK-A3WX	244	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	NO
+40551D53-388B-4067-9341-76E94D023703	TCGA-DK-A3X2	533	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	[Not Available]
+40551D53-388B-4067-9341-76E94D023703	TCGA-DK-A3X2	533	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	[Not Available]
+10C825D7-4E21-43E7-AC95-DDA75FBDAF74	TCGA-DK-A6B2	268	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	YES
+10C825D7-4E21-43E7-AC95-DDA75FBDAF74	TCGA-DK-A6B2	268	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	YES
+10C825D7-4E21-43E7-AC95-DDA75FBDAF74	TCGA-DK-A6B2	268	Distant Metastasis	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+CBE6C328-F7E1-44B2-B4E5-B495F46A7FB7	TCGA-DK-AA6L	920	Distant Metastasis	Bone	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	[Not Available]
+4E702CA1-C0E0-4B9C-B9C7-7D7946818561	TCGA-DK-AA6P	16	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+60419F8C-92C2-4E8F-B2FA-A767D30C9D59	TCGA-DK-AA6Q	285	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	YES
+45EEA556-E97B-4912-8AA9-7E5C709EB52B	TCGA-DK-AA6S	539	Distant Metastasis	Other, specify	soft tissue pelvic mass	NO	[Not Available]	NO	NO
+CEA28EAC-4442-4436-B737-536E45B89989	TCGA-DK-AA75	328	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+CA6403DD-3BD5-4023-8EA1-9957EC44DBA5	TCGA-E5-A4TZ	435	Locoregional (Urothelial tumor event)	Other, specify	soft tissue pelvic mass	NO	[Not Available]	YES	NO
+1C28F311-E0B0-4292-B29A-C6757665A4A4	TCGA-E5-A4U1	705	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	YES
+6D8D8169-0C1A-4CDB-BE6F-9761C981A369	TCGA-FD-A3SJ	548	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+6D8D8169-0C1A-4CDB-BE6F-9761C981A369	TCGA-FD-A3SJ	281	Distant Metastasis	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+6D8D8169-0C1A-4CDB-BE6F-9761C981A369	TCGA-FD-A3SJ	548	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	YES
+0FB043D3-D86B-4CD8-8C01-9E2B3E965BB0	TCGA-FD-A3SN	110	Distant Metastasis	Lung	[Not Applicable]	[Not Available]	[Not Available]	[Not Available]	YES
+94809FBF-4895-42C0-A7C6-F39EE1A41F1A	TCGA-FD-A3SO	143	Locoregional (Urothelial tumor event)	Other, specify	pelvis	NO	[Not Available]	YES	NO
+3071CB51-DCF5-41F7-B047-AFC2DCBF0AAF	TCGA-FD-A3SQ	991	Locoregional (Urothelial tumor event)	Other, specify	pelvic mass with adherence to pelvic sidewall and sigmoid colon	YES	991	YES	YES
+3071CB51-DCF5-41F7-B047-AFC2DCBF0AAF	TCGA-FD-A3SQ	991	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	YES	991	YES	YES
+72D6E9AA-4A99-4FC9-A67B-4631E95FB043	TCGA-FD-A3SR	372	Locoregional (Urothelial tumor event)	Other, specify	pelvis	NO	[Not Available]	YES	YES
+4FA31971-15E2-4C9B-B49A-B3B7096262E4	TCGA-FD-A5BV	134	Locoregional (Urothelial tumor event)	Other, specify	Peritoneal carcinomatosis	YES	150	NO	NO
+4FA31971-15E2-4C9B-B49A-B3B7096262E4	TCGA-FD-A5BV	134	Locoregional (Urothelial tumor event)	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+6BD85AE2-9D27-4285-A280-4469DD2A8B0A	TCGA-FD-A5BX	99	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	NO
+AC187CD1-A5EF-47DA-88B2-1D4DF27E0E76	TCGA-FD-A5BZ	533	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	YES	YES
+AC187CD1-A5EF-47DA-88B2-1D4DF27E0E76	TCGA-FD-A5BZ	533	Locoregional (Urothelial tumor event)	Bone	[Not Applicable]	NO	[Not Available]	YES	YES
+AC187CD1-A5EF-47DA-88B2-1D4DF27E0E76	TCGA-FD-A5BZ	533	Distant Metastasis	Bone	[Not Applicable]	YES	[Not Available]	YES	YES
+0628E443-3D7F-4A38-9D2A-EBC7F4F7E11D	TCGA-FD-A5C0	27	New Primary Tumor	Lung	[Not Applicable]	YES	103	NO	YES
+BB38805E-2CCC-4169-BA01-34B98ADF5BD0	TCGA-FJ-A871	106	New Primary Tumor	Other, specify	Pelvic	NO	[Not Available]	NO	YES
+F632BC31-3AA0-4783-B10B-818ECB26D40B	TCGA-GU-A763	303	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+79F23A0E-5AAE-4618-8191-7DD7C0552408	TCGA-GV-A3QG	84	Distant Metastasis	Other, specify	Brain	NO	[Not Available]	NO	NO
+79F23A0E-5AAE-4618-8191-7DD7C0552408	TCGA-GV-A3QG	84	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	NO
+001944E5-AF34-4061-9C09-BB9EA346F6FD	TCGA-HQ-A5ND	84	Distant Metastasis	Lymph Node Only	[Not Applicable]	NO	[Not Available]	YES	NO
+E053A911-2202-4C1F-BC93-904E26564E79	TCGA-HQ-A5NE	211	Locoregional (Urothelial tumor event)	Renal Pelvis	[Not Applicable]	NO	[Not Available]	YES	NO
+2088AC24-A8B4-49AF-A954-2B78B88A6F66	TCGA-K4-A4AC	170	Distant Metastasis	[Not Available]	[Not Applicable]	NO	[Not Available]	YES	NO
+EECA58FE-B5CB-4D13-A93F-A5A2CA00B6E2	TCGA-K4-A5RH	196	Distant Metastasis	Lung	[Not Applicable]	[Not Available]	[Not Available]	YES	NO
+32EFE5E2-E037-4547-8EAD-619F61647639	TCGA-K4-A5RI	237	Locoregional (Urothelial tumor event)	Renal Pelvis	[Not Applicable]	YES	237	NO	NO
+AA14FFB4-A715-4636-8251-73D019DDDD8C	TCGA-K4-A83P	70	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+D7AF7E2C-F742-46ED-814B-1967D7E8C2D2	TCGA-KQ-A41P	178	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	NO
+A21BDD7E-F3CF-4826-9967-7EAFFC0D035A	TCGA-KQ-A41Q	1314	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+B9B61CF9-8711-4C3A-8511-659070CFE36B	TCGA-XF-A8HG	398	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	YES
+EED3908F-F1BD-4254-BCA8-BC1A7427E95C	TCGA-XF-A8HI	468	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+EED3908F-F1BD-4254-BCA8-BC1A7427E95C	TCGA-XF-A8HI	468	Distant Metastasis	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+B838A4DB-EF0A-4D88-A220-BF57E31E0B3C	TCGA-XF-A9SH	547	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	YES	YES
+03F588D6-832E-47D8-A9C4-AF6640A1A635	TCGA-XF-A9SK	382	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+76388364-EB01-4B16-A2B9-0B6C05B4B386	TCGA-XF-A9SP	310	Locoregional (Urothelial tumor event)	Renal Pelvis	[Not Applicable]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+42BCF1A7-2F3A-4ED8-A41D-CDD67E65B928	TCGA-XF-A9SU	103	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	YES	YES
+42BCF1A7-2F3A-4ED8-A41D-CDD67E65B928	TCGA-XF-A9SU	103	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	YES	YES
+CDFD86DB-15E2-4D38-A717-2207E8DE2D8F	TCGA-XF-A9SV	237	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+A648D9BF-CF37-41FC-9515-E8F5AC85FCD4	TCGA-XF-A9SX	475	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	[Unknown]	[Unknown]
+8A83F744-8469-41EF-A4CD-E983F849383F	TCGA-XF-A9SY	168	Distant Metastasis	Other, specify	Groin	YES	318	NO	YES
+DC321B92-7275-48C9-ADEB-7670DB3195EF	TCGA-XF-A9SZ	854	Distant Metastasis	Lung	[Not Applicable]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+DC321B92-7275-48C9-ADEB-7670DB3195EF	TCGA-XF-A9SZ	854	Distant Metastasis	Liver	[Not Applicable]	[Unknown]	[Not Available]	[Unknown]	[Unknown]
+F9A03EAA-A228-429C-99C5-8E877379DB0F	TCGA-XF-A9T4	307	Distant Metastasis	Other, specify	Kidney	YES	340	NO	YES
+F9A03EAA-A228-429C-99C5-8E877379DB0F	TCGA-XF-A9T4	182	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+F9A7AB94-70DF-4194-8102-66021D01DADD	TCGA-XF-A9T5	664	Locoregional (Urothelial tumor event)	Other, specify	Vagina	NO	[Not Available]	NO	YES
+F9A7AB94-70DF-4194-8102-66021D01DADD	TCGA-XF-A9T5	847	Locoregional (Urothelial tumor event)	Other, specify	Vagina	NO	[Not Available]	YES	NO
+C8388AC0-975D-4F1E-8324-8CABDC75738D	TCGA-XF-AAME	1651	Locoregional (Urothelial tumor event)	Other, specify	Vagina	YES	1651	NO	NO
+C8388AC0-975D-4F1E-8324-8CABDC75738D	TCGA-XF-AAME	1781	Locoregional (Urothelial tumor event)	Other, specify	Vagina	NO	[Not Available]	YES	NO
+C8388AC0-975D-4F1E-8324-8CABDC75738D	TCGA-XF-AAME	2420	Locoregional (Urothelial tumor event)	Renal Pelvis	[Not Applicable]	NO	[Not Available]	YES	YES
+C8388AC0-975D-4F1E-8324-8CABDC75738D	TCGA-XF-AAME	2663	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+C8388AC0-975D-4F1E-8324-8CABDC75738D	TCGA-XF-AAME	2663	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	NO
+93FBE302-A2E0-4CF4-A638-312786F547C2	TCGA-XF-AAMF	157	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+93FBE302-A2E0-4CF4-A638-312786F547C2	TCGA-XF-AAMF	157	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	YES
+93FBE302-A2E0-4CF4-A638-312786F547C2	TCGA-XF-AAMF	157	Distant Metastasis	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+0EC37C2C-8D90-48C1-9CBC-69FE6473C980	TCGA-XF-AAMH	313	Distant Metastasis	Other, specify	lumbar spine and right hemipelvis	NO	[Not Available]	NO	NO
+9D2B19EB-BD61-490E-982B-FADF2C4AADF7	TCGA-XF-AAMY	637	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	NO	YES
+9D2B19EB-BD61-490E-982B-FADF2C4AADF7	TCGA-XF-AAMY	637	Locoregional (Urothelial tumor event)	Other, specify	Rectal wall	NO	[Not Available]	NO	NO
+ED36D054-53C4-465C-BD84-6EC5227097BF	TCGA-XF-AAMZ	1344	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	NO
+E7E95597-EF88-4442-8C01-8D633822E7B5	TCGA-XF-AAN0	603	Locoregional (Urothelial tumor event)	Other, specify	Scrotum and Perineum	YES	702	NO	YES
+5378F375-AA04-4ECA-BC35-190B3EFB52BC	TCGA-XF-AAN1	650	Locoregional (Urothelial tumor event)	Other, specify	Pelvis and vagina	NO	[Not Available]	NO	NO
+9D7FBDEB-EA3D-4E07-8527-23C5997D77CF	TCGA-XF-AAN7	321	Locoregional (Urothelial tumor event)	Bladder	[Not Applicable]	NO	[Not Available]	NO	YES
+9D7FBDEB-EA3D-4E07-8527-23C5997D77CF	TCGA-XF-AAN7	321	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+EBAD8BC9-F196-4F53-BFEA-DE38488EB4E1	TCGA-ZF-A9R9	629	Distant Metastasis	Other, specify	penis	NO	[Not Available]	YES	[Not Available]
+EBAD8BC9-F196-4F53-BFEA-DE38488EB4E1	TCGA-ZF-A9R9	819	Locoregional (Urothelial tumor event)	Other, specify	pelvis	NO	[Not Available]	NO	NO
+EBAD8BC9-F196-4F53-BFEA-DE38488EB4E1	TCGA-ZF-A9R9	852	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+FA05F7F6-50E9-4878-A834-F655C0877394	TCGA-ZF-A9RF	1565	Locoregional (Urothelial tumor event)	Bladder	[Not Applicable]	YES	1565	NO	NO
+1EB0ADBF-DBE8-4736-97F6-2DC4EE30E943	TCGA-ZF-A9RG	452	Distant Metastasis	Other, specify	neck node	NO	[Not Available]	YES	NO
+1EB0ADBF-DBE8-4736-97F6-2DC4EE30E943	TCGA-ZF-A9RG	469	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	[Not Available]	YES
+386F51E4-D03A-4606-BF2E-6168F2122C5F	TCGA-ZF-A9RL	1779	Locoregional (Urothelial tumor event)	[Not Available]	[Not Applicable]	YES	1779	NO	YES
+386F51E4-D03A-4606-BF2E-6168F2122C5F	TCGA-ZF-A9RL	2135	Locoregional (Urothelial tumor event)	[Not Available]	[Not Applicable]	YES	2135	NO	YES
+386F51E4-D03A-4606-BF2E-6168F2122C5F	TCGA-ZF-A9RL	2298	Locoregional (Urothelial tumor event)	[Not Available]	[Not Applicable]	YES	2298	NO	YES
+386F51E4-D03A-4606-BF2E-6168F2122C5F	TCGA-ZF-A9RL	2509	Locoregional (Urothelial tumor event)	[Not Available]	[Not Applicable]	YES	2509	NO	NO
+73DB40CE-2BA7-4A56-AEF2-B78D2C744BE1	TCGA-ZF-A9RN	516	Distant Metastasis	Lung	[Not Applicable]	NO	[Not Available]	[Not Available]	YES
+B36E3B5F-8904-4722-ADAE-B00812EFEC65	TCGA-ZF-AA4R	750	Locoregional (Urothelial tumor event)	Lymph Node Only	[Not Applicable]	NO	[Not Available]	NO	YES
+1859A4C5-78BC-4B1A-A26E-3D2B4CB221C2	TCGA-ZF-AA4T	511	Distant Metastasis	Lung	[Not Applicable]	[Not Available]	[Not Available]	[Unknown]	[Unknown]
+585DFB25-5013-4AE1-A26B-5FED08E6CDB3	TCGA-ZF-AA4U	199	Distant Metastasis	Bone	[Not Applicable]	NO	[Not Available]	NO	NO
+585DFB25-5013-4AE1-A26B-5FED08E6CDB3	TCGA-ZF-AA4U	199	Locoregional (Urothelial tumor event)	Other, specify	pelvis	NO	[Not Available]	NO	NO
+63443198-4FCF-40BD-BEFB-4A6920D29CA4	TCGA-ZF-AA4W	1679	Distant Metastasis	Other, specify	penile urethra	YES	1745	[Not Available]	[Not Available]
+E6F7BF6C-92B1-4795-94FC-B189D0C7877F	TCGA-ZF-AA4X	1665	Locoregional (Urothelial tumor event)	Bladder	[Not Applicable]	NO	[Not Available]	NO	YES
+EB30AE33-2076-475D-AAC9-804A8F1119A0	TCGA-ZF-AA56	248	Distant Metastasis	Liver	[Not Applicable]	NO	[Not Available]	NO	NO
+04477379-6C51-45D9-B9B9-D05D53B53945	TCGA-ZF-AA5H	449	Distant Metastasis	Lymph Node Only	[Not Applicable]	[Not Available]	[Not Available]	NO	NO

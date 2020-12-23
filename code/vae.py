@@ -7,9 +7,11 @@ from typing import List
 
 class VAE(BaseAE):
 
-    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, **kwargs) -> None:
+    def __init__(self, input_dim: int, latent_dim: int, hidden_dims: List = None, dop: float = 0.1, noise_flag: bool = True, **kwargs) -> None:
         super(VAE, self).__init__()
         self.latent_dim = latent_dim
+        self.dop = dop
+        self.noise_flag = noise_flag
 
         if hidden_dims is None:
             hidden_dims = [32, 64, 128, 256, 512]
@@ -20,8 +22,9 @@ class VAE(BaseAE):
         modules.append(
             nn.Sequential(
                 nn.Linear(input_dim, hidden_dims[0], bias=True),
-                nn.BatchNorm1d(hidden_dims[0]),
-                nn.LeakyReLU()
+                #nn.BatchNorm1d(hidden_dims[0]),
+                nn.ReLU(),
+                nn.Dropout(self.dop)
             )
         )
 
@@ -29,8 +32,9 @@ class VAE(BaseAE):
             modules.append(
                 nn.Sequential(
                     nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=True),
-                    nn.BatchNorm1d(hidden_dims[i + 1]),
-                    nn.LeakyReLU()
+                    #nn.BatchNorm1d(hidden_dims[i + 1]),
+                    nn.ReLU(),
+                    nn.Dropout(self.dop)
                 )
             )
 
@@ -48,8 +52,9 @@ class VAE(BaseAE):
         modules.append(
             nn.Sequential(
                 nn.Linear(latent_dim, hidden_dims[-1], bias=True),
-                nn.BatchNorm1d(hidden_dims[-1]),
-                nn.LeakyReLU()
+                #nn.BatchNorm1d(hidden_dims[-1]),
+                nn.ReLU(),
+                nn.Dropout(self.dop)
             )
         )
 
@@ -59,21 +64,26 @@ class VAE(BaseAE):
             modules.append(
                 nn.Sequential(
                     nn.Linear(hidden_dims[i], hidden_dims[i + 1], bias=True),
-                    nn.BatchNorm1d(hidden_dims[i + 1]),
-                    nn.LeakyReLU()
+                    #nn.BatchNorm1d(hidden_dims[i + 1]),
+                    nn.ReLU(),
+                    nn.Dropout(self.dop)
                 )
             )
         self.decoder = nn.Sequential(*modules)
 
         self.final_layer = nn.Sequential(
             nn.Linear(hidden_dims[-1], hidden_dims[-1], bias=True),
-            nn.BatchNorm1d(hidden_dims[-1]),
-            nn.LeakyReLU(),
+            #nn.BatchNorm1d(hidden_dims[-1]),
+            nn.ReLU(),
+            nn.Dropout(self.dop),
             nn.Linear(hidden_dims[-1], input_dim)
         )
 
     def encode(self, input: Tensor) -> Tensor:
-        embed = self.embedder(input)
+        if self.noise_flag and self.training:
+            embed = self.embedder(input+torch.randn_like(input, requires_grad=False) * 0.1)
+        else:
+            embed = self.embedder(input)
 
         mu = self.fc_mu(embed)
         log_var = self.fc_var(embed)

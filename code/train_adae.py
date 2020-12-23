@@ -126,10 +126,12 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
 
     autoencoder = AE(input_dim=kwargs['input_dim'],
                      latent_dim=kwargs['latent_dim'],
-                     hidden_dims=kwargs['encoder_hidden_dims']).to(kwargs['device'])
+                     hidden_dims=kwargs['encoder_hidden_dims'],
+                     dop=kwargs['dop']).to(kwargs['device'])
     classifier = MLP(input_dim=kwargs['latent_dim'],
                      output_dim=1,
-                     hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
+                     hidden_dims=kwargs['classifier_hidden_dims'],
+                     dop=kwargs['dop']).to(kwargs['device'])
     confounder_classifier = EncoderDecoder(encoder=autoencoder.encoder, decoder=classifier).to(kwargs['device'])
 
     ae_eval_train_history = defaultdict(list)
@@ -138,146 +140,160 @@ def train_adae(s_dataloaders, t_dataloaders, **kwargs):
     classification_eval_test_history = defaultdict(list)
     classification_eval_train_history = defaultdict(list)
 
-    confounded_loss = nn.BCEWithLogitsLoss()
-    ae_optimizer = torch.optim.AdamW(autoencoder.parameters(), lr=kwargs['lr'])
-    classifier_optimizer = torch.optim.AdamW(confounder_classifier.decoder.parameters(), lr=kwargs['lr'])
+    if kwargs['retrain_flag']:
+        confounded_loss = nn.BCEWithLogitsLoss()
+        ae_optimizer = torch.optim.AdamW(autoencoder.parameters(), lr=kwargs['lr'])
+        classifier_optimizer = torch.optim.AdamW(confounder_classifier.decoder.parameters(), lr=kwargs['lr'])
 
-    # start autoencoder pretraining
-    for epoch in range(kwargs['pretrain_num_epochs']):
-        if epoch % 50 == 0:
-            print(f'----Autoencoder  Pre-Training Epoch {epoch} ----')
-        for step, s_batch in enumerate(s_train_dataloader):
-            t_batch = next(iter(t_train_dataloader))
-            ae_eval_train_history = ae_train_step(ae=autoencoder,
-                                                  s_batch=s_batch,
-                                                  t_batch=t_batch,
-                                                  device=kwargs['device'],
-                                                  optimizer=ae_optimizer,
-                                                  history=ae_eval_train_history)
+        # start autoencoder pretraining
+        for epoch in range(int(kwargs['pretrain_num_epochs'])):
+            if epoch % 50 == 0:
+                print(f'----Autoencoder  Pre-Training Epoch {epoch} ----')
+            for step, s_batch in enumerate(s_train_dataloader):
+                t_batch = next(iter(t_train_dataloader))
+                ae_eval_train_history = ae_train_step(ae=autoencoder,
+                                                      s_batch=s_batch,
+                                                      t_batch=t_batch,
+                                                      device=kwargs['device'],
+                                                      optimizer=ae_optimizer,
+                                                      history=ae_eval_train_history)
 
-        ae_eval_val_history = eval_ae_epoch(model=autoencoder,
-                                            data_loader=s_test_dataloader,
-                                            device=kwargs['device'],
-                                            history=ae_eval_val_history
-                                            )
-        ae_eval_val_history = eval_ae_epoch(model=autoencoder,
-                                            data_loader=t_test_dataloader,
-                                            device=kwargs['device'],
-                                            history=ae_eval_val_history
-                                            )
-        for k in ae_eval_val_history:
-            if k != 'best_index':
-                ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
-                ae_eval_val_history[k].pop()
-        # print some loss/metric messages
-        save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss', tolerance_count=10)
-        if save_flag:
-            torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
-    if kwargs['es_flag']:
-        autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+            ae_eval_val_history = eval_ae_epoch(model=autoencoder,
+                                                data_loader=s_test_dataloader,
+                                                device=kwargs['device'],
+                                                history=ae_eval_val_history
+                                                )
+            ae_eval_val_history = eval_ae_epoch(model=autoencoder,
+                                                data_loader=t_test_dataloader,
+                                                device=kwargs['device'],
+                                                history=ae_eval_val_history
+                                                )
+            for k in ae_eval_val_history:
+                if k != 'best_index':
+                    ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
+                    ae_eval_val_history[k].pop()
+            # print some loss/metric messages
+            if kwargs['es_flag']:
+                save_flag, stop_flag = model_save_check(history=ae_eval_val_history, metric_name='loss',
+                                                        tolerance_count=10)
+                if save_flag:
+                    torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
+                if stop_flag:
+                    break
 
-    # start adversarial classifier pre-training
-    for epoch in range(kwargs['pretrain_num_epochs']):
-        if epoch % 50 == 0:
-            print(f'Adversarial classifier pre-training epoch {epoch}')
-        for step, s_batch in enumerate(s_train_dataloader):
-            t_batch = next(iter(t_train_dataloader))
-            classifier_pretrain_history = classification_train_step(classifier=confounder_classifier,
-                                                                    s_batch=s_batch,
-                                                                    t_batch=t_batch,
-                                                                    loss_fn=confounded_loss,
-                                                                    device=kwargs['device'],
-                                                                    optimizer=classifier_optimizer,
-                                                                    history=classifier_pretrain_history)
+        if kwargs['es_flag']:
+            autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
 
-        classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                             s_dataloader=s_test_dataloader,
-                                                                             t_dataloader=t_test_dataloader,
-                                                                             device=kwargs['device'],
-                                                                             history=classification_eval_test_history)
-        classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                              s_dataloader=s_train_dataloader,
-                                                                              t_dataloader=t_train_dataloader,
-                                                                              device=kwargs['device'],
-                                                                              history=classification_eval_train_history)
+        # start adversarial classifier pre-training
+        for epoch in range(int(kwargs['pretrain_num_epochs'])):
+            if epoch % 50 == 0:
+                print(f'Adversarial classifier pre-training epoch {epoch}')
+            for step, s_batch in enumerate(s_train_dataloader):
+                t_batch = next(iter(t_train_dataloader))
+                classifier_pretrain_history = classification_train_step(classifier=confounder_classifier,
+                                                                        s_batch=s_batch,
+                                                                        t_batch=t_batch,
+                                                                        loss_fn=confounded_loss,
+                                                                        device=kwargs['device'],
+                                                                        optimizer=classifier_optimizer,
+                                                                        history=classifier_pretrain_history)
 
-        save_flag, stop_flag = model_save_check(history=classification_eval_test_history, metric_name='acc',
-                                                tolerance_count=50)
-        if save_flag:
-            torch.save(confounder_classifier.state_dict(),
-                       os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
-        if kwargs['es_flag'] and stop_flag:
-            break
-    if kwargs['es_flag']:
-        confounder_classifier.load_state_dict(
-            torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
+            classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                 s_dataloader=s_test_dataloader,
+                                                                                 t_dataloader=t_test_dataloader,
+                                                                                 device=kwargs['device'],
+                                                                                 history=classification_eval_test_history)
+            classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                  s_dataloader=s_train_dataloader,
+                                                                                  t_dataloader=t_train_dataloader,
+                                                                                  device=kwargs['device'],
+                                                                                  history=classification_eval_train_history)
 
-    # start alternative training
-    for epoch in range(kwargs['train_num_epochs']):
-        if epoch % 50 == 0:
-            print(f'Alternative training epoch {epoch}')
-        # start autoencoder training epoch
-        for step, s_batch in enumerate(s_train_dataloader):
-            t_batch = next(iter(t_train_dataloader))
-            ae_eval_train_history = customized_ae_train_step(classifier=confounder_classifier,
-                                                             ae=autoencoder,
-                                                             s_batch=s_batch,
-                                                             t_batch=t_batch,
-                                                             loss_fn=confounded_loss,
-                                                             alpha=kwargs['alpha'],
-                                                             device=kwargs['device'],
-                                                             optimizer=ae_optimizer,
-                                                             history=ae_eval_train_history,
-                                                             scheduler=None)
+            save_flag, stop_flag = model_save_check(history=classification_eval_test_history, metric_name='acc',
+                                                    tolerance_count=50)
+            if kwargs['es_flag']:
+                if save_flag:
+                    torch.save(confounder_classifier.state_dict(),
+                               os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt'))
+                if stop_flag:
+                    break
 
-        ae_eval_val_history = eval_ae_epoch(model=autoencoder,
-                                            data_loader=s_test_dataloader,
-                                            device=kwargs['device'],
-                                            history=ae_eval_val_history
-                                            )
-        ae_eval_val_history = eval_ae_epoch(model=autoencoder,
-                                            data_loader=t_test_dataloader,
-                                            device=kwargs['device'],
-                                            history=ae_eval_val_history
-                                            )
-        for k in ae_eval_val_history:
-            if k != 'best_index':
-                ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
-                ae_eval_val_history[k].pop()
+        if kwargs['es_flag']:
+            confounder_classifier.load_state_dict(
+                torch.load(os.path.join(kwargs['model_save_folder'], 'adv_classifier.pt')))
 
-        classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                             s_dataloader=s_test_dataloader,
-                                                                             t_dataloader=t_test_dataloader,
-                                                                             device=kwargs['device'],
-                                                                             history=classification_eval_test_history)
-        classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                              s_dataloader=s_train_dataloader,
-                                                                              t_dataloader=t_train_dataloader,
-                                                                              device=kwargs['device'],
-                                                                              history=classification_eval_train_history)
+        # start alternative training
+        for epoch in range(int(kwargs['train_num_epochs'])):
+            if epoch % 50 == 0:
+                print(f'Alternative training epoch {epoch}')
+            # start autoencoder training epoch
+            for step, s_batch in enumerate(s_train_dataloader):
+                t_batch = next(iter(t_train_dataloader))
+                ae_eval_train_history = customized_ae_train_step(classifier=confounder_classifier,
+                                                                 ae=autoencoder,
+                                                                 s_batch=s_batch,
+                                                                 t_batch=t_batch,
+                                                                 loss_fn=confounded_loss,
+                                                                 alpha=kwargs['alpha'],
+                                                                 device=kwargs['device'],
+                                                                 optimizer=ae_optimizer,
+                                                                 history=ae_eval_train_history,
+                                                                 scheduler=None)
 
-        for step, s_batch in enumerate(s_train_dataloader):
-            t_batch = next(iter(t_train_dataloader))
-            classifier_pretrain_history = classification_train_step(classifier=confounder_classifier,
-                                                                    s_batch=s_batch,
-                                                                    t_batch=t_batch,
-                                                                    loss_fn=confounded_loss,
-                                                                    device=kwargs['device'],
-                                                                    optimizer=classifier_optimizer,
-                                                                    history=classifier_pretrain_history)
+            ae_eval_val_history = eval_ae_epoch(model=autoencoder,
+                                                data_loader=s_test_dataloader,
+                                                device=kwargs['device'],
+                                                history=ae_eval_val_history
+                                                )
+            ae_eval_val_history = eval_ae_epoch(model=autoencoder,
+                                                data_loader=t_test_dataloader,
+                                                device=kwargs['device'],
+                                                history=ae_eval_val_history
+                                                )
+            for k in ae_eval_val_history:
+                if k != 'best_index':
+                    ae_eval_val_history[k][-2] += ae_eval_val_history[k][-1]
+                    ae_eval_val_history[k].pop()
 
-        classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                             s_dataloader=s_test_dataloader,
-                                                                             t_dataloader=t_test_dataloader,
-                                                                             device=kwargs['device'],
-                                                                             history=classification_eval_test_history)
-        classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
-                                                                              s_dataloader=s_train_dataloader,
-                                                                              t_dataloader=t_test_dataloader,
-                                                                              device=kwargs['device'],
-                                                                              history=classification_eval_train_history)
+            classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                 s_dataloader=s_test_dataloader,
+                                                                                 t_dataloader=t_test_dataloader,
+                                                                                 device=kwargs['device'],
+                                                                                 history=classification_eval_test_history)
+            classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                  s_dataloader=s_train_dataloader,
+                                                                                  t_dataloader=t_train_dataloader,
+                                                                                  device=kwargs['device'],
+                                                                                  history=classification_eval_train_history)
+
+            for step, s_batch in enumerate(s_train_dataloader):
+                t_batch = next(iter(t_train_dataloader))
+                classifier_pretrain_history = classification_train_step(classifier=confounder_classifier,
+                                                                        s_batch=s_batch,
+                                                                        t_batch=t_batch,
+                                                                        loss_fn=confounded_loss,
+                                                                        device=kwargs['device'],
+                                                                        optimizer=classifier_optimizer,
+                                                                        history=classifier_pretrain_history)
+
+            classification_eval_test_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                 s_dataloader=s_test_dataloader,
+                                                                                 t_dataloader=t_test_dataloader,
+                                                                                 device=kwargs['device'],
+                                                                                 history=classification_eval_test_history)
+            classification_eval_train_history = evaluate_adv_classification_epoch(classifier=confounder_classifier,
+                                                                                  s_dataloader=s_train_dataloader,
+                                                                                  t_dataloader=t_test_dataloader,
+                                                                                  device=kwargs['device'],
+                                                                                  history=classification_eval_train_history)
+
+        torch.save(autoencoder.state_dict(), os.path.join(kwargs['model_save_folder'], 'ae.pt'))
+
+    else:
+        try:
+            autoencoder.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'ae.pt')))
+        except FileNotFoundError:
+            raise Exception("No pre-trained encoder")
 
     return autoencoder.encoder, (ae_eval_train_history,
                                  ae_eval_val_history,

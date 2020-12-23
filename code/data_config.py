@@ -7,6 +7,16 @@ root_data_folder = '../data/'
 raw_data_folder = os.path.join(root_data_folder, 'raw_dat')
 preprocessed_data_folder = os.path.join(root_data_folder, 'preprocessed_dat')
 gene_feature_file = os.path.join(preprocessed_data_folder, 'CosmicHGNC_list.tsv')
+gdsc_tcga_mapping_file = os.path.join(root_data_folder, 'tcga_gdsc_drug_mapping.csv')
+
+#TCGA_datasets
+tcga_folder = os.path.join(root_data_folder, 'tcga')
+tcga_clinical_folder = os.path.join(tcga_folder, 'Clinical')
+tcga_drug_name_mapping_file = os.path.join(tcga_folder, 'drug_name_mapping.csv')
+tcga_first_treatment_file = os.path.join(tcga_folder, 'tcga_drug_first_treatment.csv')
+tcga_first_response_file = os.path.join(tcga_folder, 'tcga_drug_first_response.csv')
+
+
 #Xena datasets
 xena_folder = os.path.join(raw_data_folder, 'Xena')
 xena_id_mapping_file = os.path.join(xena_folder, 'gencode.v23.annotation.gene.probemap')
@@ -31,3 +41,8 @@ gdsc_raw_target_file = os.path.join(gdsc_folder, 'gdsc_ic50flag.csv')
 gdsc_sample_file = os.path.join(gdsc_folder, 'gdsc_cell_line_annotation.csv')
 gdsc_preprocessed_target_file = os.path.join(preprocessed_data_folder, 'gdsc_ic50flag.csv')
 
+#adae brain cancer datasets
+adae_folder = os.path.join(root_data_folder, 'adae_data')
+adae_gex_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_PREPROCESSED_RNASEQ_EXPRESSION_500_kmeans.tsv')
+adae_sex_label_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_SEX_LABELS.tsv')
+adae_subtype_label_file = os.path.join(adae_folder, 'TCGA_GBM_and_LGG_SUBTYPE_LABELS.tsv')

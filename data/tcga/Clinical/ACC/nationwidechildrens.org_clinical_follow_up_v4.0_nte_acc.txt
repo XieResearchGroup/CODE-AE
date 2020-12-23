@@ -1,0 +1,33 @@
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_tumor_event_type	new_tumor_event_site	new_tumor_event_site_other	new_tumor_event_dx_confirmed_by	new_tumor_event_histo_progression	new_tumor_event_surgery	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+bcr_patient_uuid	bcr_patient_barcode	bcr_followup_barcode	new_neoplasm_event_type	new_neoplasm_event_occurrence_anatomic_site	new_neoplasm_occurrence_anatomic_site_text	new_neoplasm_confirmed_diagnosis_method_name	histologic_disease_progression_present_indicator	new_tumor_event_additional_surgery_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy	days_to_new_tumor_event_additional_surgery_procedure	days_to_new_tumor_event_after_initial_treatment
+CDE_ID:	CDE_ID:2673794	CDE_ID:	CDE_ID:3119721	CDE_ID:3108271	CDE_ID:3128033	CDE_ID:3186701	CDE_ID:3181376	CDE_ID:3427611	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3008335	CDE_ID:3392464
+B3164F7B-C826-4E08-9EE6-8FF96D29B913	TCGA-OR-A5J1	TCGA-OR-A5J1-F60566	Distant Metastasis	Peritoneal Surfaces	[Not Applicable]	Imaging	YES	NO	NO	NO	[Not Available]	754
+DFD687BC-6E69-42F7-AF94-D17FC150D1A1	TCGA-OR-A5J3	TCGA-OR-A5J3-F59590	Distant Metastasis	Lung	[Not Applicable]	Imaging	[Unknown]	YES	NO	YES	1583	1149
+DFD687BC-6E69-42F7-AF94-D17FC150D1A1	TCGA-OR-A5J3	TCGA-OR-A5J3-F59590	Distant Metastasis	Liver	[Not Applicable]	Imaging	[Unknown]	YES	NO	YES	1583	1149
+A53E9117-0A49-40D8-AF40-7867370B671A	TCGA-OR-A5J9	TCGA-OR-A5J9-F59596	Distant Metastasis	Lung	[Not Applicable]	Imaging	[Unknown]	NO	NO	NO	[Not Available]	414
+82940E94-AC74-4A9B-9DA5-9E4B7D4D45C0	TCGA-OR-A5JS	TCGA-OR-A5JS-F59160	Distant Metastasis	Lung	[Not Applicable]	Imaging	[Unknown]	NO	NO	YES	[Not Available]	166
+94CDAC79-2B4E-483A-8F17-3E0C9BE589D0	TCGA-OR-A5JZ	TCGA-OR-A5JZ-F59165	Distant Metastasis	Liver	[Not Applicable]	Imaging	[Not Available]	NO	NO	YES	[Not Available]	247
+94CDAC79-2B4E-483A-8F17-3E0C9BE589D0	TCGA-OR-A5JZ	TCGA-OR-A5JZ-F59165	Distant Metastasis	Other, specify	Soft tissue of pancreatic tail	Imaging	[Not Available]	NO	NO	YES	[Not Available]	247
+F8E77BB6-E521-4A6A-9CB4-4B58EE38CA7F	TCGA-OR-A5K1	TCGA-OR-A5K1-F59167	Locoregional Recurrence	Peritoneal Surfaces	[Not Applicable]	Imaging	[Not Available]	YES	YES	NO	883	826
+F8E77BB6-E521-4A6A-9CB4-4B58EE38CA7F	TCGA-OR-A5K1	TCGA-OR-A5K1-F71436	Locoregional Recurrence	Peritoneal Surfaces	[Not Applicable]	Imaging	[Not Available]	YES	YES	NO	883	826
+CF332DAA-F335-4AF1-81DE-CBFDAFB0F764	TCGA-OR-A5K5	TCGA-OR-A5K5-F59170	Distant Metastasis	Lung	[Not Applicable]	Imaging	NO	NO	NO	YES	[Not Available]	108
+CF332DAA-F335-4AF1-81DE-CBFDAFB0F764	TCGA-OR-A5K5	TCGA-OR-A5K5-F59170	Distant Metastasis	Liver	[Not Applicable]	Imaging	NO	NO	NO	YES	[Not Available]	108
+28153E3E-8515-4852-AAA0-247F86399F27	TCGA-OR-A5K6	TCGA-OR-A5K6-F61830	Distant Metastasis	Liver	[Not Applicable]	Pathology	YES	YES	NO	YES	1003	391
+28153E3E-8515-4852-AAA0-247F86399F27	TCGA-OR-A5K6	TCGA-OR-A5K6-F61830	Distant Metastasis	Peritoneal Surfaces	[Not Applicable]	Pathology	YES	YES	NO	YES	1003	391
+09454ED6-64BC-4A35-AF44-7C4344623D45	TCGA-OR-A5KB	TCGA-OR-A5KB-F59331	Distant Metastasis	Soft Tissue	[Not Applicable]	Pathology	YES	NO	NO	YES	[Not Available]	214
+B4B41A43-EE45-4AA3-ABF0-100DB752A6AC	TCGA-OR-A5KO	TCGA-OR-A5KO-F60521	Distant Metastasis	Lung	[Not Applicable]	Pathology	YES	YES	NO	YES	561	541
+B4B41A43-EE45-4AA3-ABF0-100DB752A6AC	TCGA-OR-A5KO	TCGA-OR-A5KO-F60521	Distant Metastasis	Liver	[Not Applicable]	Pathology	YES	YES	NO	YES	561	541
+653F1D34-73E9-4216-B40B-E25C1CFC7943	TCGA-OR-A5KP	TCGA-OR-A5KP-F60584	Distant Metastasis	Liver	[Not Applicable]	Pathology	YES	YES	NO	NO	1267	1250
+DE7F06AA-9638-4389-AC8E-711ADFA0F2A5	TCGA-OR-A5KT	TCGA-OR-A5KT-F60526	Distant Metastasis	Other, specify	Pancreas	Pathology	YES	YES	NO	YES	2112	2099
+202F7A77-9E5A-4F12-8FFE-78AE5527A746	TCGA-OR-A5KV	TCGA-OR-A5KV-F60525	Distant Metastasis	Lung	[Not Applicable]	Imaging	YES	YES	NO	NO	1120	1116
+33C02ECE-911B-4F45-B410-9DF07E9B189E	TCGA-OR-A5KX	TCGA-OR-A5KX-F60522	Distant Metastasis	Bone	[Not Applicable]	Pathology	YES	YES	YES	YES	69	62
+33C02ECE-911B-4F45-B410-9DF07E9B189E	TCGA-OR-A5KX	TCGA-OR-A5KX-F60522	Distant Metastasis	Lung	[Not Applicable]	Pathology	YES	YES	YES	YES	69	62
+33C02ECE-911B-4F45-B410-9DF07E9B189E	TCGA-OR-A5KX	TCGA-OR-A5KX-F60522	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Pathology	YES	YES	YES	YES	69	62
+EC9C3EFE-AF61-4DEB-B047-DCF7EE735FD2	TCGA-OR-A5LI	TCGA-OR-A5LI-F61316	Distant Metastasis	Bone	[Not Applicable]	Imaging	NO	NO	YES	YES	[Not Available]	61
+EC9C3EFE-AF61-4DEB-B047-DCF7EE735FD2	TCGA-OR-A5LI	TCGA-OR-A5LI-F61316	Distant Metastasis	Lung	[Not Applicable]	Imaging	NO	NO	YES	YES	[Not Available]	61
+EC9C3EFE-AF61-4DEB-B047-DCF7EE735FD2	TCGA-OR-A5LI	TCGA-OR-A5LI-F61316	Distant Metastasis	Liver	[Not Applicable]	Imaging	NO	NO	YES	YES	[Not Available]	61
+1D5602A7-72E7-4DC6-B2DB-2F778FCBF475	TCGA-OR-A5LO	TCGA-OR-A5LO-F59577	Distant Metastasis	Lung	[Not Applicable]	Imaging	YES	YES	YES	YES	1309	153
+1D5602A7-72E7-4DC6-B2DB-2F778FCBF475	TCGA-OR-A5LO	TCGA-OR-A5LO-F59577	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Imaging	YES	YES	[Not Available]	[Not Available]	1309	153
+1D5602A7-72E7-4DC6-B2DB-2F778FCBF475	TCGA-OR-A5LO	TCGA-OR-A5LO-F71748	Distant Metastasis	Lung	[Not Applicable]	Imaging	YES	YES	YES	YES	1309	153
+1D5602A7-72E7-4DC6-B2DB-2F778FCBF475	TCGA-OR-A5LO	TCGA-OR-A5LO-F71748	Distant Metastasis	Lymph Node(s)	[Not Applicable]	Imaging	YES	YES	YES	YES	1309	153
+A5BE4E42-CB6C-4E67-8547-45DBD058BB95	TCGA-OU-A5PI	TCGA-OU-A5PI-F65711	Distant Metastasis	Lung	[Not Applicable]	Imaging	NO	YES	YES	YES	384	351
