@@ -320,7 +320,6 @@ def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_thresho
     """
     sensitive (responder): 1
     resistant (non-responder): 0
-
     """
     drug_mapping_df = pd.read_csv(data_config.gdsc_tcga_mapping_file, index_col=0)
     gdsc_drug = drug_mapping_df.loc[drug, 'gdsc_name']
