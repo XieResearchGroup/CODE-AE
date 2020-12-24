@@ -138,7 +138,7 @@ def main(args, update_params_dict):
         seed=2020,
         batch_size=training_params['labeled']['batch_size'],
         drug=args.drug,
-        auc_threshold=args.a_thres,
+        threshold=args.a_thres,
         days_threshold=args.days_thres,
         ccle_measurement=args.measurement,
         ft_flag=False
@@ -227,7 +227,7 @@ def main(args, update_params_dict):
         batch_size=training_params['labeled']['batch_size'],
         drug=args.drug,
         ccle_measurement=args.measurement,
-        auc_threshold=args.a_thres,
+        threshold=args.a_thres,
         days_threshold=args.days_thres)
     fold_count = 0
     for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader in labeled_dataloader_generator:
@@ -237,7 +237,7 @@ def main(args, update_params_dict):
         #         seed=seed,
         #         batch_size=training_params['labeled']['batch_size'],
         #         drug=args.drug,
-        #         auc_threshold=args.auc_thres,
+        #         threshold=args.a_thres,
         #         days_threshold=args.days_thres,
         #         ft_flag=True
         #     )
