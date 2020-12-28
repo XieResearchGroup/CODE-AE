@@ -13,4 +13,4 @@ code/model_save/*/*/*/*.csv
 code/model_save/*/*/*/*.pt
 code/model_save/*/*/*.pt
 code/model_save/*/*/*.csv
-
+results/*
