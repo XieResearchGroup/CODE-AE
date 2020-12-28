@@ -170,14 +170,19 @@ def get_tcga_preprocessed_labeled_dataloaders(gex_features_df, drug, batch_size)
     return labeled_tcga_dataloader
 
 
-def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_flag=False, auc_threshold=None):
+def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_flag=False, threshold=None,
+                                 measurement='AUC'):
     drugs_to_keep = [drug]
     gdsc1_response = pd.read_csv(data_config.gdsc_target_file1)
     gdsc2_response = pd.read_csv(data_config.gdsc_target_file2)
-    gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
-    gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
+    gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', measurement]]
+    gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', measurement]]
     gdsc1_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
     gdsc2_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
+
+    if measurement == 'LN_IC50':
+        gdsc1_sensitivity_df.loc[:, measurement] = np.exp(gdsc1_sensitivity_df[measurement])
+        gdsc2_sensitivity_df.loc[:, measurement] = np.exp(gdsc2_sensitivity_df[measurement])
 
     gdsc1_sensitivity_df = gdsc1_sensitivity_df.loc[gdsc1_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
     gdsc2_sensitivity_df = gdsc2_sensitivity_df.loc[gdsc2_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
@@ -185,7 +190,7 @@ def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_fla
     gdsc2_target_df = gdsc2_sensitivity_df.groupby(['COSMIC_ID', 'DRUG_NAME']).mean()
     gdsc1_target_df = gdsc1_target_df.loc[gdsc1_target_df.index.difference(gdsc2_target_df.index)]
     gdsc_target_df = pd.concat([gdsc1_target_df, gdsc2_target_df])
-    target_df = gdsc_target_df.reset_index().pivot_table(values='AUC', index='COSMIC_ID', columns='DRUG_NAME')
+    target_df = gdsc_target_df.reset_index().pivot_table(values=measurement, index='COSMIC_ID', columns='DRUG_NAME')
     ccle_sample_info = pd.read_csv(data_config.ccle_sample_file, index_col=4)
     ccle_sample_info = ccle_sample_info.loc[ccle_sample_info.index.dropna()]
     ccle_sample_info.index = ccle_sample_info.index.astype('int')
@@ -206,10 +211,10 @@ def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_fla
     ccle_target_df.dropna(inplace=True)
     ccle_labeled_samples = gex_features_df.index.intersection(ccle_target_df.index)
 
-    if auc_threshold is None:
-        auc_threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
+    if threshold is None:
+        threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
 
-    ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < auc_threshold).astype('int')
+    ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < threshold).astype('int')
     ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
     assert all(ccle_labels.index == ccle_labeled_feature_df.index)
 
@@ -248,14 +253,19 @@ def get_ccle_labeled_dataloaders(gex_features_df, seed, drug, batch_size, ft_fla
     return (train_labeled_ccle_dataloader, test_labeled_ccle_dataloader) if ft_flag else labeled_ccle_dataloader
 
 
-def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, seed=2020, auc_threshold=None):
+def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, seed=2020, threshold=None,
+                                          measurement='AUC'):
     drugs_to_keep = [drug]
     gdsc1_response = pd.read_csv(data_config.gdsc_target_file1)
     gdsc2_response = pd.read_csv(data_config.gdsc_target_file2)
-    gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
-    gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', 'AUC']]
+    gdsc1_sensitivity_df = gdsc1_response[['COSMIC_ID', 'DRUG_NAME', measurement]]
+    gdsc2_sensitivity_df = gdsc2_response[['COSMIC_ID', 'DRUG_NAME', measurement]]
     gdsc1_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc1_sensitivity_df['DRUG_NAME'].str.lower()
     gdsc2_sensitivity_df.loc[:, 'DRUG_NAME'] = gdsc2_sensitivity_df['DRUG_NAME'].str.lower()
+
+    if measurement == 'LN_IC50':
+        gdsc1_sensitivity_df.loc[:, measurement] = np.exp(gdsc1_sensitivity_df[measurement])
+        gdsc2_sensitivity_df.loc[:, measurement] = np.exp(gdsc2_sensitivity_df[measurement])
 
     gdsc1_sensitivity_df = gdsc1_sensitivity_df.loc[gdsc1_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
     gdsc2_sensitivity_df = gdsc2_sensitivity_df.loc[gdsc2_sensitivity_df.DRUG_NAME.isin(drugs_to_keep)]
@@ -263,7 +273,7 @@ def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, see
     gdsc2_target_df = gdsc2_sensitivity_df.groupby(['COSMIC_ID', 'DRUG_NAME']).mean()
     gdsc1_target_df = gdsc1_target_df.loc[gdsc1_target_df.index.difference(gdsc2_target_df.index)]
     gdsc_target_df = pd.concat([gdsc1_target_df, gdsc2_target_df])
-    target_df = gdsc_target_df.reset_index().pivot_table(values='AUC', index='COSMIC_ID', columns='DRUG_NAME')
+    target_df = gdsc_target_df.reset_index().pivot_table(values=measurement, index='COSMIC_ID', columns='DRUG_NAME')
     ccle_sample_info = pd.read_csv(data_config.ccle_sample_file, index_col=4)
     ccle_sample_info = ccle_sample_info.loc[ccle_sample_info.index.dropna()]
     ccle_sample_info.index = ccle_sample_info.index.astype('int')
@@ -284,10 +294,10 @@ def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, see
     ccle_target_df.dropna(inplace=True)
     ccle_labeled_samples = gex_features_df.index.intersection(ccle_target_df.index)
 
-    if auc_threshold is None:
-        auc_threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
+    if threshold is None:
+        threshold = np.median(ccle_target_df.loc[ccle_labeled_samples])
 
-    ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < auc_threshold).astype('int')
+    ccle_labels = (ccle_target_df.loc[ccle_labeled_samples] < threshold).astype('int')
     ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
     assert all(ccle_labels.index == ccle_labeled_feature_df.index)
 
@@ -315,7 +325,8 @@ def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, see
         yield train_labeled_ccle_dataloader, test_labeled_ccle_dataloader
 
 
-def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_threshold=None, days_threshold=None,
+def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, ccle_measurement='AUC', threshold=None,
+                            days_threshold=None,
                             ft_flag=False):
     """
     sensitive (responder): 1
@@ -327,8 +338,9 @@ def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_thresho
 
     print(f'Drug: {drug}, TCGA: {tcga_drug}, GDSC: {gdsc_drug}')
     ccle_labeled_dataloaders = get_ccle_labeled_dataloaders(gex_features_df=gex_features_df,
-                                                            auc_threshold=auc_threshold, seed=seed, drug=gdsc_drug,
-                                                            batch_size=batch_size, ft_flag=ft_flag)
+                                                            threshold=threshold, seed=seed, drug=gdsc_drug,
+                                                            batch_size=batch_size, ft_flag=ft_flag,
+                                                            measurement=ccle_measurement)
     if drug in ['gem', 'fu']:
         tcga_labeled_dataloaders = get_tcga_preprocessed_labeled_dataloaders(gex_features_df=gex_features_df, drug=drug,
                                                                              batch_size=batch_size)
@@ -339,7 +351,8 @@ def get_labeled_dataloaders(gex_features_df, drug, seed, batch_size, auc_thresho
     return ccle_labeled_dataloaders, tcga_labeled_dataloaders
 
 
-def get_labeled_dataloader_generator(gex_features_df, drug, seed, batch_size, auc_threshold=None, days_threshold=None):
+def get_labeled_dataloader_generator(gex_features_df, drug, seed, batch_size, ccle_measurement='AUC', threshold=None,
+                                     days_threshold=None):
     """
     sensitive (responder): 1
     resistant (non-responder): 0
@@ -354,7 +367,8 @@ def get_labeled_dataloader_generator(gex_features_df, drug, seed, batch_size, au
                                                                               seed=seed,
                                                                               drug=gdsc_drug,
                                                                               batch_size=batch_size,
-                                                                              auc_threshold=auc_threshold)
+                                                                              threshold=threshold,
+                                                                              measurement=ccle_measurement)
 
     if drug in ['gem', 'fu']:
         tcga_labeled_dataloaders = get_tcga_preprocessed_labeled_dataloaders(gex_features_df=gex_features_df, drug=drug,

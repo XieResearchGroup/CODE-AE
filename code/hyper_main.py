@@ -26,6 +26,7 @@ import ml_baseline
 
 from copy import deepcopy
 
+
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
     """
 
@@ -116,11 +117,10 @@ def main(args, update_params_dict):
             'es_flag': False,
             'retrain_flag': args.retrain_flag
         })
-    task_save_folder = os.path.join('model_save', args.method, args.drug)
+    task_save_folder = os.path.join('model_save', args.method, args.measurement, args.drug)
 
     safe_make_dir(training_params['model_save_folder'])
     safe_make_dir(task_save_folder)
-
 
     ml_baseline_history = defaultdict(list)
 
@@ -138,8 +138,9 @@ def main(args, update_params_dict):
         seed=2020,
         batch_size=training_params['labeled']['batch_size'],
         drug=args.drug,
-        auc_threshold=args.auc_thres,
+        threshold=args.a_thres,
         days_threshold=args.days_thres,
+        ccle_measurement=args.measurement,
         ft_flag=False
     )
 
@@ -160,13 +161,13 @@ def main(args, update_params_dict):
                                                                                normalize_flag=normalize_flag)
 
     pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'train_encoded_feature.csv'))
+        os.path.join(task_save_folder, f'train_encoded_feature.csv'))
     pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'train_label.csv'))
+        os.path.join(task_save_folder, f'train_label.csv'))
     pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'test_encoded_feature.csv'))
+        os.path.join(task_save_folder, f'test_encoded_feature.csv'))
     pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(
-        os.path.join(training_params['model_save_folder'], f'test_label.csv'))
+        os.path.join(task_save_folder, f'test_label.csv'))
 
     # build baseline ml models for encoded features
     # ml_baseline_history['rf'].append(
@@ -221,25 +222,26 @@ def main(args, update_params_dict):
 
     ft_evaluation_metrics = defaultdict(list)
     labeled_dataloader_generator = data.get_labeled_dataloader_generator(
-            gex_features_df=gex_features_df,
-            seed=2020,
-            batch_size=training_params['labeled']['batch_size'],
-            drug=args.drug,
-            auc_threshold=args.auc_thres,
-            days_threshold=args.days_thres)
+        gex_features_df=gex_features_df,
+        seed=2020,
+        batch_size=training_params['labeled']['batch_size'],
+        drug=args.drug,
+        ccle_measurement=args.measurement,
+        threshold=args.a_thres,
+        days_threshold=args.days_thres)
     fold_count = 0
     for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader in labeled_dataloader_generator:
-    # for seed in seeds:
-    #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
-    #         gex_features_df=gex_features_df,
-    #         seed=seed,
-    #         batch_size=training_params['labeled']['batch_size'],
-    #         drug=args.drug,
-    #         auc_threshold=args.auc_thres,
-    #         days_threshold=args.days_thres,
-    #         ft_flag=True
-    #     )
-    #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader = labeled_ccle_dataloaders
+        # for seed in seeds:
+        #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+        #         gex_features_df=gex_features_df,
+        #         seed=seed,
+        #         batch_size=training_params['labeled']['batch_size'],
+        #         drug=args.drug,
+        #         threshold=args.a_thres,
+        #         days_threshold=args.days_thres,
+        #         ft_flag=True
+        #     )
+        #     train_labeled_ccle_dataloader, test_labeled_ccle_dataloader = labeled_ccle_dataloaders
         # start fine-tuning encoder
         ft_encoder = deepcopy(encoder)
 
@@ -251,7 +253,7 @@ def main(args, update_params_dict):
             seed=fold_count,
             normalize_flag=normalize_flag,
             metric_name=args.metric,
-            task_save_folder = task_save_folder,
+            task_save_folder=task_save_folder,
             **wrap_training_params(training_params, type='labeled')
         )
 
@@ -268,8 +270,6 @@ def main(args, update_params_dict):
         json.dump(ft_evaluation_metrics, f)
 
 
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
@@ -277,7 +277,8 @@ if __name__ == '__main__':
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu', 'cis', 'pac'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
-    parser.add_argument('--a_thres', dest='auc_thres', nargs='?', type=float, default=None)
+    parser.add_argument('--measurement', dest='measurement', nargs='?', default='LN_IC50', choices=['AUC', 'LN_IC50'])
+    parser.add_argument('--a_thres', dest='a_thres', nargs='?', type=float, default=None)
     parser.add_argument('--d_thres', dest='days_thres', nargs='?', type=float, default=None)
 
     parser.add_argument('--n', dest='n', nargs='?', type=int, default=10)
