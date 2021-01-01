@@ -75,8 +75,8 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     critic.zero_grad()
     s_dsnae.zero_grad()
     t_dsnae.zero_grad()
-    s_dsnae.eval()
     critic.eval()
+    s_dsnae.eval()
     t_dsnae.train()
 
     s_x = s_batch[0].to(device)
