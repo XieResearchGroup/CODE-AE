@@ -52,7 +52,7 @@ def fine_tune_encoder(train_dataloader, val_dataloader, seed, task_save_folder, 
                      hidden_dims=kwargs['encoder_hidden_dims'],
                      noise_flag=False,
                      dop=kwargs['dop']).to(kwargs['device'])
-    encoder = autoencoder.encoder()
+    encoder = autoencoder.encoder
     target_decoder = MLP(input_dim=kwargs['latent_dim'],
                          output_dim=1,
                          hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
