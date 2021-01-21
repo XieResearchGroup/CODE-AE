@@ -126,8 +126,8 @@ def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_thresho
 
     # if days_threshold is None:
     #     days_threshold = np.median(labeled_df.days_to_new_tumor_event_after_initial_treatment)
-
-
+    #
+    #
     # drug_label = np.array(labeled_df.days_to_new_tumor_event_after_initial_treatment >= days_threshold, dtype='int32')
     drug_label = np.array(labeled_df.treatment_outcome_at_tcga_followup.apply(
         lambda s: s not in ['Progressive Disease', 'Stable Disease', 'Persistant Disease']), dtype='int32')
