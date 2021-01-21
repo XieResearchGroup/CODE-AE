@@ -160,8 +160,7 @@ def dict_to_str(d):
 
 
 def main(args, update_params_dict):
-    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
-    # normalize_flag = False
+    normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
