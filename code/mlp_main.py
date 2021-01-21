@@ -215,7 +215,7 @@ def main(args, update_params_dict):
         json.dump(ft_evaluation_metrics, f)
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='mlp',
                         choices=['mlp'])
