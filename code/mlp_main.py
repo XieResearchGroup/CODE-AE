@@ -222,7 +222,7 @@ if __name__ == '__main__':
     parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu', 'cis', 'tem'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
-    parser.add_argument('--measurement', dest='measurement', nargs='?', default='LN_IC50', choices=['AUC', 'LN_IC50'])
+    parser.add_argument('--measurement', dest='measurement', nargs='?', default='AUC', choices=['AUC', 'LN_IC50'])
     parser.add_argument('--a_thres', dest='a_thres', nargs='?', type=float, default=None)
     parser.add_argument('--d_thres', dest='days_thres', nargs='?', type=float, default=None)
 
