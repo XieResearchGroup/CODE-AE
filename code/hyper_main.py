@@ -133,92 +133,76 @@ def main(args, update_params_dict):
         batch_size=training_params['unlabeled']['batch_size']
     )
 
-    # labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
-    #     gex_features_df=gex_features_df,
-    #     seed=2020,
-    #     batch_size=training_params['labeled']['batch_size'],
-    #     drug=args.drug,
-    #     threshold=args.a_thres,
-    #     days_threshold=args.days_thres,
-    #     ccle_measurement=args.measurement,
-    #     ft_flag=False
-    # )
+    labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+        gex_features_df=gex_features_df,
+        seed=2020,
+        batch_size=training_params['labeled']['batch_size'],
+        drug=args.drug,
+        threshold=args.a_thres,
+        days_threshold=args.days_thres,
+        ccle_measurement=args.measurement,
+        ft_flag=False
+    )
 
     # start unlabeled training
     encoder, historys = train_fn(s_dataloaders=s_dataloaders,
                                  t_dataloaders=t_dataloaders,
                                  **wrap_training_params(training_params, type='unlabeled'))
-
-    # with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history.pickle'),
-    #           'wb') as f:
-    #     for history in historys:
-    #         pickle.dump(dict(history), f)
+    with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history.pickle'),
+              'wb') as f:
+        for history in historys:
+            pickle.dump(dict(history), f)
 
     # generate encoded features
-    # ccle_encoded_feature_tensor, ccle_label_tensor = generate_encoded_features(encoder, labeled_ccle_dataloader,
-    #                                                                            normalize_flag=normalize_flag)
-    # tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
-    #                                                                            normalize_flag=normalize_flag)
-    #
-    # pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-    #     os.path.join(task_save_folder, f'train_encoded_feature.csv'))
-    # pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(
-    #     os.path.join(task_save_folder, f'train_label.csv'))
-    # pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
-    #     os.path.join(task_save_folder, f'test_encoded_feature.csv'))
-    # pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(
-    #     os.path.join(task_save_folder, f'test_label.csv'))
-    #
-    # # build baseline ml models for encoded features
-    # # ml_baseline_history['rf'].append(
-    # #     ml_baseline.n_time_cv(
-    # #         model_fn=ml_baseline.classify_with_rf,
-    # #         n=args.n,
-    # #         train_data=(
-    # #             ccle_encoded_feature_tensor.detach().cpu().numpy(),
-    # #             ccle_label_tensor.detach().cpu().numpy()
-    # #         ),
-    # #         test_data=(
-    # #             tcga_encoded_feature_tensor.detach().cpu().numpy(),
-    # #             tcga_label_tensor.detach().cpu().numpy(),
-    # #         metric = args.metric
-    # #         )
-    # #     )[1]
-    # # )
-    #
-    # ml_baseline_history['enet'].append(
+    ccle_encoded_feature_tensor, ccle_label_tensor = generate_encoded_features(encoder, labeled_ccle_dataloader,
+                                                                               normalize_flag=normalize_flag)
+    tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
+                                                                               normalize_flag=normalize_flag)
+
+    pd.DataFrame(ccle_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(task_save_folder, f'train_encoded_feature.csv'))
+    pd.DataFrame(ccle_label_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(task_save_folder, f'train_label.csv'))
+    pd.DataFrame(tcga_encoded_feature_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(task_save_folder, f'test_encoded_feature.csv'))
+    pd.DataFrame(tcga_label_tensor.detach().cpu().numpy()).to_csv(
+        os.path.join(task_save_folder, f'test_label.csv'))
+
+    # build baseline ml models for encoded features
+    # ml_baseline_history['rf'].append(
     #     ml_baseline.n_time_cv(
-    #         model_fn=ml_baseline.classify_with_enet,
-    #         n=int(args.n),
+    #         model_fn=ml_baseline.classify_with_rf,
+    #         n=args.n,
     #         train_data=(
     #             ccle_encoded_feature_tensor.detach().cpu().numpy(),
     #             ccle_label_tensor.detach().cpu().numpy()
     #         ),
     #         test_data=(
     #             tcga_encoded_feature_tensor.detach().cpu().numpy(),
-    #             tcga_label_tensor.detach().cpu().numpy()
-    #         ),
-    #         metric=args.metric
+    #             tcga_label_tensor.detach().cpu().numpy(),
+    #         metric = args.metric
+    #         )
     #     )[1]
     # )
-    #
-    # with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
-    #     json.dump(ml_baseline_history, f)
 
-    # start fine-tuning encoder
-    # target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-    #     encoder=encoder,
-    #     train_dataloader=labeled_ccle_dataloader,
-    #     val_dataloader=labeled_tcga_dataloader,
-    #     test_dataloader=labeled_tcga_dataloader,
-    #     normalize_flag=normalize_flag,
-    #     **wrap_training_params(training_params, type='labeled')
-    # )
-    #
-    # with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_train_history.pickle'), 'wb') as f:
-    #     for history in ft_historys:
-    #         pickle.dump(dict(history), f)
-    #
+    ml_baseline_history['enet'].append(
+        ml_baseline.n_time_cv(
+            model_fn=ml_baseline.classify_with_enet,
+            n=int(args.n),
+            train_data=(
+                ccle_encoded_feature_tensor.detach().cpu().numpy(),
+                ccle_label_tensor.detach().cpu().numpy()
+            ),
+            test_data=(
+                tcga_encoded_feature_tensor.detach().cpu().numpy(),
+                tcga_label_tensor.detach().cpu().numpy()
+            ),
+            metric=args.metric
+        )[1]
+    )
+
+    with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
+        json.dump(ml_baseline_history, f)
 
     ft_evaluation_metrics = defaultdict(list)
     labeled_dataloader_generator = data.get_labeled_dataloader_generator(
@@ -256,11 +240,6 @@ def main(args, update_params_dict):
             task_save_folder=task_save_folder,
             **wrap_training_params(training_params, type='labeled')
         )
-
-        # with open(os.path.join(training_params['model_save_folder'], f'ft_train_history_{seed}.pickle'),
-        #           'wb') as f:
-        #     for history in ft_historys:
-        #         pickle.dump(dict(history), f)
 
         for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
             ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
