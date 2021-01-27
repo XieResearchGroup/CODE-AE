@@ -14,3 +14,6 @@ code/model_save/*/*/*/*.pt
 code/model_save/*/*/*.pt
 code/model_save/*/*/*.csv
 results/*
+code/main.py
+code/benchmark_main.py
+code/run.log
