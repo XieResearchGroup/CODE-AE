@@ -148,7 +148,6 @@ def main(args, update_params_dict):
     encoder, historys = train_fn(s_dataloaders=s_dataloaders,
                                  t_dataloaders=t_dataloaders,
                                  **wrap_training_params(training_params, type='unlabeled'))
-
     with open(os.path.join(training_params['model_save_folder'], f'unlabel_train_history.pickle'),
               'wb') as f:
         for history in historys:
@@ -205,21 +204,6 @@ def main(args, update_params_dict):
     with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
 
-    # start fine-tuning encoder
-    # target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-    #     encoder=encoder,
-    #     train_dataloader=labeled_ccle_dataloader,
-    #     val_dataloader=labeled_tcga_dataloader,
-    #     test_dataloader=labeled_tcga_dataloader,
-    #     normalize_flag=normalize_flag,
-    #     **wrap_training_params(training_params, type='labeled')
-    # )
-    #
-    # with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_train_history.pickle'), 'wb') as f:
-    #     for history in ft_historys:
-    #         pickle.dump(dict(history), f)
-    #
-
     ft_evaluation_metrics = defaultdict(list)
     labeled_dataloader_generator = data.get_labeled_dataloader_generator(
         gex_features_df=gex_features_df,
@@ -257,11 +241,6 @@ def main(args, update_params_dict):
             **wrap_training_params(training_params, type='labeled')
         )
 
-        # with open(os.path.join(training_params['model_save_folder'], f'ft_train_history_{seed}.pickle'),
-        #           'wb') as f:
-        #     for history in ft_historys:
-        #         pickle.dump(dict(history), f)
-
         for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
             ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
         fold_count += 1
@@ -274,10 +253,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
                         choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
-    parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu', 'cis', 'pac'])
+    parser.add_argument('--drug', dest='drug', nargs='?', default='gem', choices=['gem', 'fu', 'cis', 'tem'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
-    parser.add_argument('--measurement', dest='measurement', nargs='?', default='LN_IC50', choices=['AUC', 'LN_IC50'])
+    parser.add_argument('--measurement', dest='measurement', nargs='?', default='AUC', choices=['AUC', 'LN_IC50'])
     parser.add_argument('--a_thres', dest='a_thres', nargs='?', type=float, default=None)
     parser.add_argument('--d_thres', dest='days_thres', nargs='?', type=float, default=None)
 

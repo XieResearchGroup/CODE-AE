@@ -127,7 +127,11 @@ def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_thresho
     if days_threshold is None:
         days_threshold = np.median(labeled_df.days_to_new_tumor_event_after_initial_treatment)
 
+
     drug_label = np.array(labeled_df.days_to_new_tumor_event_after_initial_treatment >= days_threshold, dtype='int32')
+    # drug_label = np.array(labeled_df.treatment_outcome_at_tcga_followup.apply(
+    #     lambda s: s not in ['Progressive Disease', 'Stable Disease', 'Persistant Disease']), dtype='int32')
+
     # drug_label_df = pd.DataFrame(drug_label, index=labeled_df.index, columns=['label'])
 
     labeled_tcga_dateset = TensorDataset(
@@ -143,7 +147,7 @@ def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_thresho
 
 def get_tcga_preprocessed_labeled_dataloaders(gex_features_df, drug, batch_size):
     if drug not in ['gem', 'fu']:
-        raise NotImplementedError('Only suppirt gem or fu!')
+        raise NotImplementedError('Only support gem or fu!')
     non_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_non_gex.csv')
     res_feature_file_path = os.path.join(data_config.preprocessed_data_folder, f'{drug}_res_gex.csv')
 

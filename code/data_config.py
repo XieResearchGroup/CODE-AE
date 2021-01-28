@@ -15,6 +15,7 @@ tcga_clinical_folder = os.path.join(tcga_folder, 'Clinical')
 tcga_drug_name_mapping_file = os.path.join(tcga_folder, 'drug_name_mapping.csv')
 tcga_first_treatment_file = os.path.join(tcga_folder, 'tcga_drug_first_treatment.csv')
 tcga_first_response_file = os.path.join(tcga_folder, 'tcga_drug_first_response.csv')
+#tcga_first_response_file = os.path.join(tcga_folder, 'tcga_drug_first_response_type.csv')
 
 
 #Xena datasets
