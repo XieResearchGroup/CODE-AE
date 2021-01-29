@@ -62,7 +62,7 @@ def dsn_ae_train_step(s_dsnae, t_dsnae, s_batch, t_batch, device, optimizer, his
     return history
 
 
-def train_mdsn(s_dataloaders, t_dataloaders, **kwargs):
+def train_code_mmd(s_dataloaders, t_dataloaders, **kwargs):
     """
 
     :param s_dataloaders:

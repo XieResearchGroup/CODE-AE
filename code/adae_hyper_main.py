@@ -11,14 +11,14 @@ from copy import deepcopy
 
 import data
 import data_config
-import train_ndsn
+import train_code_base
 import train_adae
-import train_adsn
+import train_code_adv
 import train_coral
 import train_dae
 import train_vae
 import train_ae
-import train_mdsn
+import train_code_mmd
 import train_dsnw
 import train_dsn
 
@@ -87,22 +87,22 @@ def main(args, update_params_dict):
         train_fn = train_vae.train_vae
     elif args.method == 'ae':
         train_fn = train_ae.train_ae
-    elif args.method == 'mdsn':
-        train_fn = train_mdsn.train_mdsn
-    elif args.method == 'ndsn':
-        train_fn = train_ndsn.train_ndsn
+    elif args.method == 'code_mmd':
+        train_fn = train_code_mmd.train_code_mmd
+    elif args.method == 'code_base':
+        train_fn = train_code_base.train_code_base
     elif args.method == 'dsnw':
         train_fn = train_dsnw.train_dsnw
     else:
-        train_fn = train_adsn.train_adsn
+        train_fn = train_code_adv.train_code_adv
 
-    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
+    normalize_flag = args.method in ['code_adv', 'code_mmd', 'code_base']
     # normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.adae_gex_file, sep='\t', index_col=0)
 
-    with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
+    with open(os.path.join('model_save', 'train_params.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params['unlabeled'].update(update_params_dict)
@@ -245,8 +245,8 @@ def main(args, update_params_dict):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
-    parser.add_argument('--method', dest='method', nargs='?', default='adsn',
-                        choices=['adsn', 'dsn', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
+    parser.add_argument('--method', dest='method', nargs='?', default='code_adv',
+                        choices=['code_adv', 'code_mmd', 'code_base', 'dsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--gender', dest='gender', nargs='?', default='female', choices=['female', 'male'])
     parser.add_argument('--n', dest='n', nargs='?', default=10)
     parser.add_argument('--metric', dest='metric', nargs='?', default='auprc', choices=['auroc', 'auprc'])
@@ -264,7 +264,7 @@ if __name__ == '__main__':
         "dop": [0.0, 0.1]
     }
 
-    if args.method not in ['adsn', 'adae', 'dsnw']:
+    if args.method not in ['code_adv', 'adae', 'dsnw']:
         params_grid.pop('pretrain_num_epochs')
 
     keys, values = zip(*params_grid.items())

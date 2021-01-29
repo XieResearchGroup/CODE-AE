@@ -165,7 +165,7 @@ def main(args, update_params_dict):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
 
-    with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
+    with open(os.path.join('model_save', 'train_params.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params['unlabeled'].update(update_params_dict)

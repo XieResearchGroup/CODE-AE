@@ -4,7 +4,7 @@ from itertools import chain
 from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
-from train_ndsn import eval_dsnae_epoch, dsn_ae_train_step
+from train_code_base import eval_dsnae_epoch, dsn_ae_train_step
 
 
 def compute_gradient_penalty(critic, real_samples, fake_samples, device):
@@ -106,7 +106,7 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     return history
 
 
-def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
+def train_code_adv(s_dataloaders, t_dataloaders, **kwargs):
     """
 
     :param s_dataloaders:
