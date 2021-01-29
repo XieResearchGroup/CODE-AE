@@ -1,7 +1,6 @@
 data/raw_dat/*
 data/preprocessed_dat/*
 data/cancer_drug_response-master/*
-code/*.ipynb
 code/.idea/*
 code/.ipynb_checkpoints/*
 code/__pycache__/*
