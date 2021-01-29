@@ -1,1 +1,0 @@
-{"unlabeled": {"batch_size": 64, "lr": 0.0001, "pretrain_num_epochs": 500, "train_num_epochs": 100.0, "alpha": 1.0, "classifier_hidden_dims": [64, 32], "dop": 0.1}, "labeled": {"classifier_hidden_dims": [64, 32], "batch_size": 64, "lr": 0.0001, "train_num_epochs": 2000, "decay_coefficient": 0.1}, "encoder_hidden_dims": [512, 256], "latent_dim": 128, "dop": 0.1}
