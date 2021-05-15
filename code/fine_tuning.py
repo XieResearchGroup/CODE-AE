@@ -1,4 +1,4 @@
-from evaluation_utils import evaluate_target_classification_epoch, model_save_check
+from evaluation_utils import evaluate_target_classification_epoch, model_save_check, predict_target_classification
 from collections import defaultdict
 from itertools import chain
 from mlp import MLP
@@ -30,8 +30,12 @@ def classification_train_step(model, batch, loss_fn, device, optimizer, history,
     return history
 
 
-def fine_tune_encoder(encoder, train_dataloader, val_dataloader, seed, task_save_folder, test_dataloader=None, metric_name='auroc',
-                      normalize_flag=False, **kwargs):
+def fine_tune_encoder(encoder, train_dataloader, val_dataloader, seed, task_save_folder, test_dataloader=None,
+                      metric_name='auroc',
+                      normalize_flag=False,
+                      break_flag=False,
+                      test_df=None,
+                      **kwargs):
     target_decoder = MLP(input_dim=kwargs['latent_dim'],
                          output_dim=1,
                          hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
@@ -98,9 +102,29 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, seed, task_save
                 reset_count += 1
             except IndexError:
                 break
+        # if stop_flag and not break_flag:
+        #     print(f'Unfreezing {epoch}')
+        #     target_classifier.load_state_dict(
+        #         torch.load(os.path.join(task_save_folder, f'target_classifier_{seed}.pt')))
+        #
+        #     target_classification_params.append(target_classifier.encoder.shared_encoder.parameters())
+        #     target_classification_params.append(target_classifier.encoder.private_encoder.parameters())
+        #
+        #     lr = lr * kwargs['decay_coefficient']
+        #     target_classification_optimizer = torch.optim.AdamW(chain(*target_classification_params), lr=lr)
+        #     break_flag = True
+        #     stop_flag = False
+        # if stop_flag and break_flag:
+        #     break
 
     target_classifier.load_state_dict(
         torch.load(os.path.join(task_save_folder, f'target_classifier_{seed}.pt')))
 
+    prediction_df = None
+    if test_df is not None:
+        prediction_df = predict_target_classification(classifier=target_classifier, test_df=test_df,
+                                                      device=kwargs['device'])
+
     return target_classifier, (target_classification_train_history, target_classification_eval_train_history,
-                               target_classification_eval_val_history, target_classification_eval_test_history)
+                               target_classification_eval_val_history, target_classification_eval_test_history), prediction_df
+

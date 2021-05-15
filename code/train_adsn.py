@@ -41,10 +41,11 @@ def critic_dsn_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, op
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    s_code = s_dsnae.s_encode(s_x)
-    t_code = t_dsnae.s_encode(t_x)
+    s_code = s_dsnae.encode(s_x)
+    t_code = t_dsnae.encode(t_x)
 
     loss = torch.mean(critic(t_code)) - torch.mean(critic(s_code))
+
     if gp is not None:
         gradient_penalty = compute_gradient_penalty(critic,
                                                     real_samples=s_code,
@@ -81,7 +82,7 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     s_x = s_batch[0].to(device)
     t_x = t_batch[0].to(device)
 
-    t_code = t_dsnae.s_encode(t_x)
+    t_code = t_dsnae.encode(t_x)
 
     optimizer.zero_grad()
     gen_loss = -torch.mean(critic(t_code))
@@ -105,7 +106,7 @@ def gan_dsn_gen_train_step(critic, s_dsnae, t_dsnae, s_batch, t_batch, device, o
     return history
 
 
-def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
+def train_adsn(s_dataloaders, t_dataloaders, **kwargs):
     """
 
     :param s_dataloaders:
@@ -147,11 +148,25 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
                     dop=kwargs['dop'],
                     norm_flag=kwargs['norm_flag']).to(kwargs['device'])
 
-    confounding_classifier = MLP(input_dim=kwargs['latent_dim'],
+    confounding_classifier = MLP(input_dim=kwargs['latent_dim'] * 2,
                                  output_dim=1,
                                  hidden_dims=kwargs['classifier_hidden_dims'],
                                  dop=kwargs['dop']).to(kwargs['device'])
 
+    ae_params = [t_dsnae.private_encoder.parameters(),
+                 s_dsnae.private_encoder.parameters(),
+                 shared_decoder.parameters(),
+                 shared_encoder.parameters()
+                 ]
+    t_ae_params = [t_dsnae.private_encoder.parameters(),
+                   s_dsnae.private_encoder.parameters(),
+                   shared_decoder.parameters(),
+                   shared_encoder.parameters()
+                   ]
+
+    ae_optimizer = torch.optim.AdamW(chain(*ae_params), lr=kwargs['lr'])
+    classifier_optimizer = torch.optim.RMSprop(confounding_classifier.parameters(), lr=kwargs['lr'])
+    t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
 
     dsnae_train_history = defaultdict(list)
     dsnae_val_history = defaultdict(list)
@@ -161,20 +176,7 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
     # classification_eval_train_history = defaultdict(list)
 
     if kwargs['retrain_flag']:
-        ae_params = [t_dsnae.private_encoder.parameters(),
-                     s_dsnae.private_encoder.parameters(),
-                     shared_decoder.parameters(),
-                     shared_encoder.parameters()
-                     ]
-        t_ae_params = [t_dsnae.private_encoder.parameters(),
-                       s_dsnae.private_encoder.parameters(),
-                       shared_decoder.parameters(),
-                       shared_encoder.parameters()
-                       ]
 
-        ae_optimizer = torch.optim.AdamW(chain(*ae_params), lr=kwargs['lr'])
-        classifier_optimizer = torch.optim.RMSprop(confounding_classifier.parameters(), lr=kwargs['lr'])
-        t_ae_optimizer = torch.optim.RMSprop(chain(*t_ae_params), lr=kwargs['lr'])
         # start dsnae pre-training
         for epoch in range(int(kwargs['pretrain_num_epochs'])):
             if epoch % 50 == 0:
@@ -202,15 +204,13 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
                 if k != 'best_index':
                     dsnae_val_history[k][-2] += dsnae_val_history[k][-1]
                     dsnae_val_history[k].pop()
-
-            save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
             if kwargs['es_flag']:
+                save_flag, stop_flag = model_save_check(dsnae_val_history, metric_name='loss', tolerance_count=20)
                 if save_flag:
                     torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt'))
                     torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
                 if stop_flag:
                     break
-
         if kwargs['es_flag']:
             s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt')))
             t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
@@ -260,19 +260,23 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
 
         torch.save(s_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt'))
         torch.save(t_dsnae.state_dict(), os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
+
     else:
         try:
-            loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
-            new_loaded_model = {key: val for key, val in loaded_model.items() if key in t_dsnae.state_dict()}
-            new_loaded_model['shared_encoder.output_layer.0.weight'] = loaded_model[
+            if kwargs['norm_flag']:
+                loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
+                new_loaded_model = {key: val for key, val in loaded_model.items() if key in t_dsnae.state_dict()}
+                new_loaded_model['shared_encoder.output_layer.0.weight'] = loaded_model[
                     'shared_encoder.output_layer.3.weight']
-            new_loaded_model['shared_encoder.output_layer.0.bias'] = loaded_model[
+                new_loaded_model['shared_encoder.output_layer.0.bias'] = loaded_model[
                     'shared_encoder.output_layer.3.bias']
-            new_loaded_model['decoder.output_layer.0.weight'] = loaded_model['decoder.output_layer.3.weight']
-            new_loaded_model['decoder.output_layer.0.bias'] = loaded_model['decoder.output_layer.3.bias']
+                new_loaded_model['decoder.output_layer.0.weight'] = loaded_model['decoder.output_layer.3.weight']
+                new_loaded_model['decoder.output_layer.0.bias'] = loaded_model['decoder.output_layer.3.bias']
 
-            corrected_model = OrderedDict({key: new_loaded_model[key] for key in t_dsnae.state_dict()})
-            t_dsnae.load_state_dict(corrected_model)
+                corrected_model = OrderedDict({key: new_loaded_model[key] for key in t_dsnae.state_dict()})
+                t_dsnae.load_state_dict(corrected_model)
+            else:
+                t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
 
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")

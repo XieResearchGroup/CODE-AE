@@ -1,5 +1,5 @@
+import pandas as pd
 from collections import defaultdict
-
 import numpy as np
 import torch
 from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score, f1_score, \
@@ -97,3 +97,18 @@ def evaluate_adv_classification_epoch(classifier, s_dataloader, t_dataloader, de
     history['auprc'].append(auprc(y_true=y_truths, y_score=y_preds))
 
     return history
+
+
+def predict_target_classification(classifier, test_df, device):
+    y_preds = np.array([])
+    classifier.eval()
+
+    for df in [test_df[i:i+64] for i in range(0,test_df.shape[0],64)]:
+        x_batch = torch.from_numpy(df.values.astype('float32')).to(device)
+        with torch.no_grad():
+            y_pred = torch.sigmoid(classifier(x_batch)).detach()
+            y_preds = np.concatenate([y_preds, y_pred.cpu().detach().numpy().ravel()])
+
+    output_df = pd.DataFrame(y_preds,index=test_df.index,columns=['score'])
+
+    return output_df

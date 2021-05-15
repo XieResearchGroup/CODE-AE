@@ -8,6 +8,27 @@ from sklearn.preprocessing import StandardScaler
 
 import random
 from collections import defaultdict
+from evaluation_utils import evaluate_target_classification_epoch, model_save_check
+from itertools import chain
+import os
+import pandas as pd
+import json
+import os
+import argparse
+import random
+import pickle
+from collections import defaultdict
+import itertools
+import numpy as np
+import data
+import data_config
+
+
+def safe_make_dir(new_folder_name):
+    if not os.path.exists(new_folder_name):
+        os.makedirs(new_folder_name)
+    else:
+        print(new_folder_name, 'exists!')
 
 
 def auprc(y_true, y_score):
@@ -78,7 +99,7 @@ def n_time_cv(train_data, n=10, model_fn=classify_with_enet, test_data=None, ran
 
     models = []
     for seed in seeds:
-        kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
+        kfold = StratifiedKFold(n_splits=n, shuffle=True, random_state=seed)
         cv_split = kfold.split(*train_data)
         trained_model, scaler = model_fn(*train_data, list(cv_split), metric=metric)
         for metric in metric_list:
@@ -100,3 +121,78 @@ def n_time_cv(train_data, n=10, model_fn=classify_with_enet, test_data=None, ran
         models.append(trained_model)
 
     return (train_history, models) if test_data is None else (train_history, test_history, models)
+
+
+def main(args, drug):
+    if args.method == 'rf':
+        model_fn = classify_with_rf
+    else:
+        model_fn = classify_with_enet
+
+    gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
+
+    if args.pdtc_flag:
+        task_save_folder = os.path.join('model_save', args.method, args.measurement, 'pdtc', drug)
+    else:
+        task_save_folder = os.path.join('model_save', args.method, args.measurement, drug)
+
+    safe_make_dir(task_save_folder)
+
+    random.seed(2020)
+    ft_evaluation_metrics = defaultdict(list)
+
+    labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
+        gex_features_df=gex_features_df,
+        seed=2020,
+        batch_size=64,
+        drug=drug,
+        ft_flag=False,
+        ccle_measurement=args.measurement,
+        threshold=None,
+        days_threshold=None,
+        pdtc_flag=args.pdtc_flag
+    )
+
+    metric_result_list = n_time_cv(
+        model_fn=model_fn,
+        n=args.n,
+        train_data=(
+            labeled_ccle_dataloader.dataset.tensors[0].numpy(),
+            labeled_ccle_dataloader.dataset.tensors[1].numpy()
+        ),
+        test_data=(
+            labeled_tcga_dataloader.dataset.tensors[0].numpy(),
+            labeled_tcga_dataloader.dataset.tensors[1].numpy()
+        ),
+        metric=args.metric
+    )
+
+
+    with open(os.path.join(task_save_folder, f'ft_evaluation_results.json'), 'w') as f:
+        json.dump(dict(metric_result_list[1]), f)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser('ML training and evaluation')
+    parser.add_argument('--method', dest='method', nargs='?', default='enet', choices=['enet', 'rf'])
+    parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
+    parser.add_argument('--measurement', dest='measurement', nargs='?', default='AUC', choices=['AUC', 'LN_IC50'])
+    parser.add_argument('--a_thres', dest='a_thres', nargs='?', type=float, default=None)
+    parser.add_argument('--d_thres', dest='days_thres', nargs='?', type=float, default=None)
+    parser.add_argument('--n', dest='n', nargs='?', type=int, default=5)
+
+    train_group = parser.add_mutually_exclusive_group(required=False)
+    train_group.add_argument('--pdtc', dest='pdtc_flag', action='store_true')
+    train_group.add_argument('--no-pdtc', dest='pdtc_flag', action='store_false')
+    parser.set_defaults(pdtc_flag=False)
+
+    args = parser.parse_args()
+
+    if args.pdtc_flag:
+        drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
+        drug_list = ['gsk19']
+
+    else:
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+    for drug in drug_list:
+        main(args=args, drug=drug)

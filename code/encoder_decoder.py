@@ -12,7 +12,7 @@ class EncoderDecoder(nn.Module):
 
 
     def forward(self, input: Tensor) -> Tensor:
-        encoded_input = self.encoder(input)
+        encoded_input = self.encode(input)
         if self.normalize_flag:
             encoded_input = nn.functional.normalize(encoded_input, p=2, dim=1)
         output = self.decoder(encoded_input)
