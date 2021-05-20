@@ -15,7 +15,7 @@
 **CODE-AE** depends on Numpy, SciPy, PyTorch (CUDA toolkit if use GPU), scikit-learn, pandas. 
 You must have them installed before using **CODE-AE**.
 
-The simple way to install them is using Docker: the Dockerfile is given within code/ folder
+The simple way to install them is using Docker: the Dockerfile is given within folder ``code/``
 
 ## 4. Usage
 
@@ -23,4 +23,4 @@ The simple way to install them is using Docker: the Dockerfile is given within c
 
 Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4477674]
 
-
+### 
