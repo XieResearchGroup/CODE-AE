@@ -1,0 +1,5 @@
+Drug,Targets,Target pathway
+SL 0101-1,"RSK, AURKB, PIM1, PIM3","Other, kinases"
+AZD6482,PI3Kbeta,PI3K/MTOR signaling
+AZ628,BRAF,ERK MAPK signaling
+JNJ-26854165,MDM2,p53 pathway

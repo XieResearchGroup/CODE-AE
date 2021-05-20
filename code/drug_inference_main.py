@@ -5,24 +5,20 @@ import os
 import argparse
 import random
 import pickle
-from collections import defaultdict
-import itertools
 import numpy as np
 
 import data
 import data_config
-import train_ndsn
+import train_code_base
 import train_adae
-import train_adsn
+import train_code_adv
 import train_coral
 import train_dae
 import train_vae
 import train_ae
-import train_mdsn
-import train_dsnw
+import train_code_mmd
 import train_dsn
 import train_dsna
-import inference
 import fine_tuning
 from copy import deepcopy
 
@@ -58,16 +54,14 @@ def main(args, drug):
         train_fn = train_vae.train_vae
     elif args.method == 'ae':
         train_fn = train_ae.train_ae
-    elif args.method == 'mdsn':
-        train_fn = train_mdsn.train_mdsn
-    elif args.method == 'ndsn':
-        train_fn = train_ndsn.train_ndsn
-    elif args.method == 'dsnw':
-        train_fn = train_dsnw.train_dsnw
+    elif args.method == 'code_mmd':
+        train_fn = train_code_mmd.train_code_mmd
+    elif args.method == 'code_base':
+        train_fn = train_code_base.train_code_base
     elif args.method == 'dsna':
         train_fn = train_dsna.train_dsna
     else:
-        train_fn = train_adsn.train_adsn
+        train_fn = train_code_adv.train_code_adv
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
@@ -122,17 +116,6 @@ def main(args, drug):
             for history in historys:
                 pickle.dump(dict(history), f)
 
-    ft_evaluation_metrics = defaultdict(list)
-    labeled_train_dataloader, _ = data.get_labeled_dataloaders(
-        gex_features_df=gex_features_df,
-        seed=2020,
-        batch_size=training_params['labeled']['batch_size'],
-        drug=drug,
-        ccle_measurement=args.measurement,
-        threshold=None,
-        days_threshold=None,
-        pdtc_flag=args.pdtc_flag)
-
     prediction_df = None
     labeled_dataloader_generator = data.get_labeled_dataloader_generator(
         gex_features_df=gex_features_df,
@@ -148,9 +131,9 @@ def main(args, drug):
     fold_count = 0
     for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader in labeled_dataloader_generator:
         ft_encoder = deepcopy(encoder)
-        print(train_labeled_ccle_dataloader.dataset.tensors[1].sum())
-        print(test_labeled_ccle_dataloader.dataset.tensors[1].sum())
-        print(labeled_tcga_dataloader.dataset.tensors[1].sum())
+        #print(train_labeled_ccle_dataloader.dataset.tensors[1].sum())
+        #print(test_labeled_ccle_dataloader.dataset.tensors[1].sum())
+        #print(labeled_tcga_dataloader.dataset.tensors[1].sum())
 
         target_classifier, ft_historys, temp_df = fine_tuning.fine_tune_encoder(
             encoder=ft_encoder,
@@ -168,27 +151,12 @@ def main(args, drug):
         prediction_df = pd.concat([prediction_df, temp_df], axis=1)
         prediction_df.to_csv(os.path.join(task_save_folder, 'tcga_predcition_cv.csv'), index_label='Sample')
         fold_count += 1
-    # prediction_df, ft_historys = inference.make_inference(
-    #         encoder=ft_encoder,
-    #         train_dataloader=labeled_train_dataloader,
-    #         test_df=test_df,
-    #         task_save_folder=task_save_folder,
-    #         normalize_flag=args.norm_flag,
-    #         retrain_flag=False,
-    #         **wrap_training_params(training_params, type='labeled')
-    #     )
-    # prediction_df.to_csv(os.path.join(task_save_folder, 'tcga_predcition.csv'), index_label='Sample')
-    # # with open(os.path.join(task_save_folder, f'ft_train_history.json'), 'w') as f:
-    #     json.dump(ft_historys[0], f)
-    #
-    # with open(os.path.join(task_save_folder, f'ft_train_eval_history.json'), 'w') as f:
-    #     json.dump(ft_historys[1], f)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
     parser.add_argument('--method', dest='method', nargs='?', default='adsn',
-                        choices=['adsn', 'dsn', 'dsna', 'ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
+                        choices=['code_adv', 'dsn', 'dsna', 'code_base', 'code_mmd', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
     parser.add_argument('--measurement', dest='measurement', nargs='?', default='AUC', choices=['AUC', 'LN_IC50'])
@@ -215,10 +183,8 @@ if __name__ == '__main__':
 
     if args.pdtc_flag:
         drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
-        drug_list = np.array_split(drug_list, 3)[0].tolist()
-
     else:
-        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu']
 
     for drug in drug_list:
         main(args=args, drug=drug)

@@ -220,17 +220,9 @@ if __name__ == '__main__':
     update_params_dict_list = [dict(zip(keys, v)) for v in itertools.product(*values)]
 
     if args.pdtc_flag:
-        # drug_list = ['camp', 'pic', 'pd03', 'wee', 'mot', 'axi', 'az628', 'azd6482', 'azd8055']
-        # drug_list = ['bms536','bms754','bos', 'bx795', 'les', 'chir', 'gef', 'gsk26', 'gw44', 'jnk', 'jq1']
-        # drug_list = ['ku', 'mk', 'nil', 'nut', 'oba', 'nut', 'pal', 'pd17', 'pf47', 'ppl']
-        # drug_list = ['ppl', 'ro', 'sb', 'sl', 'tam', 'vor', 'zm', 'aic', '5z', 'ruc']
-        # drug_list = ['azd7762', 'bi2536', 'emb', 'dap', 'serd', 'enc', 'pac1', 'pf56', 'sora', 'tw', 'yk']
         drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
-        drug_list = ['gsk19']
-
     else:
-        #drug_list = ['GEM', 'FU', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
-        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu']
 
     for drug in drug_list:
         for param_dict in update_params_dict_list:

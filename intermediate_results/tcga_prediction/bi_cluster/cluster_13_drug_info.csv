@@ -1,0 +1,6 @@
+Drug,Targets,Target pathway
+Axitinib,"PDGFR, KIT, VEGFR",RTK signaling
+Camptothecin,TOP1,DNA replication
+JQ1,"BRD2, BRD3, BRD4, BRDT",Chromatin other
+CEP-701,"FLT3, JAK2, NTRK1, NTRK2, NTRK3","Other, kinases"
+FK866,NAMPT,Metabolism

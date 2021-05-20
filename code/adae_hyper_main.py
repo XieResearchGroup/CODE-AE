@@ -7,7 +7,6 @@ import pickle
 import itertools
 import random
 from collections import defaultdict
-from copy import deepcopy
 
 import data
 import data_config
@@ -19,10 +18,9 @@ import train_dae
 import train_vae
 import train_ae
 import train_code_mmd
-import train_dsnw
+import train_dsna
 import train_dsn
 
-import fine_tuning
 import ml_baseline
 
 
@@ -87,22 +85,22 @@ def main(args, update_params_dict):
         train_fn = train_vae.train_vae
     elif args.method == 'ae':
         train_fn = train_ae.train_ae
-    elif args.method == 'code_mmd':
+    elif args.method == 'code-ae-mmd':
         train_fn = train_code_mmd.train_code_mmd
-    elif args.method == 'code_base':
+    elif args.method == 'ode-ae-base':
         train_fn = train_code_base.train_code_base
-    elif args.method == 'dsnw':
-        train_fn = train_dsnw.train_dsnw
+    elif args.method == 'dsna':
+        train_fn = train_dsna.train_dsna
     else:
         train_fn = train_code_adv.train_code_adv
 
-    normalize_flag = args.method in ['code_adv', 'code_mmd', 'code_base']
+    normalize_flag = args.method in ['adsn', 'mdsn', 'ndsn']
     # normalize_flag = False
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.adae_gex_file, sep='\t', index_col=0)
 
-    with open(os.path.join('model_save', 'train_params.json'), 'r') as f:
+    with open(os.path.join('model_save', args.method, 'train_params.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params['unlabeled'].update(update_params_dict)
@@ -195,58 +193,11 @@ def main(args, update_params_dict):
     with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
         json.dump(ml_baseline_history, f)
 
-    # start fine-tuning encoder
-    # target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-    #     encoder=encoder,
-    #     train_dataloader=labeled_pos_dataloader,
-    #     val_dataloader=labeled_neg_dataloader,
-    #     test_dataloader=labeled_neg_dataloader,
-    #     normalize_flag=normalize_flag,
-    #     **wrap_training_params(training_params, type='labeled')
-    # )
-    #
-    # with open(os.path.join(training_params['model_save_folder'], f'{param_str}_ft_train_history.pickle'), 'wb') as f:
-    #     for history in ft_historys:
-    #         pickle.dump(dict(history), f)
-    ft_evaluation_metrics = defaultdict(list)
-    for seed in seeds:
-        train_labeled_pos_dataloader, val_labeled_pos_dataloader, labeled_neg_dataloader = data.get_adae_labeled_dataloaders(
-            gex_features_df=gex_features_df,
-            seed=seed,
-            batch_size=training_params['labeled']['batch_size'],
-            pos_gender=args.gender,
-            ft_flag=True
-        )
-        # start fine-tuning encoder
-        ft_encoder = deepcopy(encoder)
-
-        target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-            encoder=ft_encoder,
-            train_dataloader=train_labeled_pos_dataloader,
-            val_dataloader=val_labeled_pos_dataloader,
-            test_dataloader=labeled_neg_dataloader,
-            seed=seed,
-            normalize_flag=normalize_flag,
-            metric_name=args.metric,
-            **wrap_training_params(training_params, type='labeled')
-        )
-
-        # with open(os.path.join(training_params['model_save_folder'], f'ft_train_history_{seed}.pickle'),
-        #           'wb') as f:
-        #     for history in ft_historys:
-        #         pickle.dump(dict(history), f)
-
-        for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
-            ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
-
-    with open(os.path.join(task_save_folder, f'{param_str}_ft_evaluation_results.json'), 'w') as f:
-        json.dump(ft_evaluation_metrics, f)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
-    parser.add_argument('--method', dest='method', nargs='?', default='code_adv',
-                        choices=['code_adv', 'code_mmd', 'code_base', 'dsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
+    parser.add_argument('--method', dest='method', nargs='?', default='code-ae-adv',
+                        choices=['code_adv', 'dsn', 'code_base', 'code_mmd', 'dsna', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--gender', dest='gender', nargs='?', default='female', choices=['female', 'male'])
     parser.add_argument('--n', dest='n', nargs='?', default=10)
     parser.add_argument('--metric', dest='metric', nargs='?', default='auprc', choices=['auroc', 'auprc'])
@@ -264,7 +215,7 @@ if __name__ == '__main__':
         "dop": [0.0, 0.1]
     }
 
-    if args.method not in ['code_adv', 'adae', 'dsnw']:
+    if args.method not in ['adsn', 'adae', 'dsnw']:
         params_grid.pop('pretrain_num_epochs')
 
     keys, values = zip(*params_grid.items())

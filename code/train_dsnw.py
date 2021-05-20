@@ -4,7 +4,7 @@ from itertools import chain
 from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
-from train_ndsn import eval_dsnae_epoch, dsn_ae_train_step
+from train_code_base import eval_dsnae_epoch, dsn_ae_train_step
 from collections import OrderedDict
 
 def compute_gradient_penalty(critic, real_samples, fake_samples, device):

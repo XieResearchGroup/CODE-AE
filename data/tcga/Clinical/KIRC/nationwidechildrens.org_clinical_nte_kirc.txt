@@ -1,6 +1,0 @@
-bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_dx_days_to	new_tumor_event_surgery	new_tumor_event_surgery_days_to_loco	new_tumor_event_surgery_met	new_tumor_event_surgery_days_to_met	new_tumor_event_radiation_tx	new_tumor_event_pharmaceutical_tx
-bcr_patient_uuid	bcr_patient_barcode	days_to_new_tumor_event_after_initial_treatment	additional_surgery_locoregional_procedure	days_to_additional_surgery_locoregional_procedure	additional_surgery_metastatic_procedure	days_to_additional_surgery_metastatic_procedure	additional_radiation_therapy	additional_pharmaceutical_therapy
-CDE_ID:	CDE_ID:2673794	CDE_ID:3392464	CDE_ID:3008755	CDE_ID:3408572	CDE_ID:3008757	CDE_ID:3408682	CDE_ID:3427615	CDE_ID:3427616
-FC7065FC-D834-4E7D-98BD-CA6666BEB6CB	TCGA-B2-A4SR	266	[Not Available]	[Not Available]	[Not Available]	[Not Available]	YES	NO
-01277E9D-A35F-45D9-9E60-2E8CD79630A0	TCGA-DV-A4W0	2008	NO	[Not Available]	NO	[Not Available]	NO	NO
-FE1F95A3-A6C2-4A39-8586-F8A70E975DD4	TCGA-MM-A563	[Not Available]	[Not Available]	[Not Available]	[Not Available]	[Not Available]	NO	NO

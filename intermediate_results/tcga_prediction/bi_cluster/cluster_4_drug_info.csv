@@ -1,0 +1,16 @@
+Drug,Targets,Target pathway
+SB 216763,"GSK3A, GSK3B",WNT signaling
+AZD8055,"MTORC1, MTORC2",PI3K/MTOR signaling
+BMS-754807,"IGF1R, IR",IGF1R signaling
+PF-4708671,S6K1,PI3K/MTOR signaling
+JNK Inhibitor VIII,JNK,JNK and p38 signaling
+PLX4720,BRAF,ERK MAPK signaling
+AG-014699,"PARP1, PARP2",Genome integrity
+AMG-706,"VEGFR, RET, KIT, PDGFR",RTK signaling
+TW 37,"BCL2, BCL-XL, MCL1",Apoptosis regulation
+PD-0325901,"MEK1, MEK2",ERK MAPK signaling
+GDC0941,PI3K (class 1),PI3K/MTOR signaling
+GW 441756,NTRK1,RTK signaling
+Bosutinib,"SRC, ABL, TEC","Other, kinases"
+PAC-1,"Procaspase-3, Procaspase-7",Apoptosis regulation
+BI-2536,"PLK1, PLK2, PLK3",Cell cycle

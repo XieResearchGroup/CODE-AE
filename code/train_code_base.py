@@ -86,7 +86,8 @@ def train_code_base(s_dataloaders, t_dataloaders, **kwargs):
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
-                    dop=kwargs['dop']).to(kwargs['device'])
+                    dop=kwargs['dop'],
+                    norm_flag=kwargs['norm_flag']).to(kwargs['device'])
 
     t_dsnae = DSNAE(shared_encoder=shared_encoder,
                     decoder=shared_decoder,
@@ -94,8 +95,8 @@ def train_code_base(s_dataloaders, t_dataloaders, **kwargs):
                     input_dim=kwargs['input_dim'],
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
-                    dop=kwargs['dop']).to(kwargs['device'])
-
+                    dop=kwargs['dop'],
+                    norm_flag=kwargs['norm_flag']).to(kwargs['device'])
 
     device = kwargs['device']
 
@@ -154,11 +155,12 @@ def train_code_base(s_dataloaders, t_dataloaders, **kwargs):
 
     else:
         try:
-            s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 's_dsnae.pt')))
+            loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt'))
+            print({key:val.shape for key,val in loaded_model.items()})
+            print({key:val.shape for key,val in t_dsnae.state_dict().items()})
+            t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 't_dsnae.pt')))
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")
-
-
 
 
     return shared_encoder, (dsnae_train_history, dsnae_val_history)

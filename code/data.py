@@ -96,10 +96,10 @@ def get_unlabeled_dataloaders(gex_features_df, seed, batch_size, ccle_only=False
     test_ccle_dataloader = DataLoader(test_ccle_dateset,
                                       batch_size=batch_size,
                                       shuffle=True)
-    return (ccle_data_loader, test_ccle_dataloader), (ccle_data_loader, test_ccle_dataloader)
-        # if ccle_only else (
-        # ccle_data_loader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
-    # return (train_ccle_dataloader, test_ccle_dataloader), (train_xena_dataloader, test_xena_dataloader)
+    if ccle_only:
+        return (ccle_data_loader, test_ccle_dataloader), (ccle_data_loader, test_ccle_dataloader)
+    else:
+        return (ccle_data_loader, test_ccle_dataloader), (xena_dataloader, test_xena_dataloader)
 
 
 def get_tcga_labeled_dataloaders(gex_features_df, drug, batch_size, days_threshold=None, tcga_cancer_type=None):

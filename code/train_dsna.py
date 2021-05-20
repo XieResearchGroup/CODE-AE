@@ -6,7 +6,7 @@ from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
 from encoder_decoder import EncoderDecoder
-from train_ndsn import eval_dsnae_epoch
+from train_code_base import eval_dsnae_epoch
 
 def dsn_dann_train_step(classifier, s_dsnae, t_dsnae, s_batch, t_batch, loss_fn, device, optimizer, alpha, history,
                         scheduler=None):

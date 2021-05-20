@@ -100,7 +100,7 @@ def fine_tune_encoder(train_dataloader, val_dataloader, tissue_dataloader_dict, 
     target_classification_optimizer = torch.optim.AdamW(chain(*target_classification_params),
                                                         lr=lr)
 
-    set_seed(2021)
+    set_seed(2020)
 
     for epoch in range(kwargs['train_num_epochs']):
         if epoch % 50 == 0:
@@ -202,8 +202,8 @@ def main(args, drug, update_params_dict):
         seed=2020,
         batch_size=training_params['labeled']['batch_size'],
         ccle_measurement=args.measurement,
-        threshold=None,
-        days_threshold=None,
+        threshold=args.a_thres,
+        days_threshold=args.days_thres,
         pdtc_flag=args.pdtc_flag,
         n_splits=args.n)
     fold_count = 0
@@ -257,9 +257,8 @@ if __name__ == '__main__':
 
     if args.pdtc_flag:
         drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
-        drug_list = np.array_split(drug_list, 3)[2].tolist()
     else:
-        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu']
 
     for drug in drug_list:
         for param_dict in update_params_dict_list:

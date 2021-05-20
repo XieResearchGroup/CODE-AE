@@ -7,25 +7,11 @@ import random
 import pickle
 from collections import defaultdict
 import itertools
-import numpy as np
 
 import data
 import data_config
-import train_ndsn
-import train_adae
-import train_adsn
-import train_coral
-import train_dae
 import train_vae
-import train_ae
-import train_mdsn
-import train_dsnw
-import train_dsn
-import train_dsna
-
-import fine_tuning
-
-from copy import deepcopy
+import ml_baseline
 
 
 def generate_encoded_features(encoder, dataloader, normalize_flag=False):
@@ -89,10 +75,7 @@ def main(args, drug, update_params_dict):
     training_params['unlabeled'].update(update_params_dict)
     param_str = dict_to_str(update_params_dict)
 
-    if not args.norm_flag:
-        method_save_folder = os.path.join('model_save', args.method)
-    else:
-        method_save_folder = os.path.join('model_save', f'{args.method}_norm')
+    method_save_folder = os.path.join('model_save', 'vaen')
 
     training_params.update(
         {
@@ -112,7 +95,7 @@ def main(args, drug, update_params_dict):
     safe_make_dir(task_save_folder)
 
     random.seed(2020)
-    seeds = random.sample(range(100000), k=int(args.n))
+    ml_baseline_history = defaultdict(list)
 
     s_dataloaders, t_dataloaders = data.get_unlabeled_dataloaders(
         gex_features_df=gex_features_df,
@@ -130,48 +113,48 @@ def main(args, drug, update_params_dict):
             for history in historys:
                 pickle.dump(dict(history), f)
 
-    ft_evaluation_metrics = defaultdict(list)
-    labeled_dataloader_generator = data.get_labeled_dataloader_generator(
+    labeled_ccle_dataloader, labeled_tcga_dataloader = data.get_labeled_dataloaders(
         gex_features_df=gex_features_df,
         seed=2020,
         batch_size=training_params['labeled']['batch_size'],
-        drug=drug,
+        drug=args.drug,
+        threshold=args.a_thres,
+        days_threshold=args.days_thres,
         ccle_measurement=args.measurement,
-        threshold=None,
-        days_threshold=None,
-        pdtc_flag=args.pdtc_flag,
-        n_splits=args.n)
-    fold_count = 0
-    for train_labeled_ccle_dataloader, test_labeled_ccle_dataloader, labeled_tcga_dataloader in labeled_dataloader_generator:
-        ft_encoder = deepcopy(encoder)
-        print(train_labeled_ccle_dataloader.dataset.tensors[1].sum())
-        print(test_labeled_ccle_dataloader.dataset.tensors[1].sum())
-        print(labeled_tcga_dataloader.dataset.tensors[1].sum())
+        ft_flag=False,
+        pdtc_flag=args.pdtc_flag
+    )
 
-        target_classifier, ft_historys = fine_tuning.fine_tune_encoder(
-            encoder=ft_encoder,
-            train_dataloader=train_labeled_ccle_dataloader,
-            val_dataloader=test_labeled_ccle_dataloader,
-            test_dataloader=labeled_tcga_dataloader,
-            seed=fold_count,
-            normalize_flag=args.norm_flag,
-            metric_name=args.metric,
-            task_save_folder=task_save_folder,
-            **wrap_training_params(training_params, type='labeled')
-        )
-        ft_evaluation_metrics['best_index'].append(ft_historys[-2]['best_index'])
-        for metric in ['auroc', 'acc', 'aps', 'f1', 'auprc']:
-            ft_evaluation_metrics[metric].append(ft_historys[-1][metric][ft_historys[-2]['best_index']])
-        fold_count += 1
+    # generate encoded features
+    ccle_encoded_feature_tensor, ccle_label_tensor = generate_encoded_features(encoder, labeled_ccle_dataloader,
+                                                                               normalize_flag=args.norm_flag)
+    tcga_encoded_feature_tensor, tcga_label_tensor = generate_encoded_features(encoder, labeled_tcga_dataloader,
+                                                                               normalize_flag=args.norm_flag)
 
-    with open(os.path.join(task_save_folder, f'{param_str}_ft_evaluation_results.json'), 'w') as f:
-        json.dump(ft_evaluation_metrics, f)
+    # build baseline ml models for encoded features
+
+    ml_baseline_history['enet'].append(
+        ml_baseline.n_time_cv(
+            model_fn=ml_baseline.classify_with_enet,
+            n=int(args.n),
+            train_data=(
+                ccle_encoded_feature_tensor.detach().cpu().numpy(),
+                ccle_label_tensor.detach().cpu().numpy()
+            ),
+            test_data=(
+                tcga_encoded_feature_tensor.detach().cpu().numpy(),
+                tcga_label_tensor.detach().cpu().numpy()
+            ),
+            metric=args.metric
+        )[1]
+    )
+    #
+    with open(os.path.join(task_save_folder, f'{param_str}_ml_baseline_results.json'), 'w') as f:
+        json.dump(ml_baseline_history, f)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
-    parser.add_argument('--method', dest='method', nargs='?', default='adsn',
-                        choices=['adsn', 'dsn', 'dsna','ndsn', 'mdsn', 'dsnw', 'adae', 'coral', 'dae', 'vae', 'ae'])
     parser.add_argument('--metric', dest='metric', nargs='?', default='auroc', choices=['auroc', 'auprc'])
 
     parser.add_argument('--measurement', dest='measurement', nargs='?', default='AUC', choices=['AUC', 'LN_IC50'])
@@ -210,10 +193,8 @@ if __name__ == '__main__':
 
     if args.pdtc_flag:
         drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
-        drug_list = np.array_split(drug_list, 5)[4].tolist()
-
     else:
-        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu']
 
     for drug in drug_list:
         for param_dict in update_params_dict_list:

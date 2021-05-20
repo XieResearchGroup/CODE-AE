@@ -5,7 +5,7 @@ from dsn_ae import DSNAE
 from evaluation_utils import *
 from mlp import MLP
 from train_code_base import eval_dsnae_epoch, dsn_ae_train_step
-
+from collections import OrderedDict
 
 def compute_gradient_penalty(critic, real_samples, fake_samples, device):
     """Calculates the gradient penalty loss for WGAN GP"""
@@ -137,7 +137,7 @@ def train_code_adv(s_dataloaders, t_dataloaders, **kwargs):
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
                     dop=kwargs['dop'],
-                    norm_flag=True).to(kwargs['device'])
+                    norm_flag=kwargs['norm_flag']).to(kwargs['device'])
 
     t_dsnae = DSNAE(shared_encoder=shared_encoder,
                     decoder=shared_decoder,
@@ -146,7 +146,7 @@ def train_code_adv(s_dataloaders, t_dataloaders, **kwargs):
                     latent_dim=kwargs['latent_dim'],
                     hidden_dims=kwargs['encoder_hidden_dims'],
                     dop=kwargs['dop'],
-                    norm_flag=True).to(kwargs['device'])
+                    norm_flag=kwargs['norm_flag']).to(kwargs['device'])
 
     confounding_classifier = MLP(input_dim=kwargs['latent_dim'] * 2,
                                  output_dim=1,
@@ -263,7 +263,21 @@ def train_code_adv(s_dataloaders, t_dataloaders, **kwargs):
 
     else:
         try:
-            s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_s_dsnae.pt')))
+            if kwargs['norm_flag']:
+                loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
+                new_loaded_model = {key: val for key, val in loaded_model.items() if key in t_dsnae.state_dict()}
+                new_loaded_model['shared_encoder.output_layer.0.weight'] = loaded_model[
+                    'shared_encoder.output_layer.3.weight']
+                new_loaded_model['shared_encoder.output_layer.0.bias'] = loaded_model[
+                    'shared_encoder.output_layer.3.bias']
+                new_loaded_model['decoder.output_layer.0.weight'] = loaded_model['decoder.output_layer.3.weight']
+                new_loaded_model['decoder.output_layer.0.bias'] = loaded_model['decoder.output_layer.3.bias']
+
+                corrected_model = OrderedDict({key: new_loaded_model[key] for key in t_dsnae.state_dict()})
+                t_dsnae.load_state_dict(corrected_model)
+            else:
+                t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
+
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")
 

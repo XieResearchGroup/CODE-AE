@@ -190,9 +190,7 @@ if __name__ == '__main__':
 
     if args.pdtc_flag:
         drug_list = pd.read_csv(data_config.gdsc_pdtc_drug_name_mapping_file, index_col=0).index.tolist()
-        drug_list = ['gsk19']
-
     else:
-        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu', 'sun', 'dox', 'tam', 'pac', 'car']
+        drug_list = ['tgem', 'tfu', 'tem', 'gem', 'cis', 'sor', 'fu']
     for drug in drug_list:
         main(args=args, drug=drug)
