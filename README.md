@@ -23,10 +23,10 @@ The simple way to install them is using Docker: the Dockerfile is given within f
 
 Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4477674]
 
-### 4.2 Example 
+### 4.2 Basic Usage 
 #### 4.2.1 Pre-train encoders
 ```sh
-    $ python pretrain_hyper_main
+    $ python pretrain_hyper_main.py
 ```
 Arguments in this script:
 * ``--method``:       method to be used for encoder pre-training, choose from \['code_adv', 'dsna', 'dsn', 'code_base', 'code_mmd', 'adae', 'coral', 'dae', 'vae','vaen', 'ae'\]
@@ -35,4 +35,17 @@ Arguments in this script:
 * ``--norm``:        use L2 normalization for embedding
 * ``--no-norm``:     don't use L2 normalization for embedding
 
+#### 4.2.1 Fine-tune encoders for different drug response predictive models
+```sh
+    $ python drug_ft_hyper_main.py
+```
+Arguments in this script:
+* ``--method``:       method to be used for encoder pre-training, choose from \['code_adv', 'dsna', 'dsn', 'code_base', 'code_mmd', 'adae', 'coral', 'dae', 'vae','vaen', 'ae'\]
+* ``--train``:        retrain the encoders
+* ``--no-train``:     no re-training
+* ``--norm``:        use L2 normalization for embedding
+* ``--no-norm``:     don't use L2 normalization for embedding
+* ``--metric``:     metric used in early stopping
+*  ``--pdtc``:  fine-tune PDTC drugs (target therapy agents)
+*  ``--no-pdtc``:  fine-tune chemotherapy drugs
 
