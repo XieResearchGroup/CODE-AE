@@ -21,7 +21,7 @@ The simple way to install them is using Docker: the Dockerfile is given within f
 
 ### 4.1. Data
 
-Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4776448](version 2.0)
+Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4776448]   (version 2.0)
 
 ### 4.2 Basic Usage 
 #### 4.2.1 Pre-train encoders
