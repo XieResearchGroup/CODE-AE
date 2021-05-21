@@ -23,4 +23,16 @@ The simple way to install them is using Docker: the Dockerfile is given within f
 
 Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4477674]
 
-### 
+### 4.2 Example 
+#### 4.2.1 Pre-train encoders
+```sh
+    $ python pretrain_hyper_main
+```
+Arguments in this script:
+* ``--method``:       method to be used for encoder pre-training
+* ``--train``:        retrain the encoders
+* ``--no-train``:     no re-training
+* ``--norm``:        use L2 normalization for embedding
+* ``--no-norm``:     don't use L2 normalization for embedding
+
+
