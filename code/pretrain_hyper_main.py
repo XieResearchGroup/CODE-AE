@@ -139,7 +139,7 @@ def main(args, update_params_dict):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('ADSN training and evaluation')
-    parser.add_argument('--method', dest='method', nargs='?', default='vae',
+    parser.add_argument('--method', dest='method', nargs='?', default='code_adv',
                         choices=['code_adv', 'dsna', 'dsn', 'code_base', 'code_mmd', 'adae', 'coral', 'dae', 'vae',
                                  'vaen', 'ae'])
 
