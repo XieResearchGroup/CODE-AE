@@ -29,7 +29,7 @@ Benchmark datasets available at Zenodo[http://doi.org/10.5281/zenodo.4477674]
     $ python pretrain_hyper_main
 ```
 Arguments in this script:
-* ``--method``:       method to be used for encoder pre-training
+* ``--method``:       method to be used for encoder pre-training, choose from \['code_adv', 'dsna', 'dsn', 'code_base', 'code_mmd', 'adae', 'coral', 'dae', 'vae','vaen', 'ae'\]
 * ``--train``:        retrain the encoders
 * ``--no-train``:     no re-training
 * ``--norm``:        use L2 normalization for embedding
