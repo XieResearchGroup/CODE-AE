@@ -49,3 +49,11 @@ Arguments in this script:
 *  ``--pdtc``:  fine-tune PDTC drugs (target therapy agents)
 *  ``--no-pdtc``:  fine-tune chemotherapy drugs
 
+### Additional scripts
+- adae_hyper_main.py: run ADAE de-confounding experiments
+- drug_inference_main.py: generate TCGA sample prediction
+- generate_encoded_features.py: generate encoded features by pre-trained encoders
+- ml_baseline.py: get benchmark experiments' results using random forest and elastic net
+- mlp_main.py: get benchmark experiments' results using simple multi-layer neural network
+- tcrp_main.py: get benchmark experiments' results using TCRP
+- vaen_main.py: get benchmark experiments' results using VAEN (VAE+elastic net)
