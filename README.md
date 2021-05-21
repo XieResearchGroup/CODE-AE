@@ -1,6 +1,6 @@
 # CODE-AE
 
-## CODE-AE - CONTEXT-AWARE DECONFOUNDING AUTOENCODER
+## CONTEXT-AWARE DECONFOUNDING AUTOENCODER
 -----------------------------------------------------------------
 
 ## 1. Introduction
