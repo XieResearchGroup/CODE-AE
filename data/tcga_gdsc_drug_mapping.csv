@@ -1,0 +1,13 @@
+,gdsc_name,drug_name,response_count
+tem,Temozolomide,Temozolomide,46
+gem,Gemcitabine,Gemcitabine,46
+cis,Cisplatin,Cisplatin,40
+sor,Sorafenib,Sorafenib,26
+fu,5-Fluorouracil,Fluorouracil,21
+sun,Sunitinib,Sunitinib,12
+dox,Doxorubicin,Doxorubicin,8
+tam,Tamoxifen,Tamoxifen,4
+pac,Paclitaxel,Paclitaxel,4
+car,Carmustine,Carmustine,3
+tgem,Gemcitabine,Gemcitabine,46
+tfu,5-Fluorouracil,Fluorouracil,21
