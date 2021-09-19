@@ -180,4 +180,4 @@ def train_code_mmd(s_dataloaders, t_dataloaders, **kwargs):
             raise Exception("No pre-trained encoder")
 
 
-    return shared_encoder, (dsnae_train_history, dsnae_val_history)
+    return t_dsnae.shared_encoder, (dsnae_train_history, dsnae_val_history)

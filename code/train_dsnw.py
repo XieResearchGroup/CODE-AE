@@ -277,4 +277,4 @@ def train_dsnw(s_dataloaders, t_dataloaders, **kwargs):
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")
 
-    return shared_encoder, (dsnae_train_history, dsnae_val_history, critic_train_history, gen_train_history)
+    return t_dsnae.shared_encoder, (dsnae_train_history, dsnae_val_history, critic_train_history, gen_train_history)

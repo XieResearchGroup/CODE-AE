@@ -156,8 +156,8 @@ def train_dsna(s_dataloaders, t_dataloaders, **kwargs):
 
     else:
         try:
-            s_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'dann_s_dsnae.pt')))
+            t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'dann_t_dsnae.pt')))
         except FileNotFoundError:
             raise Exception("No pre-trained encoder")
 
-    return shared_encoder, (dsnae_train_history, dsnae_val_history)
+    return t_dsnae.shared_encoder, (dsnae_train_history, dsnae_val_history)
