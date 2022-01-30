@@ -53,3 +53,8 @@ pdtc_folder = os.path.join(root_data_folder, 'PDTC')
 gdsc_pdtc_drug_name_mapping_file = os.path.join(root_data_folder, 'pdtc_gdsc_drug_mapping.csv')
 pdtc_gex_file = os.path.join(preprocessed_data_folder, 'pdtc_uq1000_feature.csv')
 pdtc_target_file = os.path.join(pdtc_folder, 'DrugResponsesAUCModels.txt')
+
+#Celligner datasets
+celligner_folder = os.path.join(root_data_folder, 'celligner')
+celligner_pdtc_gex_file = os.path.join(preprocessed_data_folder, 'celligner_pdtc_uq_df.csv')
+celligner_xena_gex_file = os.path.join(preprocessed_data_folder, 'celligner_xena_uq_df.csv')
