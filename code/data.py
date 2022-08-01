@@ -338,7 +338,7 @@ def get_ccle_labeled_dataloader_generator(gex_features_df, drug, batch_size, see
     ccle_labeled_feature_df = gex_features_df.loc[ccle_labeled_samples]
     assert all(ccle_labels.index == ccle_labeled_feature_df.index)
 
-    s_kfold = StratifiedKFold(n_splits=5, random_state=seed)
+    s_kfold = StratifiedKFold(n_splits=5, random_state=seed, shuffle=True)
     for train_index, test_index in s_kfold.split(ccle_labeled_feature_df.values, ccle_labels.values):
         train_labeled_ccle_df, test_labeled_ccle_df = ccle_labeled_feature_df.values[train_index], \
                                                       ccle_labeled_feature_df.values[test_index]

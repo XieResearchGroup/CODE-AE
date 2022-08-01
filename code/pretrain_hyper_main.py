@@ -96,7 +96,7 @@ def main(args, update_params_dict):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
 
-    with open(os.path.join('train_params.json'), 'r') as f:
+    with open(os.path.join('model_save/train_params.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params['unlabeled'].update(update_params_dict)
@@ -146,7 +146,7 @@ if __name__ == '__main__':
     train_group = parser.add_mutually_exclusive_group(required=False)
     train_group.add_argument('--train', dest='retrain_flag', action='store_true')
     train_group.add_argument('--no-train', dest='retrain_flag', action='store_false')
-    parser.set_defaults(retrain_flag=False)
+    parser.set_defaults(retrain_flag=True)
 
     train_group.add_argument('--pdtc', dest='pdtc_flag', action='store_true')
     train_group.add_argument('--no-pdtc', dest='pdtc_flag', action='store_false')
@@ -155,17 +155,17 @@ if __name__ == '__main__':
     norm_group = parser.add_mutually_exclusive_group(required=False)
     norm_group.add_argument('--norm', dest='norm_flag', action='store_true')
     norm_group.add_argument('--no-norm', dest='norm_flag', action='store_false')
-    parser.set_defaults(norm_flag=False)
+    parser.set_defaults(norm_flag=True)
 
     args = parser.parse_args()
-
+    print(f'current config is {args}')
     params_grid = {
         "pretrain_num_epochs": [0, 100, 300],
         "train_num_epochs": [100, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3000],
         "dop": [0.0, 0.1]
     }
 
-    if args.method not in ['adsn', 'adae', 'dsnw']:
+    if args.method not in ['code_adv', 'adsn', 'adae', 'dsnw']:
         params_grid.pop('pretrain_num_epochs')
 
     keys, values = zip(*params_grid.items())

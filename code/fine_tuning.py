@@ -126,5 +126,32 @@ def fine_tune_encoder(encoder, train_dataloader, val_dataloader, seed, task_save
                                                       device=kwargs['device'])
 
     return target_classifier, (target_classification_train_history, target_classification_eval_train_history,
-                               target_classification_eval_val_history, target_classification_eval_test_history), prediction_df
+                               target_classification_eval_val_history, target_classification_eval_test_history)#, prediction_df
 
+def reproduce_result(train_dataloader, val_dataloader, seed, task_save_folder, test_dataloader=None,
+                      metric_name='auroc',
+                      normalize_flag=False,
+                      break_flag=False,
+                      test_df=None,
+                      **kwargs):
+    encoder = MLP(input_dim=kwargs['input_dim'],
+                        output_dim=kwargs['latent_dim'],
+                        hidden_dims=kwargs['encoder_hidden_dims'],
+                        dop=kwargs['dop']).to(kwargs['device'])
+
+    target_decoder = MLP(input_dim=kwargs['latent_dim'],
+                         output_dim=1,
+                         hidden_dims=kwargs['classifier_hidden_dims']).to(kwargs['device'])
+    target_classifier = EncoderDecoder(encoder=encoder, decoder=target_decoder, normalize_flag=normalize_flag).to(
+        kwargs['device'])
+    target_classifier.load_state_dict(
+            torch.load(os.path.join(task_save_folder, f'target_classifier_{seed}.pt')))
+    print('sucessfully loaded target_classifier_{}'.format(seed))
+    target_classification_eval_test_history = defaultdict(list)
+        
+    target_classification_eval_test_history = evaluate_target_classification_epoch(classifier=target_classifier,
+                                                                                           dataloader=test_dataloader,
+                                                                                           device=kwargs['device'],
+                                                                                           history=target_classification_eval_test_history)
+    print(target_classification_eval_test_history[metric_name])
+    return target_classification_eval_test_history

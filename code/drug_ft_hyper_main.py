@@ -100,7 +100,7 @@ def main(args, drug, update_params_dict):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     gex_features_df = pd.read_csv(data_config.gex_feature_file, index_col=0)
 
-    with open(os.path.join('train_params.json'), 'r') as f:
+    with open(os.path.join('model_save/train_params.json'), 'r') as f:
         training_params = json.load(f)
 
     training_params['unlabeled'].update(update_params_dict)
@@ -244,7 +244,7 @@ if __name__ == '__main__':
     norm_group = parser.add_mutually_exclusive_group(required=False)
     norm_group.add_argument('--norm', dest='norm_flag', action='store_true')
     norm_group.add_argument('--no-norm', dest='norm_flag', action='store_false')
-    parser.set_defaults(norm_flag=False)
+    parser.set_defaults(norm_flag=True)
 
     args = parser.parse_args()
 
@@ -254,7 +254,7 @@ if __name__ == '__main__':
         "dop": [0.0, 0.1]
     }
 
-    if args.method not in ['adsn', 'adae', 'dsnw']:
+    if args.method not in ['code_adv', 'adsn', 'adae', 'dsnw']:
         params_grid.pop('pretrain_num_epochs')
 
     keys, values = zip(*params_grid.items())

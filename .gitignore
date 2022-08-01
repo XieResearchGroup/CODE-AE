@@ -1,6 +1,3 @@
-data/raw_dat/*
-data/preprocessed_dat/*
-data/cancer_drug_response-master/*
 code/.idea/*
 code/.ipynb_checkpoints/*
 code/__pycache__/*
@@ -8,11 +5,12 @@ code/results/*
 *.ipynb
 *.xlsx
 paper/*
-code/model_save/*/*/*/*.csv
-code/model_save/*/*/*/*.pt
-code/model_save/*/*/*.pt
-code/model_save/*/*/*.csv
 results/*
 code/main.py
 code/benchmark_main.py
 code/run.log
+code/model_save/*
+code/to_oceancode/*
+data/*
+*.log
+

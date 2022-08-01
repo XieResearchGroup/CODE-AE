@@ -263,19 +263,20 @@ def train_code_adv(s_dataloaders, t_dataloaders, **kwargs):
 
     else:
         try:
-            if kwargs['norm_flag']:
-                loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
-                new_loaded_model = {key: val for key, val in loaded_model.items() if key in t_dsnae.state_dict()}
-                new_loaded_model['shared_encoder.output_layer.0.weight'] = loaded_model[
-                    'shared_encoder.output_layer.3.weight']
-                new_loaded_model['shared_encoder.output_layer.0.bias'] = loaded_model[
-                    'shared_encoder.output_layer.3.bias']
-                new_loaded_model['decoder.output_layer.0.weight'] = loaded_model['decoder.output_layer.3.weight']
-                new_loaded_model['decoder.output_layer.0.bias'] = loaded_model['decoder.output_layer.3.bias']
+            # if kwargs['norm_flag']:
+            #     loaded_model = torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt'))
+            #     new_loaded_model = {key: val for key, val in loaded_model.items() if key in t_dsnae.state_dict()}
+            #     new_loaded_model['shared_encoder.output_layer.0.weight'] = loaded_model[
+            #         'shared_encoder.output_layer.3.weight']
+            #     new_loaded_model['shared_encoder.output_layer.0.bias'] = loaded_model[
+            #         'shared_encoder.output_layer.3.bias']
+            #     new_loaded_model['decoder.output_layer.0.weight'] = loaded_model['decoder.output_layer.3.weight']
+            #     new_loaded_model['decoder.output_layer.0.bias'] = loaded_model['decoder.output_layer.3.bias']
 
-                corrected_model = OrderedDict({key: new_loaded_model[key] for key in t_dsnae.state_dict()})
-                t_dsnae.load_state_dict(corrected_model)
-            else:
+            #     corrected_model = OrderedDict({key: new_loaded_model[key] for key in t_dsnae.state_dict()})
+            #     t_dsnae.load_state_dict(corrected_model)
+            # else:
+                #t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
                 t_dsnae.load_state_dict(torch.load(os.path.join(kwargs['model_save_folder'], 'a_t_dsnae.pt')))
 
         except FileNotFoundError:
