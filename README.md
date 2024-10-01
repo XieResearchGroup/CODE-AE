@@ -12,6 +12,22 @@ This work is licensed under a
 [cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
 
 ## CONTEXT-AWARE DECONFOUNDING AUTOENCODER
+
+- [Paper](https://www.nature.com/articles/s42256-022-00541-0)
+
+```
+@article{he2022context,
+  title={A context-aware deconfounding autoencoder for robust prediction of personalized clinical drug response from cell-line compound screening},
+  author={He, Di and Liu, Qiao and Wu, You and Xie, Lei},
+  journal={Nature Machine Intelligence},
+  volume={4},
+  number={10},
+  pages={879--892},
+  year={2022},
+  publisher={Nature Publishing Group UK London}
+}
+```
+
 -----------------------------------------------------------------
 
 ## 1. Introduction
