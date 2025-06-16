@@ -1,0 +1,18 @@
+## Question about t-SNE Embedding Alignment in CODE-AE
+
+Hello,
+
+I’m currently trying to reproduce the results of CODE-AE, and I had a question regarding the t-SNE visualizations shown in **Figure 1** of the paper.
+
+Despite successfully training the model (with reasonable pretraining and adversarial loss curves), I was unable to reproduce similarly well-aligned embeddings. My t-SNE plots of the shared representations still show noticeable domain separation between CCLE and TCGA, unlike the figure presented in the paper.
+
+My workflow was:
+1. Running `generate_encoded_features.py` with `--train` and `--method` being `code_adv`
+2. Visualizing the resulting `.csv` outputs using the provided `generate_plots.ipynb`
+
+Everything else (losses, model setup) appears to be working as expected. May I ask if there are any specific hyperparameters, seeds, data preprocessing steps, or t-SNE settings that might be critical to achieving the aligned embeddings shown in the paper? I have so far used the exact given hyperparameters and code given in the repository.
+
+Any guidance you could provide would be greatly appreciated. Thank you so much for your time and for sharing this valuable work.
+
+Best regards,  
+Siying
